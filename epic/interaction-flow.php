@@ -6,7 +6,7 @@
     </head>
     <body>
         <header>
-				<h1>Interaction flow</h1>
+				<h1>Interaction Flow</h1>
         </header>
         <main>
             <ol>
