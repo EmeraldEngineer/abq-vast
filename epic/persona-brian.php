@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<title>Persona A: Brian Murphy</title>
+		<title>Persona A: Brian Murphy: Individual</title>
 	</head>
 	<body>
 		<strong>Name:</strong> Brian Murphy<br>
