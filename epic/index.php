@@ -14,6 +14,11 @@
 				Once you give people, advocacy leaders and small business owners this tool, it can be utilized to create accountability and more
 				competition among city vendors. We hope the site will help display more transparency for all of Albuquerque taxpayers.
 			</p>
+            <a href="persona-adriana.php">Adriana</a><br>
+            <a href="persona-brian.php">Brian</a><br>
+            <a href="persona-maricela.php">Maricela</a><br>
+            <a href="interaction-flow.php">Interaction</a><br>
+            <a href="use-cases.php">Use Cases</a><br>
 		</main>
 	</body>
 
