@@ -9,7 +9,7 @@
 	<body>
 		<main>
 			<h1>Use Case for Brian Murphy</h1>
-			<p>Brian is out to lunch with some co-workers and the common topic of school funding gets brought up. He lets them know about this new ABQ app that makes it easy to see where all our local tax money is going. He continues to take out his phone and sends each of them a detailed graph of how much funding each Albuquerque school district recieved in the last 4 years, after only a few clicks</p>
+			<p>Brian is out to lunch with some co-workers and the common topic of school funding gets brought up. He lets them know about this new ABQ app that makes it easy to see where all our local tax money is going. He continues to take out his phone and sends each of them a detailed graph of how much funding each Albuquerque school district received in the last 4 years, after only a few clicks</p>
 
 			<h1>Use Case for Adriana Vasquez</h1>
 			<p>Adriana is an investigative journalist looking to find reliable data about how the city pays its vendors: who gets city contracts, how often, and how much they are getting paid by the city. She would also like an app that will translate this data into user-friendly graphs that she can post into her articles.</p>
