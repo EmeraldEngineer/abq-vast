@@ -10,9 +10,10 @@
 		</header>
 
 		<main>
-			<p>This site is to inform local Albuquerque residents about where and how their tax dollars are being spent. It will also be informative for current
-			and future businesses to see possible tax incentives, government bids and government bonds. Albuquerque Community advocates will be able to gather information about funding projects and events.
-			Our overall objective is to display some transparency for all of Albuqeurque tax payers.</p>
+			<p>The overall objective is to create a simple interactive tool that allows anyone to see where and how our local tax money is being spent.
+				Once you give people, advocacy leaders and small business owners this tool, it can be utilized to create accountability and more
+				competition amoung city vendors. We hope the site will help display more transparency for all of Albuqeurque tax payers.
+			</p>
 		</main>
 	</body>
 </html>
