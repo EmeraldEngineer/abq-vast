@@ -17,12 +17,12 @@
                 <li>database fetches and compiles information and creates a usable graph with buttons for the user to print, email and/or share on social media.</li>
                 <li>user is then asked if they would like to contact city council member.</li>
             </ol>
-			  	<h1>User Stories</h1>
+			  	<h1>Anonymous User Stories</h1>
 			  <ul>
 				  <li>As an administrator, I want to update the City of Albuquerque taxpayers data.</li>
 				  <li>As an anonymous user, I want to know how much money is being spent on vendors.</li>
 				  <li>As an anonymous user, I want to see where my local taxes are being spent.</li>
-                  <li>As a user, I want to be able to share whatever I find on social websites.</li>
+				  <li>As an anonymous user, I want to be able to share whatever I find on social websites.</li>
               </ul>
                       <a href="persona-adriana.php">Adriana</a><br>
                       <a href="persona-brian.php">Brian</a><br>
