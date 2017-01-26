@@ -22,7 +22,7 @@
 				  <li>As an administrator, I want to update the City of Albuquerque taxpayers data.</li>
 				  <li>As an anonymous user, I want to know how much money is being spent on vendors.</li>
 				  <li>As an anonymous user, I want to see where my local taxes are being spent.</li>
-				  <li>As an anonymous user, I want to be able to share whatever I find on social websites.</li>
+				  		<li>As an anonymous user, I want to be able to share whatever I find on social websites.</li>
               </ul>
                       <a href="persona-adriana.php">Adriana</a><br>
                       <a href="persona-brian.php">Brian</a><br>
