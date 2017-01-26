@@ -5,7 +5,7 @@
 		<title>Persona A: Brian Murphy: Individual</title>
 	</head>
 	<body>
-		<strong>Name:</strong> Brian Murphy<br>
+		<strong>Name:</strong> Aaron Murphy<br>
 		<strong>Age:</strong> 25<br>
 		<strong>Profession:</strong> Teacher<br>
 		<strong>Technology:</strong> Android LG G3, Windows 10. Brian uses his desktop to do most of his research and school work and his phone for minimal app use with typical on-the-go mobile web browsing<br>
