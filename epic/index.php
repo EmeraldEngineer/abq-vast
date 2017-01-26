@@ -8,7 +8,6 @@
 		<header>
 			<h1>System Summery</h1>
 		</header>
-
 		<main>
 			<p>The overall objective is to create a simple interactive tool that allows anyone to see where and how our local tax money is being spent.
 				Once you give people, advocacy leaders and small business owners this tool, it can be utilized to create accountability and more
