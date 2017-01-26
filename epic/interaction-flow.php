@@ -24,7 +24,7 @@
 				  		<li>As an anonymous user, I want to be able to share whatever I find on social websites.</li>
               </ul>
                       <a href="persona-adriana.php">Adriana</a><br>
-                      <a href="persona-brian.php">Brian</a><br>
+                      <a href="persona-aaron.php">Aaron</a><br>
                       <a href="persona-maricela.php">Maricela</a><br>
                       <a href="index.php">Index</a><br>
                       <a href="use-cases.php">Use Cases</a><br>

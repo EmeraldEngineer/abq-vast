@@ -14,7 +14,7 @@
 			<strong>Frustrations and Needs:</strong> Maricela needs reliable, user-friendly information that can help with the direction of her campaigns and with any grant applications/deadlines. She also needs an app that will be easy to use by her staff and volunteers. <br>
 			<strong>Goals:</strong> Maricela hopes that showmethemoney.com will be a useful tool for both herself, staff and volunteers. The ability to share the graphs on social media would also help with the effectiveness of her campaigns.<br>
             <a href="persona-adriana.php">Adriana</a><br>
-            <a href="persona-brian.php">Brian</a><br>
+            <a href="persona-aaron.php">Aaron</a><br>
             <a href="index.php">Index</a><br>
             <a href="interaction-flow.php">Interaction</a><br>
             <a href="use-cases.php">Use Cases</a><br>
