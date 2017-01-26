@@ -12,9 +12,9 @@
             <ol>
                 <li>user enters url</li>
                 <li>url is fetched from the database.</li>
-                <li>user enters site and current projects are displayed.</li>
-                <li>user is able to select what project,vendors, and zip code they are interested in.</li>
-                <li>user is able to print, email, post to social media once they find information pertaining to there goals.</li>
+                <li>user enters site and drop down menus of search parameters are diplayed</li>
+                <li>user selects to graph data by vendor name, payment dates, and payment amounts</li>
+                <li>database fetches and compiles information and creates a usable graph with buttons for the user to print, email and/or share on social media.</li>
                 <li>user is then asked if they would like to contact city council member.</li>
             </ol>
 			  	<h1>User Stories</h1>
