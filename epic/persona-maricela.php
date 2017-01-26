@@ -10,9 +10,9 @@
 			<strong>Age: 38</strong><br>
 			<strong>Profession:</strong> Executive Director of a nonprofit<br>
 			<strong>Technology:</strong> Samsung Galaxy 7 running Marshmallow, Windows 10<br>
-			<strong>Attitudes and Behaviors:</strong> Marcela runs an advocacy nonprofit and is constantly researching different websites/news/resources to help her make decisions on the campaigns of her nonprofit.<br>
-			<strong>Frustrations and Needs:</strong> Because of Marcela's nonprofit budget, time is money. She needs reliable information that will help her understand the data she needs for her campaigns and that it is easily digestible for her constituents.<br>
-			<strong>Goals:</strong> Maricela hopes that showmethemoney.com will be a useful tool for both herself, staff and volunteers to be able to gather data for their campaigns.
+			<strong>Attitudes and Behaviors:</strong> Marcela runs an advocacy nonprofit and is constantly researching different websites/news/resources to help her make decisions on her campaigns. Because it's easy to get bogged down in the details of the city's website in terms of financials, she looks for website apps that will help streamline this process.<br>
+			<strong>Frustrations and Needs:</strong> Maricela needs reliable, user-friendly information that can help with the direction of her campaigns and with any grant applications/deadlines. She also needs an app that will be easy to use by her staff and volunteers. <br>
+			<strong>Goals:</strong> Maricela hopes that showmethemoney.com will be a useful tool for both herself, staff and volunteers. The ability to share the graphs on social media would also help with the effectiveness of her campaigns.
 		</main>
 	</body>
 </html>
