@@ -16,6 +16,11 @@
 
 			<h1>Use Case for Maricela Diaz</h1>
 			<p>Maricela and her staff are constantly doing research about government spending for their nonprofit's campaigns. Maricela was told about showmethemoney.com from one of her volunteers as a quick way to search the city's vendor database and create reliable, user-friendly graphs that can then be shared on their social media channels, ultimately assisting their campaigns.</p>
+            <a href="persona-adriana.php">Adriana</a><br>
+            <a href="persona-brian.php">Brian</a><br>
+            <a href="persona-maricela.php">Maricela</a><br>
+            <a href="interaction-flow.php">Interaction</a><br>
+            <a href="index.php">Index</a><br>
 		</main>
 	</body>
 </html>
