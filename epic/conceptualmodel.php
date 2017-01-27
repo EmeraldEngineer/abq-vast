@@ -9,11 +9,14 @@
         <main>
             <h2>Checkbook</h2>
         <ul>
-            <li></li>
+            <li>checkbookId(primary key)</li>
+            <li>checkbookField</li>
+            <li>checkbookOperator</li>
+            <li>checkbookValue</li>
         </ul>
             <h2>Graph</h2>
         <ul>
-            <li></li>
+            <li>graphId</li>
         </ul>
             <h2>Share</h2>
         <ul>
