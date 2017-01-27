@@ -15,10 +15,10 @@
                 <ul>
                     <li>checkbookId(primary key)</li>
                     <li>checkbookVendor</li>
-                    <li>checkbookReferenceNumber</li>
-                    <li>checkbookInvoiceNumber</li>
+                    <li>checkbookReferenceNum</li>
+                    <li>checkbookInvoiceNum</li>
                     <li>checkbookInvoiceDate</li>
-                    <li>checkbookPaymentDate</li>
+                    <li>checkbookPymtDate</li>
                     <li>checkbookInvoiceAmount</li>
                 </ul>
             <h2>Criteria</h2>
@@ -45,6 +45,7 @@
                     <li>One Checkbook can have many criteria(s)- (1- to n)</li>
                     <li>Many fields can be shared many times - (n-m)</li>
                 </ul>
+			  <img src="../images/showmethemoneyERD.svg" />
         </main>
     </body>
 </html>
