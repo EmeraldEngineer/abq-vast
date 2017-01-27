@@ -40,6 +40,12 @@
                     <li>shareId</li>
                     <li>shareUrl</li>
                 </ul>
+            <h2>Relations</h2>
+                <ul>
+                    <li>One Checkbook can have many criteria(s)- (1- to n)</li>
+                    <li>Many criteria can be shared many times - (m to n)</li>
+                    <li></li>
+                </ul>
             </main>
     </body>
 </html>
