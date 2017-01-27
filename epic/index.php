@@ -19,44 +19,33 @@
             <a href="persona-maricela.php">Maricela</a><br>
             <a href="interaction-flow.php">Interaction</a><br>
             <a href="use-cases.php">Use Cases</a><br>
-		</main>
-	</body>
-
 
 			<h1>URLs</h1>
-	<head>
-		<style>
-			table, th, td {
-				border: 1px seagreen;
-			}
-		</style>
-	</head>
-	<body>
-
-		<table>
+		<table class="table">
 			<tr>
 				<th>File</th>
 				<th>URL</th>
 			</tr>
 			<tr>
 				<td>interaction-flow</td>
-				<td><a href="https://bootcamp-coders.cnm.edu/~apedroza6/epic/interaction-flow.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/interaction-flow.php</a></td>
+				<td><a href="interaction-flow.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/interaction-flow.php</a></td>
 			<tr>
 				<td>use-cases</td>
-				<td><a href="https://bootcamp-coders.cnm.edu/~apedroza6/epic/use-cases.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/use-cases.php</a></td>
+				<td><a href="use-cases.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/use-cases.php</a></td>
 			</tr>
 			<tr>
 				<td>persona-adriana</td>
-				<td><a href="https://bootcamp-coders.cnm.edu/~apedroza6/epic/persona-adriana.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/persona-adriana.php</a></td>
+				<td><a href="persona-adriana.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/persona-adriana.php</a></td>
 			</tr>
 			<tr>
-				<td>persona-brian</td>
-				<td><a href="https://bootcamp-coders.cnm.edu/~apedroza6/epic/persona-brian.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/persona-adriana.php</a></td>
+				<td>persona-aaron</td>
+				<td><a href="persona-aaron.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/persona-adriana.php</a></td>
 			</tr>
 			<tr>
 				<td>persona-maricela</td>
-				<td><a href="https://bootcamp-coders.cnm.edu/~apedroza6/epic/persona-adriana.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/persona-adriana.php</a></td>
+				<td><a href="persona-maricela.php">https://bootcamp-coders.cnm.edu/~apedroza6/epic/persona-adriana.php</a></td>
 			</tr>
 		</table>
+		</main>
 	</body>
 </html>
