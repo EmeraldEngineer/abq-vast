@@ -21,6 +21,7 @@
         <a href="persona-maricela.php">Maricela</a><br>
         <a href="interaction-flow.php">Interaction</a><br>
         <a href="index.php">Index</a><br>
+        <a href="conceptualmodel.php">Conceptual Model</a>
     </main>
     </body>
 </html>

@@ -17,5 +17,6 @@
     <a href="persona-maricela.php">Maricela</a><br>
     <a href="interaction-flow.php">Interaction</a><br>
     <a href="use-cases.php">Use Cases</a><br>
+    <a href="conceptualmodel.php">Conceputal Model</a>
     </body>
 </html>

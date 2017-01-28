@@ -18,6 +18,7 @@
         <a href="index.php">Index</a><br>
         <a href="interaction-flow.php">Interaction</a><br>
         <a href="use-cases.php">Use Cases</a><br>
+        <a href="conceptualmodel.php">Conceptual Model</a>
     </main>
     </body>
 </html>

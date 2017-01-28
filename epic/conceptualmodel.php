@@ -45,6 +45,12 @@
                     <li>One Checkbook can have many criteria(s)- (1 to n)</li>
                     <li>Many fields can be shared many times - (n to m)</li>
                 </ul>
+            <a href="index.php">Index</a>
+            <a href="interaction-flow.php">Interaction</a>
+            <a href="persona-aaron.php">Aaron</a>
+            <a href="persona-adriana.php">Adriana</a>
+            <a href="persona-maricela.php">Maricela</a>
+            <a href="use-cases.php">Use Case</a>
 			  <img src="../images/showmethemoneyERD.svg" />
         </main>
     </body>
