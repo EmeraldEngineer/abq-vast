@@ -26,4 +26,4 @@ CREATE TABLE field(
 CREATE TABLE share(
   shareId,
   shareUrl
-);
+)
