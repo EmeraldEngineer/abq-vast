@@ -42,8 +42,8 @@
                 </ul>
             <h2>Relations</h2>
                 <ul>
-                    <li>One Checkbook can have many criteria(s)- (1- to n)</li>
-                    <li>Many fields can be shared many times - (n-m)</li>
+                    <li>One Checkbook can have many criteria(s)- (1 to n)</li>
+                    <li>Many fields can be shared many times - (n to m)</li>
                 </ul>
 			  <img src="../images/showmethemoneyERD.svg" />
         </main>
