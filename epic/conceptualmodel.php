@@ -18,7 +18,7 @@
                     <li>checkbookReferenceNum</li>
                     <li>checkbookInvoiceNum</li>
                     <li>checkbookInvoiceDate</li>
-                    <li>checkbookPymtDate</li>
+                    <li>checkbookPaymtDate</li>
                     <li>checkbookInvoiceAmount</li>
                 </ul>
             <h2>Criteria</h2>
