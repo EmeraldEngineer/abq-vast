@@ -24,21 +24,21 @@
             <h2>Criteria</h2>
                 <ul>
                     <li>criteriaId(primary key)</li>
-                    <li>criteriaFieldId(forign key)</li>
-                    <li>criteriaShareId(forign key)</li>
+                    <li>criteriaFieldId(foreign key)</li>
+                    <li>criteriaShareId(foreign key)</li>
                     <li>criteriaOperator</li>
                     <li>criteriaValue</li>
                 </ul>
             <h2>Field</h2>
                 <ul>
-                    <li>fieldId(forign key)</li>
+                    <li>fieldId(foreign key)</li>
                     <li>fieldName</li>
                     <li>fieldType</li>
                 </ul>
             <h2>Share</h2>
                 <ul>
-                    <li>shareId(forign key)</li>
-                    <li>shareUrl(forign key)</li>
+                    <li>shareId(foreign key)</li>
+                    <li>shareUrl(foreign key)</li>
                 </ul>
             <h2>Relations</h2>
                 <ul>
