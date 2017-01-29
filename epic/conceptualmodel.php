@@ -31,7 +31,7 @@
                 </ul>
             <h2>Field</h2>
                 <ul>
-                    <li>fieldId(foreign key)</li>
+                    <li>fieldId(primary key)</li>
                     <li>fieldName</li>
                     <li>fieldType</li>
                 </ul>
@@ -39,12 +39,15 @@
                 <ul>
                     <li>shareId(foreign key)</li>
                     <li>shareUrl(foreign key)</li>
+						  <li>shareImage</li>
                 </ul>
             <h2>Relations</h2>
                 <ul>
-                    <li>One Checkbook can have many criteria(s)- (1 to n)</li>
-                    <li>Many fields can be shared many times - (n to m)</li>
-                </ul>
+                    <li>One Checkbook can have many criteria(s) - (1 to n)</li>
+						  <li>Many criteria(s) can create many field(s) - (m to n)</li>
+                    <li>One field can be shared many times - (1 to n)</li>
+						  <li>One share can have many criteria - (1 to n)</li>
+					 </ul>
             <a href="index.php">Index</a>
             <a href="interaction-flow.php">Interaction</a>
             <a href="persona-aaron.php">Aaron</a>
