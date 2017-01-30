@@ -12,15 +12,15 @@ CREATE TABLE checkbook(
   checkbookInvoiceAmount DECIMAL(26, 3)
 );
 CREATE TABLE criteria(
-  criteriaId,
-  criteriaFieldId,
-  criteriaShareId,
+  criteriaId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+  criteriaFieldId INT UNSIGNED NOT NULL,
+  criteriaShareId INT UNSIGNED NOT NULL,
   criteriaOperator VARCHAR (4),
-  criteriaValue
+  criteriaValue INT UNSIGNED NOT NULL,
 );
 CREATE TABLE field(
-  fieldId,
-  fieldName,
+  fieldId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+  fieldName VARCHAR()
   fieldType
 );
 CREATE TABLE share(
