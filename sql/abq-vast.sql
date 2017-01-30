@@ -3,12 +3,12 @@ DROP TABLE IF EXISTS field;
 DROP TABLE IF EXISTS criteria;
 DROP TABLE IF EXISTS checkbook;
 CREATE TABLE checkbook(
-  checkbookId,
-  checkbookVendor,
-  checkbookReferenceNum,
-  checkbookInvoiceNum,
-  checkbookInvoiceDate,
-  checkbookPaymtDate,
+  checkbookId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+  checkbookVendor VARCHAR(82),
+  checkbookReferenceNum VARCHAR(42),
+  checkbookInvoiceNum VARCHAR(62),
+  checkbookInvoiceDate DATETIME,
+  checkbookPaymtDate DATETIME,
   checkbookInvoiceAmount
 );
 CREATE TABLE criteria(
@@ -26,5 +26,5 @@ CREATE TABLE field(
 CREATE TABLE share(
   shareId,
   shareUrl,
-  shareImage,
+  shareImage
 )
