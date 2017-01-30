@@ -15,7 +15,7 @@ CREATE TABLE criteria(
   criteriaId,
   criteriaFieldId,
   criteriaShareId,
-  criteriaOperator,
+  criteriaOperator VARCHAR (4),
   criteriaValue
 );
 CREATE TABLE field(
