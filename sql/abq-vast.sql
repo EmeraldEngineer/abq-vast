@@ -9,7 +9,7 @@ CREATE TABLE checkbook(
   checkbookInvoiceNum VARCHAR(62),
   checkbookInvoiceDate DATETIME,
   checkbookPaymtDate DATETIME,
-  checkbookInvoiceAmount
+  checkbookInvoiceAmount DECIMAL(26, 3)
 );
 CREATE TABLE criteria(
   criteriaId,
