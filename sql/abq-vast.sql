@@ -9,7 +9,8 @@ CREATE TABLE checkbook(
   checkbookInvoiceNum VARCHAR(62),
   checkbookInvoiceDate DATETIME,
   checkbookPaymtDate DATETIME,
-  checkbookInvoiceAmount DECIMAL(26, 3)
+  checkbookInvoiceAmount DECIMAL(26, 3),
+  PRIMARY KEY(checkbookId)
 );
 CREATE TABLE criteria(
   criteriaId INT UNSIGNED AUTO_INCREMENT NOT NULL,
@@ -17,14 +18,20 @@ CREATE TABLE criteria(
   criteriaShareId INT UNSIGNED NOT NULL,
   criteriaOperator VARCHAR(4),
   criteriaValue INT UNSIGNED NOT NULL,
+  PRIMARY KEY(criteriaId),
+  FOREIGN KEY(criteriaFieldId),
+  UNIQUE(criteriaShareId)
 );
 CREATE TABLE field(
   fieldId INT UNSIGNED AUTO_INCREMENT NOT NULL,
   fieldName VARCHAR(64) NOT NULL,
   fieldType VARCHAR(16) NOT NULL,
+  PRIMARY KEY(criteriaId)
 );
 CREATE TABLE share(
   shareId INT UNSIGNED NOT NULL,
   shareUrl VARCHAR(32),
   shareImage VARCHAR(32),
+  FOREIGN KEY(shareId),
+  UNIQUE(shareUrl)
 )
