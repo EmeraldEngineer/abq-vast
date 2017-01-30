@@ -15,16 +15,16 @@ CREATE TABLE criteria(
   criteriaId INT UNSIGNED AUTO_INCREMENT NOT NULL,
   criteriaFieldId INT UNSIGNED NOT NULL,
   criteriaShareId INT UNSIGNED NOT NULL,
-  criteriaOperator VARCHAR (4),
+  criteriaOperator VARCHAR(4),
   criteriaValue INT UNSIGNED NOT NULL,
 );
 CREATE TABLE field(
   fieldId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-  fieldName VARCHAR()
-  fieldType
+  fieldName VARCHAR(64) NOT NULL,
+  fieldType VARCHAR(16) NOT NULL,
 );
 CREATE TABLE share(
-  shareId,
-  shareUrl,
-  shareImage
+  shareId INT UNSIGNED NOT NULL,
+  shareUrl VARCHAR(32),
+  shareImage VARCHAR(32),
 )
