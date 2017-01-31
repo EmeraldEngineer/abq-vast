@@ -29,6 +29,36 @@ class Criteria implements \JsonSerializable {
 	 * @var int $criteraValue
 	 **/
 	private $criteriaValue;
+	/**
+	 *Constructor for criteria
+	 * @param int|null $newCriteriaId id of criteria or null or null if new.
+	 * @param int $newCriteriaFieldId id of foreign key from field.
+	 * @param int $newCriteriaShareId id of foreign key from share.
+	 * @param string $newCriteriaOperator mathematical operator for criteria.
+	 * @param int $newCriteriaValue value of the criteria to be operated upon.
+	 * @throws \InvalidArgumentException if data type is not valid.
+	 * @throws \RangeException if data values are out of bounds.
+	 * @throws \TypeError if data types violate type hints.
+	 * @throws \Exception if any other exception occurs.
+	 **/
+	public function __construct(int $newCriteriaId = null, int $newCriteriaFieldId, int $newCriteriaShareId, string $newCriteriaOperator, int $newCriteriaValue) {
+		try {
+			$this->setCriteriaId($newCriteriaId);
+			$this->setCriteriaFieldId($newCriteriaFieldId);
+			$this->setCriteriaShareId($newCriteriaShareId);
+			$this->setCriteriaOperator($newCriteriaOperator);
+			$this->setCriteriaValue($newCriteriaValue);
+		}	catch(\InvalidArgumentException $invalidArgument) {
+				throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+		}	catch(\RangeException $range) {
+				throw(new \RangeException($range->getMessage(), 0, $range));
+		}	catch(\TypeError $typeError) {
+				throw(new \TypeError($typeError->getMessage(), 0, $typeError));
+		}	catch(\Exception $exception) {
+				throw(new \Exception($exception->getMessage(), 0, $exception));
+		}
+	}
+
 
 	/**
 	 * accessor method for criteriaId
