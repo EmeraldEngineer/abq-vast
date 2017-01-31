@@ -34,5 +34,5 @@ CREATE TABLE share(
   shareId INT UNSIGNED NOT NULL,
   shareUrl VARCHAR(64) NOT NULL,
   shareImage VARCHAR(64) NOT NULL,
-  UNIQUE(shareUrl),
+  UNIQUE(shareUrl)
 );
