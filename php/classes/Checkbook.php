@@ -48,7 +48,7 @@ class Checkbook implements \JsonSerializable {
      * @param string $newCheckbookPaymentDate payment date for this checkbook
      * @param string $newCheckbookInvoiceAmount invoice amount for this checkbook
      * @throws \InvalidArgumentException if data types are not valid
-     * @throws \RangeException if data values are out of bounds (to long, negarive integers
+     * @throws \RangeException if data values are out of bounds (to long, negative integers)
      * @throw \TypeError if data types violate type
      * @throw \Exception if some other exception occurs
      **/
@@ -102,4 +102,29 @@ class Checkbook implements \JsonSerializable {
         }
         $this->checkbookId = $newCheckbookId;
     }
+
+    /**
+     * accessor method for Vendor content
+     * @return string value of vendor content
+     **/
+    public function getCheckbookVendor()
+{
+    return ($this->checkbookVendor);
+}
+/**
+ * mutator method for vendor content
+ * @param string $newCheckbookVendor
+ * @throws \InvalidArgumentException if $newCheckbookVendor is not a string or insecure
+ * @throws \RangeException if $newCheckbookVendor is not a to long
+ * @throws \TypeError if $newCheckbookVendor is not a string
+ **/
+public function setCheckbookVendor(string $newCheckbookVendor){
+    /**verify vendor is secure */
+    $newCheckbookVendor = filter_var($newCheckbookVendor, FILTER_SANITIZE_STRING);
+    if(empty($newCheckbookVendor) === true) {
+        throw(new \InvalidArgumentException("vendor content is empty or insecure"));
+    }
+    /**store the vendor cotent**/
+    $this->checkbookVendor = $newCheckbookVendor;
+}
 }
