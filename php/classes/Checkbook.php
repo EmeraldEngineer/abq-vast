@@ -108,23 +108,51 @@ class Checkbook implements \JsonSerializable {
      * @return string value of vendor content
      **/
     public function getCheckbookVendor()
-{
-    return ($this->checkbookVendor);
-}
-/**
- * mutator method for vendor content
- * @param string $newCheckbookVendor
- * @throws \InvalidArgumentException if $newCheckbookVendor is not a string or insecure
- * @throws \RangeException if $newCheckbookVendor is not a to long
- * @throws \TypeError if $newCheckbookVendor is not a string
- **/
-public function setCheckbookVendor(string $newCheckbookVendor){
-    /**verify vendor is secure */
-    $newCheckbookVendor = filter_var($newCheckbookVendor, FILTER_SANITIZE_STRING);
-    if(empty($newCheckbookVendor) === true) {
-        throw(new \InvalidArgumentException("vendor content is empty or insecure"));
+    {
+        return ($this->checkbookVendor);
     }
-    /**store the vendor cotent**/
-    $this->checkbookVendor = $newCheckbookVendor;
-}
+    /**
+     * mutator method for vendor content
+     * @param string $newCheckbookVendor
+     * @throws \InvalidArgumentException if $newCheckbookVendor is not a string or insecure
+     * @throws \RangeException if $newCheckbookVendor is not a to long
+     * @throws \TypeError if $newCheckbookVendor is not a string
+     **/
+    public function setCheckbookVendor(string $newCheckbookVendor){
+        /**verify vendor is secure */
+        $newCheckbookVendor = filter_var($newCheckbookVendor, FILTER_SANITIZE_STRING);
+        if(empty($newCheckbookVendor) === true) {
+            throw(new \InvalidArgumentException("vendor content is empty or insecure"));
+        }
+        /**store the vendor cotent**/
+        $this->checkbookVendor = $newCheckbookVendor;
+    }
+    /**
+     * accessor method for Reference Number
+     * @return string of Reference number content
+     **/
+    public function getCheckbookReferenceNum()
+    {
+        return ($this->checkbookReferenceNum);
+    }
+    /** mutator method for reference number
+     * @param string $newCheckbookReferenceNum
+     *@throws \InvalidArgumentException if $newCheckbookReferenceNum is insecure
+     * @throws \RangeException if $newCheckbookReferenceNum is > 82
+     * @throws \TypeError if $newCheckbookReferenceNum is not a string
+     */
+    public function setCheckbookReferenceNum (string $newCheckbookReferenceNum)
+    {
+        //** verify the reference number is secure */
+        $newCheckbookReferenceNum = filter_var($newCheckbookReferenceNum, FILTER_SANITIZE_STRING);
+        if(empty($newCheckbookReferenceNum) === true){
+            throw(new \InvalidArgumentException("Reference number is empty or insecure"));
+        }
+        /** verify the Reference number will fit in the database **/
+        if (strlen($newCheckbookReferenceNum) > 42) {
+            throw(new \RangeException("Reference number is to long"));
+        }
+        /** store reference number */
+        $this->checkbookReferenceNum = $newCheckbookReferenceNum;
+    }
 }
