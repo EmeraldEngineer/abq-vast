@@ -27,11 +27,11 @@ CREATE TABLE criteria(
   criteriaOperator VARCHAR(4)NOT NULL,
   criteriaValue INT UNSIGNED NOT NULL,
   PRIMARY KEY(criteriaId),
-  FOREIGN KEY(criteriaFieldId) REFERENCES (fieldId),
-  FOREIGN KEY(criteriaShareId) REFERENCES (shareId),
+  FOREIGN KEY(criteriaFieldId) REFERENCES field(fieldId),
+  FOREIGN KEY(criteriaShareId) REFERENCES share(shareId)
 );
 CREATE TABLE share(
-  shareId INT UNSIGNED NOT NULL,
+  shareId INT UNSIGNED AUTO_INCREMENT NOT NULL,
   shareUrl VARCHAR(64) NOT NULL,
   shareImage VARCHAR(64) NOT NULL,
   UNIQUE(shareUrl)
