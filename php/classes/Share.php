@@ -68,8 +68,61 @@ class Share {
 	/**
 	 * mutator method for share id
 	 *
-	 * @param int $newShareId new value of share id
-	 * @throws \
+	 * @param int|null $newShareId new value of share id
+	 * @throws \RangeException if $newTweetId is not positive
+	 * @throws \TypeError if $newTweetId is not an integer
 	 **/
+	public function setShareId(int $newShareId = null) {
+		// base case: if the share id is null, this is a new share without a mySQL assigned id (yet) and will also reference criteria share id
+		if($newShareId === null) {
+			$this->shareId = null;
+			return;
+		}
 
+		//verify the share id is positive
+		if($newShareId <= 0) {
+			throw(new \RangeException("share is not positive"));
+		}
+
+		//convert and store the share id
+		$this->shareId = $newShareId;
+	}
+
+	/**
+	 * accessor method for the share url
+	 *
+	 * @return string value of share url
+	 *
+	 **/
+	public function getShareUrl() {
+		return($this->shareUrl);
+	}
+
+	/**
+	 * mutator method for share url
+	 *
+	 * @param string $newShareUrl new value of share url
+	 * @throws \InvalidArgumentException if $newShareUrl is not a string or not insecure
+	 * @throws \RangeException if $newShareUrl is > 64 characters
+	 * @throws \TypeError if $newShareUrl is not a string
+	 **/
+	public function setShareUrl(string $newShareUrl) {
+		// verify url is secure
+		$newShareUrl = trim($newShareUrl);
+		$newShareUrl = filter_var($newShareUrl, FILTER_SANITIZE_URL);
+		if(empty($newShareUrl) === true) {
+			throw(new \InvalidArgumentException("Share content is empty or insecure"));
+		}
+
+		//verify the share url will fit into the database
+		if(strlen($newShareUrl) > 64) ;
+		throw(new \RangeException("Share URL is too long"));
+
+		//store the new share url
+		$this->shareUrl = $newShareUrl;
+	}
+
+	/**
+	 *
+	 **/
 }
