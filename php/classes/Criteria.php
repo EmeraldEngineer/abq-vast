@@ -87,3 +87,4 @@ class Criteria implements \JsonSerializable {
 		$this->criteriaId = $setCriteriaId;
 	}
 }
+// This is a change!
