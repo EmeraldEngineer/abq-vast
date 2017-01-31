@@ -55,7 +55,7 @@ class Checkbook implements \JsonSerializable {
     public function __construct(int $newCheckbookId = null, string $newCheckbookVendor, string $newCheckbookReferenceNum, string $newCheckbookInvoiceNum, string $newCheckbookInvoiceDate, string $newCheckbookPaymentDate, string $newCheckbookInvoiceAmount) {
         try{
             $this->setCheckbookId($newCheckbookId);
-            $this->setChechbookVendor($newCheckbookVendor);
+            $this->setCheckbookVendor($newCheckbookVendor);
             $this->setCheckbookReferenceNum($newCheckbookReferenceNum);
             $this->setCheckbookInvoiceNum($newCheckbookInvoiceNum);
             $this->setCheckbookInvoiceDate($newCheckbookInvoiceDate);
@@ -154,5 +154,33 @@ class Checkbook implements \JsonSerializable {
         }
         /** store reference number */
         $this->checkbookReferenceNum = $newCheckbookReferenceNum;
+    }
+    /**
+     * accessor method for Invoice Number
+     * @return string value of invoice number
+     **/
+    public function getCheckbookInvoiceNum()
+    {
+        return ($this->checkbookInvoiceNum);
+    }
+    /**
+     * mutator method for invoice number
+     * @param string $newCheckbookInvoiceNum
+     * @throws \InvalidArgumentException if $newCheckbookInvoiceNum is not a string or insecure
+     * @throws \RangeException if $newCheckbookInvoiceNum is to long > 62
+     * @throws \TypeError if $newCheckbookInvoiceNum
+     **/
+    public function setCheckbookInvoiceNum(string $newCheckbookInvoiceNum){
+        //** verify invoice number is secure */
+        $newCheckbookInvoiceNum = filter_var($newCheckbookInvoiceNum, FILTER_SANITIZE_STRING);
+        if (empty($newCheckbookInvoiceNum) === true){
+            throw(new \InvalidArgumentException("invoice number is empty or insecure"));
+        }
+        //** verify invoice number will fit in the database */
+        if(strlen($newCheckbookInvoiceNum) > 62){
+            throw(new \RangeException("invoice number is to long"));
+        }
+        /** store the Invoice number in database */
+        $this->checkbookInvoiceNum = $newCheckbookInvoiceNum;
     }
 }
