@@ -1,4 +1,7 @@
 <?php
+namespace Edu\Cnm\sfinkel\Share;
+
+require_once("autoload.php");
 
 /** Share is the image users will be able to share on their social media channels, emails, or print.
  * Share will also have a customizable url for sharing purposes.
@@ -15,15 +18,15 @@ class Share {
 	 **/
 	private $shareId;
 	/**
-	 * url for the Share; this url will be customizable to the end user.
-	 * @var string $shareUrl
-	 **/
-	private $shareUrl;
-	/**
 	 * image of the data graph for the user to share and/or save.
 	 * @var string $shareUrl
 	 **/
 	private $shareImage;
+	/**
+	 * url for the Share; this url will be customizable to the end user.
+	 * @var string $shareUrl
+	 **/
+	private $shareUrl;
 	/**
 	 * constructor for this Share
 	 *
@@ -89,40 +92,6 @@ class Share {
 	}
 
 	/**
-	 * accessor method for the share url
-	 *
-	 * @return string value of share url
-	 *
-	 **/
-	public function getShareUrl() {
-		return($this->shareUrl);
-	}
-
-	/**
-	 * mutator method for share url
-	 *
-	 * @param string $newShareUrl new value of share url
-	 * @throws \InvalidArgumentException if $newShareUrl is not a string or not insecure
-	 * @throws \RangeException if $newShareUrl is > 64 characters
-	 * @throws \TypeError if $newShareUrl is not a string
-	 **/
-	public function setShareUrl(string $newShareUrl) {
-		// verify url is secure
-		$newShareUrl = trim($newShareUrl);
-		$newShareUrl = filter_var($newShareUrl, FILTER_SANITIZE_URL);
-		if(empty($newShareUrl) === true) {
-			throw(new \InvalidArgumentException("Share content is empty or insecure"));
-		}
-
-		//verify the share url will fit into the database
-		if(strlen($newShareUrl) > 64) ;
-		throw(new \RangeException("Share URL is too long"));
-
-		//store the new share url
-		$this->shareUrl = $newShareUrl;
-	}
-
-	/**
 	 * accessor method for share image
 	 *
 	 * @return string value of share image
@@ -157,8 +126,92 @@ class Share {
 	}
 
 	/**
+	 * accessor method for the share url
+	 *
+	 * @return string value of share url
+	 *
+	 **/
+	public function getShareUrl() {
+		return($this->shareUrl);
+	}
+
+	/**
+	 * mutator method for share url
+	 *
+	 * @param string $newShareUrl new value of share url
+	 * @throws \InvalidArgumentException if $newShareUrl is not a string or not insecure
+	 * @throws \RangeException if $newShareUrl is > 64 characters
+	 * @throws \TypeError if $newShareUrl is not a string
+	 **/
+	public function setShareUrl(string $newShareUrl) {
+		// verify url is secure
+		$newShareUrl = trim($newShareUrl);
+		$newShareUrl = filter_var($newShareUrl, FILTER_SANITIZE_URL);
+		if(empty($newShareUrl) === true) {
+			throw(new \InvalidArgumentException("Share content is empty or insecure"));
+		}
+
+		//verify the share url will fit into the database
+		if(strlen($newShareUrl) > 64) ;
+		throw(new \RangeException("Share URL is too long"));
+
+		//store the new share url
+		$this->shareUrl = $newShareUrl;
+	}
+
+	/**
 	 *inserts this share image into mySQL
 	 *
-	 * @param \PDO $pdo PDO
+	 * @param \PDO $pdo PDO Connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
+	public function insert(\PDO $pdo) {
+		//enforce the shareId is null (i.e. don't insert a share id that already exists)
+		if($this->shareId !== null) {
+			throw(new \PDOException("not a new share"));
+		}
+
+		//create query template
+		$query = "INSERT INTO share(shareId, shareImage, shareUrl) VALUES(:shareId, :shareImage, :shareUrl)";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$parameters = ["shareId" => $this->shareId, "shareImage" => $this->shareImage, "shareUrl" => $this->shareUrl];
+		$statement->execute($parameters);
+
+		//update the null shareId with what mySQL just gave us
+		$this->shareId = intval($pdo->lastInsertId());
+	}
+	/**
+	 * deletes this Share from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) {
+		//enforce the shareId is not null (i.e., don't delete a share that hasn't been inserted)
+		if($this->shareId === null) {
+			throw(new \PDOException("unable to delete a share that doesn't exist"));
+		}
+
+		//create query template
+		$query = "DELETE FROM share WHERE shareId = :shareId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holder in the template
+		$parameters = ["shareId" => $this->shareId];
+		$statement->execute($parameters);
+	}
+
+	/**updates this share in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) {
+		//enforce the shareId
+	}
 }
