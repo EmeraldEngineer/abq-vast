@@ -8,7 +8,7 @@ CREATE TABLE checkbook(
   checkbookReferenceNum VARCHAR(42),
   checkbookInvoiceNum VARCHAR(62),
   checkbookInvoiceDate DATE,
-  checkbookPaymtDate DATE,
+  checkbookPaymentDate DATE,
   checkbookInvoiceAmount DECIMAL(12, 3),
   INDEX(checkbookVendor),
   INDEX(checkbookInvoiceDate),
