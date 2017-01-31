@@ -123,6 +123,42 @@ class Share {
 	}
 
 	/**
+	 * accessor method for share image
 	 *
+	 * @return string value of share image
+	 **/
+	public function getShareImage() {
+		return($this->shareImage);
+	}
+
+	/**
+	 * mutator method for share image
+	 *
+	 * @param string $newShareImage new value of share image
+	 * @throws \InvalidArgumentException if $newShareImageis not a string
+	 * @throws \RangeException if $newShareImage is > 64 characters
+	 * @throws \TypeError if $newShareImage is not a string
+	 **/
+	public function setShareImage(string $newShareImage) {
+		//verify the share image is a string
+		$newShareImage = trim($newShareImage);
+		$newShareImage = filter_var($newShareImage, FILTER_SANITIZE_STRING);
+		if(empty($newShareImage) === true) {
+			throw(new \InvalidArgumentException("Share Image Name is empty or insecure"));
+		}
+
+		//verify share image will fit into the database
+		if(strlen($newShareImage) > 64) {
+			throw(new \RangeException("Share Image Name is too large"));
+		}
+
+		//store the share image
+		$this->shareImage = $newShareImage;
+	}
+
+	/**
+	 *inserts this share image into mySQL
+	 *
+	 * @param \PDO $pdo PDO
 	 **/
 }
