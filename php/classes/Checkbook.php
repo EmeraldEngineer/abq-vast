@@ -344,4 +344,26 @@ class Checkbook implements \JsonSerializable {
         $parameters = ["checkbookId" => $this->checkbookId, "checkbookInvoiceAmount" => $this->checkbookInvoiceAmount, "checkbookInvoiceDate" => $formattedDate1, "checkbookInvoiceNum" => $this->checkbookInvoiceNum, "checkbookPaymentDate" => $formattedDate2, "checkbookReferenceNum" => $this ->checkbookReferenceNum, "checkbookVendor" => $this->checkbookVendor];
         $statement->execute($parameters);
     }
+    /**
+     * gets the checkbook by checkbookId
+     *
+     * @param \PDO $pdo PDO connection object
+     * @param int $checkbookId checkbook id to search for
+     * @return Checkbook|null Checkbook found or null if not found
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
+    public static function getCheckbookByCheckbookId(\PDO $pdo, int $checkbookId){
+        // sanitize the checkbookId before searching
+        if($checkbookId <= 0){
+            throw(new \PDOException("checkbook id is not positive"));
+        }
+        // create query template
+        $query = "SELECT checkbookId, checkbookInoiceAmount, checkbookInvoiceDate, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookId = :checkbookId";
+        $statement = $pdo->prepare($query);
+        // bind the checkbook id to the place holder in the template
+        $parameters = ["checkbookId" => $checkbookId];
+        $statement->execute($parameters);
+        // grab the checkbook from mySQL
+    }
 }
