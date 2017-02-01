@@ -41,17 +41,17 @@ class Checkbook implements \JsonSerializable {
      * constructor for this checkbook
      * @param int $newCheckbookId id of this checkbook
      * @param string $newCheckbookInvoiceAmount invoice amount for this checkbook
-     * @param string $newCheckbookInvoiceDate invoice date for this checkbook
+     * @param \DateTime|string|null $newCheckbookInvoiceDate invoice date for this checkbook
      * @param string $newCheckbookInvoiceNum invoice number for this checkbook
-     * @param string $newCheckbookPaymentDate payment date for this checkbook
+     * @param \DateTime|string|null $newCheckbookPaymentDate payment date for this checkbook
      * @param string $newCheckbookReferenceNum reference number for this checkbook
-     * @param string $newcheckbookVendor vendor name on checkbook
+     * @param string $newCheckbookVendor vendor name on checkbook
      * @throws \InvalidArgumentException if data types are not valid
-     * @throws \RangeException if data values are out of bounds (to long, negative integers)
-     * @throw \TypeError if data types violate type
-     * @throw \Exception if some other exception occurs
-     **/
-    public function __construct(int $newCheckbookId = null, string $newCheckbookInvoiceAmount, string $newCheckbookInvoiceDate, string $newCheckbookInvoiceNum, string $newCheckbookPaymentDate, string $newCheckbookReferenceDate, string $newCheckbookVendor)
+     * @throws \TypeError if data types violate type hints
+     * @throws \TypeError if data types violate type
+     * @throws \Exception if some other exception occurs
+     */
+    public function __construct(int $newCheckbookId = null, string $newCheckbookInvoiceAmount, string $newCheckbookInvoiceDate, string $newCheckbookInvoiceNum, string $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor)
     {
         try{
             $this->setCheckbookId($newCheckbookId);
@@ -59,7 +59,7 @@ class Checkbook implements \JsonSerializable {
             $this->setCheckbookInvoiceDate($newCheckbookInvoiceDate);
             $this->setCheckbookInvoiceNum($newCheckbookInvoiceNum);
             $this->setCheckbookPaymentDate($newCheckbookPaymentDate);
-            $this->setCheckbookReferenceNum($newCheckbookReferenceDate);
+            $this->setCheckbookReferenceNum($newCheckbookReferenceNum);
             $this->setCheckbookVendor($newCheckbookVendor);
         } catch (\InvalidArgumentException $invalidArgument){
             //**rethrow the exception to the caller */
@@ -71,6 +71,7 @@ class Checkbook implements \JsonSerializable {
             //**rethrow the exception to the caller**//
             throw(new\TypeError($typeError));
         } catch (\Exception $exception) {
+            // rethrow exception to the caller
             throw(new\Exception($exception->getMessage(), 0, $exception));
         }
     }
