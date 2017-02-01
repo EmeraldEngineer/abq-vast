@@ -59,7 +59,7 @@ class Checkbook implements \JsonSerializable {
             $this->setCheckbookInvoiceDate($newCheckbookInvoiceDate);
             $this->setCheckbookInvoiceNum($newCheckbookInvoiceNum);
             $this->setCheckbookPaymentDate($newCheckbookPaymentDate);
-            $this->setCheckbookReferenceDate($newCheckbookReferenceDate);
+            $this->setCheckbookReferenceNum($newCheckbookReferenceDate);
             $this->setCheckbookVendor($newCheckbookVendor);
         } catch (\InvalidArgumentException $invalidArgument){
             //**rethrow the exception to the caller */
