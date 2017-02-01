@@ -96,12 +96,12 @@ class Criteria implements \JsonSerializable {
 	}
 	/**
 	 * mutator method for criteriaFieldId
-	 * @param int newCriteriaFieldId
+	 * @param int $newCriteriaFieldId
 	 * @throws \RangeException if $newCriteriaFieldId is not positive
 	 * @throws \TypeError if $newCriteriaFieldId is not an integer
 	 **/
 	public function setCriteriaFieldId(int $newCriteriaFieldId) {
-		if($setCriteriaFieldId <= 0) {
+		if($newCriteriaFieldId <= 0) {
 			throw(new \RangeException("criteriaFieldId is not positive"));
 		}
 		$this->criteriaFieldId = $newCriteriaFieldId;
@@ -120,7 +120,7 @@ class Criteria implements \JsonSerializable {
 	 * @throws \TypeError if $newCriteriaShareId is not an integer
 	 **/
 	public function setCriteriaShareId(int $newCriteriaShareId) {
-		if($setCriteriaShareId <=0) {
+		if($newCriteriaShareId <=0) {
 			throw(new \RangeException("criteriaShareId is not positive"));
 		}
 		$this->criteriaShareId = $newCriteriaShareId;
@@ -149,7 +149,7 @@ class Criteria implements \JsonSerializable {
 		$this->criteriaOperator = $newCriteriaOperator;
 	}
 	/**
-	 * accesor method for criteriaValue
+	 * accessor method for criteriaValue
 	 **/
 	public function getCriteriaValue(){
 		return($this->criteriaValue);
