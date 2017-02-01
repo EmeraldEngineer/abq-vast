@@ -110,7 +110,7 @@ class Criteria implements \JsonSerializable {
 	 * Accessor method for criteriaShareId
 	 * @return int value of criteriaShareId
 	 **/
-	public function getCriteriaShareId(){
+	public function getCriteriaShareId() {
 		return($this->criteriaShareId);
 	}
 	/**
@@ -128,7 +128,7 @@ class Criteria implements \JsonSerializable {
 	/**
 	 * accessor method for criteriaOperator
 	 **/
-	public function getCriteriaOperator(){
+	public function getCriteriaOperator() {
 		return($this->criteriaOperator);
 	}
 	/**
@@ -151,7 +151,7 @@ class Criteria implements \JsonSerializable {
 	/**
 	 * accessor method for criteriaValue
 	 **/
-	public function getCriteriaValue(){
+	public function getCriteriaValue() {
 		return($this->criteriaValue);
 	}
 	/**
@@ -166,7 +166,7 @@ class Criteria implements \JsonSerializable {
 		}
 		$this->criteriaValue = $newCriteriaValue;
 	}
-}
+
 
 /**
  * inserts criteria into mySQL
@@ -178,7 +178,7 @@ class Criteria implements \JsonSerializable {
 
 public function insert(\PDO $pdo) {
 	// enforce criteriaId is null
-	if($this->criteriaId !==null){
+	if($this->criteriaId !==null) {
 		throw(new \PDOException("not a new criteria"));
 	}
 	/**
@@ -193,4 +193,5 @@ public function insert(\PDO $pdo) {
 	**/
 	$parameters = ["criteriaId" => $this->criteriaId, "criteriaFieldId" => $this->criteriaFieldId, "criteriaShareId" => $this->criteriaShareId, "criteriaOperator" => $this->criteriaOperator, "criteriaValue" => $this->criteriaValue];
 	
+	}
 }
