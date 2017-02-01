@@ -233,14 +233,14 @@ class Share {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $shareId share id to search by
-	 * @return \SplFixedArray SplFixedArray of Share found
+	 * @return Share|null Share found or null if not found
 	 * @throws \PDOException when my SQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
 	public static function getShareByShareId(\PDO $pdo, int $shareId) {
 		// sanitize the share id before searching
 		if($shareId <= 0) {
-			throw(new \RangeException("share id must be positive"));
+			throw(new \RangeException("share id is not positive"));
 		}
 
 		// create query template
@@ -251,21 +251,19 @@ class Share {
 		$parameters = ["shareId" => $shareId];
 		$statement->execute($parameters);
 
-		//build and array of shares
-		$shares = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$share = new Share($row["shareId"], $row["shareImage"], $row[shareUrl]);
-				$shares[$shares->key()] = $share;
-				$shares->next();
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
+		//grab the share from mySQL
+		try {
+			$share = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$share = new Share($row["shareId"], $row["shareImage"], $row["shareUrl"]);
 			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
-		return($shares);
-
+		return ($share);
 	}
 
 
