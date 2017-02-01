@@ -1,4 +1,7 @@
 <?php
+namespace Edu\Cnm\Abqvast;
+
+require_once("autoload.php");
 /**
  * checkbook class'
  * this will be the class checkbook attributes and entities.
@@ -7,6 +10,7 @@
  */
 
 class Checkbook implements \JsonSerializable {
+    use ValidateDate;
     /**
      * id for checkbook; this is the primary key
      * @var int $checkbookId
