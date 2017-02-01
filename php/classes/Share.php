@@ -265,6 +265,4 @@ class Share {
 		}
 		return ($share);
 	}
-
-
 }
