@@ -167,4 +167,29 @@ class Criteria implements \JsonSerializable {
 		$this->criteriaValue = $newCriteriaValue;
 	}
 }
-// this is a change
+
+/**
+ * inserts criteria into mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not a PDO connection object
+ **/
+
+public function insert(\PDO $pdo) {
+	// enforce criteriaId is null
+	if($this->criteriaId !==null){
+		throw(new \PDOException("not a new criteria"));
+	}
+	/**
+	 * create query template
+	**/
+	$query = "insert INTO criteria(criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue) VALUES(:criteriaId, :criteriaFieldId, :criteriaShareId, :criteriaOperator, :criteriaValue):;
+	$statement = $pdo->prepare($query);
+	
+	/**
+	* bind the member variables to the place holders
+	**/
+	$parameters = ["criteriaId" => $this->criteriaId, "criteriaFieldId" => $this->criteriaFieldId, "criteriaShareId" => $this->criteriaShareId, "criteriaOperator" => $this->criteriaOperator, "criteriaValue" => $this->criteriaValue];
+	
+}
