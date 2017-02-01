@@ -1,70 +1,70 @@
 <?php
-namespace Edu\cnm\vmeza3\DataDesign;
-
 /**
- *checkbook class
- *this will be the class for checkbook
- *@author Valente Meza <vmeza3@cnm.edu>
- *@version 3.2.0*/
+ * checkbook class'
+ * this will be the class checkbook attributes and entities.
+ * @author Valente Meza <vmeza3@cnm.edu>
+ * @version 3.2.0
+ */
 
 class Checkbook implements \JsonSerializable {
     /**
-    id for checkbook; this is the primary key
-    @var int $checkbookId
-     */
+     * id for checkbook; this is the primary key
+     * @var int $checkbookId
+     **/
     private $checkbookId;
     /**
-     *Vendor for checkbook
-     */
-    private $checkbookVendor;
+     * Invoice amount for checkbook
+     **/
+    private $checkbookInvoiceAmount;
     /**
-     *Reference Number for checkbook
-     */
-    private $checkbookReferenceNum;
-    /**
-     *Invoice number for checkbook
-     */
-    private $checkbookInvoiceNum;
-    /**
-     *Invoice Date for checkbook
-     */
+     * Invoice date for checkbook
+     **/
     private $checkbookInvoiceDate;
     /**
-     *Payment Date for checkbook
-     */
-    private $checkbookPaymenDate;
+     * Invoice Number for checkbook
+     **/
+    private $checkbookInvoiceNum;
     /**
-     * Invoice amount for checkbook
-     */
-    private $checkbookInvoiceAmount;
+     * Payment Date for checkbook
+     **/
+    private $checkbookPaymentDate;
+    /**
+     * Reference number for checkbook
+     **/
+    private $checkbookReferenceNum;
+    /**
+     * Vendor for checkbook
+     **/
+    private $checkbookVendor;
 
     /**
      * constructor for this checkbook
      * @param int $newCheckbookId id of this checkbook
-     * @param string $newcheckbookVendor vendor name on checkbook
-     * @param string $newCheckbookReferenceNum reference number for this checkbook
-     * @param string $newCheckbookInvoiceNum invoice number for this checkbook
-     * @param string $newCheckbookInvoiceDate invoice date for this checkbook
-     * @param string $newCheckbookPaymentDate payment date for this checkbook
      * @param string $newCheckbookInvoiceAmount invoice amount for this checkbook
+     * @param string $newCheckbookInvoiceDate invoice date for this checkbook
+     * @param string $newCheckbookInvoiceNum invoice number for this checkbook
+     * @param string $newCheckbookPaymentDate payment date for this checkbook
+     * @param string $newCheckbookReferenceNum reference number for this checkbook
+     * @param string $newcheckbookVendor vendor name on checkbook
      * @throws \InvalidArgumentException if data types are not valid
      * @throws \RangeException if data values are out of bounds (to long, negative integers)
      * @throw \TypeError if data types violate type
      * @throw \Exception if some other exception occurs
      **/
-    public function __construct(int $newCheckbookId = null, string $newCheckbookVendor, string $newCheckbookReferenceNum, string $newCheckbookInvoiceNum, string $newCheckbookInvoiceDate, string $newCheckbookPaymentDate, string $newCheckbookInvoiceAmount) {
+    public function __construct(int $newCheckbookId = null, string $newCheckbookInvoiceAmount, string $newCheckbookInvoiceDate, string $newCheckbookInvoiceNum, string $newCheckbookPaymentDate, string $newCheckbookReferenceDate, string $newCheckbookVendor)
+    {
         try{
             $this->setCheckbookId($newCheckbookId);
-            $this->setCheckbookVendor($newCheckbookVendor);
-            $this->setCheckbookReferenceNum($newCheckbookReferenceNum);
-            $this->setCheckbookInvoiceNum($newCheckbookInvoiceNum);
-            $this->setCheckbookInvoiceDate($newCheckbookInvoiceDate);
-            $this->setChechbookPaymentDate($newCheckbookPaymentDate);
             $this->setCheckbookInvoiceAmount($newCheckbookInvoiceAmount);
-        } catch (\InvalidArgumentException $invalidArgument) {
-            //** rethrow the exception to the caller */
+            $this->setCheckbookInvoiceDate($newCheckbookInvoiceDate);
+            $this->setCheckbookInvoiceNum($newCheckbookInvoiceNum);
+            $this->setCheckbookPaymentDate($newCheckbookPaymentDate);
+            $this->setCheckbookReferenceDate($newCheckbookReferenceDate);
+            $this->setCheckbookVendor($newCheckbookVendor);
+        } catch (\InvalidArgumentException $invalidArgument){
+            //**rethrow the exception to the caller */
             throw(new\InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-        } catch(\RangeException $range){
+        }  catch(\RangeException $range){
             //** rethrow the exception to the caller**/
             throw(new\RangeException($range->getMessage(), 0, $range));
         } catch (\TypeError $typeError) {
@@ -102,58 +102,65 @@ class Checkbook implements \JsonSerializable {
         }
         $this->checkbookId = $newCheckbookId;
     }
-
     /**
-     * accessor method for Vendor content
-     * @return string value of vendor content
+     * accessor method for Invoice amount
+     * @return string value of invoice amount
      **/
-    public function getCheckbookVendor()
+    public function getCheckbookInvoiceAmount()
     {
-        return ($this->checkbookVendor);
+        return($this->checkbookInvoiceAmount);
     }
     /**
-     * mutator method for vendor content
-     * @param string $newCheckbookVendor
-     * @throws \InvalidArgumentException if $newCheckbookVendor is not a string or insecure
-     * @throws \RangeException if $newCheckbookVendor is not a to long
-     * @throws \TypeError if $newCheckbookVendor is not a string
-     **/
-    public function setCheckbookVendor(string $newCheckbookVendor){
-        /**verify vendor is secure */
-        $newCheckbookVendor = filter_var($newCheckbookVendor, FILTER_SANITIZE_STRING);
-        if(empty($newCheckbookVendor) === true) {
-            throw(new \InvalidArgumentException("vendor content is empty or insecure"));
-        }
-        /**store the vendor cotent**/
-        $this->checkbookVendor = $newCheckbookVendor;
-    }
-    /**
-     * accessor method for Reference Number
-     * @return string of Reference number content
-     **/
-    public function getCheckbookReferenceNum()
-    {
-        return ($this->checkbookReferenceNum);
-    }
-    /** mutator method for reference number
-     * @param string $newCheckbookReferenceNum
-     *@throws \InvalidArgumentException if $newCheckbookReferenceNum is insecure
-     * @throws \RangeException if $newCheckbookReferenceNum is > 82
-     * @throws \TypeError if $newCheckbookReferenceNum is not a string
+     * mutator method for invoice amount
+     * @param string $newCheckbookInvoiceAmount
+     * @throws \InvalidArgumentException if $newCheckbookInvoiceAmount is not a string or a insecure
+     * @throws \RangeException if $newCheckbookInvoiceAmount is not to long
+     * @throws \TypeError if $newCheckbook is to long
      */
-    public function setCheckbookReferenceNum (string $newCheckbookReferenceNum)
+    public function setCheckbookInvoiceAmount( string $newCheckbookInvoiceAmount)
     {
-        //** verify the reference number is secure */
-        $newCheckbookReferenceNum = filter_var($newCheckbookReferenceNum, FILTER_SANITIZE_STRING);
-        if(empty($newCheckbookReferenceNum) === true){
-            throw(new \InvalidArgumentException("Reference number is empty or insecure"));
+        //**verify the invoice amount is secure */
+        $newCheckbookInvoiceAmount = filter_var($newCheckbookInvoiceAmount, FILTER_SANITIZE_NUMBER_FLOAT);
+        if(empty($newCheckbookInvoiceAmount) === true){
+            throw(new \InvalidArgumentException("Invoice amount is empty or insecure"));
         }
-        /** verify the Reference number will fit in the database **/
-        if (strlen($newCheckbookReferenceNum) > 42) {
-            throw(new \RangeException("Reference number is to long"));
+        //** verify the invoice amount will fit in the data base */
+        if (strlen($newCheckbookInvoiceAmount)){
+            throw(new \RangeException("Invoice to lone"));
         }
-        /** store reference number */
-        $this->checkbookReferenceNum = $newCheckbookReferenceNum;
+        //** store invoice amount */
+        $this->checkbookInvoiceAmount = $newCheckbookInvoiceAmount;
+    }
+    /**
+     * accessor method for Invoice Date
+     *
+     * @return \DateTime value of invoice date
+     **/
+    public function getCheckbookInvoiceDate(){
+        return($this->checkbookInvoiceDate);
+    }
+    /**
+     * mutator method for invoice date
+     *
+     * @param \DateTime|string|null $newCheckbookInvoiceDate invoice date as a DateTime object or string (or null to load the current time)
+     * @throws \InvalidArgumentException if $newCheckbookInvoiceDate is not a valid object or string
+     * @throws \RangeException if $newCheckbookInvoiceDate is a date that does not exist
+     **/
+    public function setCheckbookInvoiceDate($newCheckbookInvoiceDate = null){
+        // base case: if the date is null, use the current date and time
+        if($newCheckbookInvoiceDate === null){
+            $this->checkbookInvoiceDate = new \DateTime();
+            return;
+        }
+        // store invoice date
+        try {
+            $newCheckbookInvoiceDate = self::validateDateTime($newCheckbookInvoiceDate);
+        } catch(\InvalidArgumentException $invalidArgument){
+            throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+        } catch(\RangeException $range){
+            throw(new \RangeException($range->getMessage(), 0, $range));
+        }
+        $this->checkbookInvoiceDate =$newCheckbookInvoiceDate;
     }
     /**
      * accessor method for Invoice Number
@@ -182,5 +189,36 @@ class Checkbook implements \JsonSerializable {
         }
         /** store the Invoice number in database */
         $this->checkbookInvoiceNum = $newCheckbookInvoiceNum;
+    }
+    /**
+     * accessor method for checkbook payment date
+     *
+     * @return \DateTime value of payment date
+     **/
+    public function getCheckbookPaymentDate(){
+        return($this->checkbookPaymentDate);
+    }
+    /**
+     * mutator method for payment date
+     *
+     * @param \DateTime|string|null $newCheckbookPaymentDate payment date as a DateTime object or string (or null to load the current time)
+     * @throws \InvalidArgumentException if $newCheckbookPaymentDate payment date as a DateTime object or string
+     * @throws \RangeException if $newCheckbookPaymentDate is a date that does not exist
+     **/
+    public function setCheckbookPaymentDate($newCheckbookPaymentDate = null){
+        // base case: if the date is null, use the current date and time
+        if($newCheckbookPaymentDate === null){
+            $this->checkbookPaymentDate = new \DateTime();
+            return;
+        }
+        // store the Payment Date
+        try{
+            $newCheckbookPaymentDate = self ::validateDateTime($newCheckbookPaymentDate);
+        } catch(\InvalidArgumentException $invalidArgument){
+            throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+        } catch(\RangeException $range){
+            throw(new \RangeException($range->getMessage(), 0, $range));
+        }
+        $this->checkbookPaymentDate = $newCheckbookPaymentDate;
     }
 }
