@@ -11,7 +11,7 @@ require_once("autoload.php");
  * @version
  *
  **/
-class Share {
+class Share implements \JsonSerializable {
 	/**
 	 * id for this Share; this is Id references criteriaShareId and is unique
 	 * @var int $shareId
@@ -264,5 +264,15 @@ class Share {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		return ($share);
+	}
+
+		/**
+		 * formats the state variable for JSON serialization
+		 *
+		 * @return array resulting state variables to serialize
+		 **/
+		public function jsonSerialize() {
+			$fields = get_object_vars($this);
+			return($fields);
 	}
 }
