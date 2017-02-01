@@ -46,7 +46,7 @@ class Checkbook implements \JsonSerializable {
      * @param int $newCheckbookId id of this checkbook
      * @param string $newCheckbookInvoiceAmount invoice amount for this checkbook
      * @param \DateTime|string|null $newCheckbookInvoiceDate invoice date for this checkbook
-     * @param string $newCheckbookInvoiceNum invoice number for this checkbook
+     * @param float $newCheckbookInvoiceNum invoice number for this checkbook
      * @param \DateTime|string|null $newCheckbookPaymentDate payment date for this checkbook
      * @param string $newCheckbookReferenceNum reference number for this checkbook
      * @param string $newCheckbookVendor vendor name on checkbook
@@ -122,10 +122,10 @@ class Checkbook implements \JsonSerializable {
      * @throws \RangeException if $newCheckbookInvoiceAmount is not to long
      * @throws \TypeError if $newCheckbook is to long
      */
-    public function setCheckbookInvoiceAmount( string $newCheckbookInvoiceAmount)
+    public function setCheckbookInvoiceAmount(float $newCheckbookInvoiceAmount)
     {
         //**verify the invoice amount is secure */
-        $newCheckbookInvoiceAmount = filter_var($newCheckbookInvoiceAmount, FILTER_SANITIZE_NUMBER_FLOAT);
+        $newCheckbookInvoiceAmount = filter_var($newCheckbookInvoiceAmount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         if(empty($newCheckbookInvoiceAmount) === true){
             throw(new \InvalidArgumentException("Invoice amount is empty or insecure"));
         }
@@ -277,5 +277,29 @@ class Checkbook implements \JsonSerializable {
         }
         /**store the vendor cotent**/
         $this->checkbookVendor = $newCheckbookVendor;
+    }
+    /**
+     * inserts this checkbook into mySQL
+     *
+     * @param \PDO $pdo PDO connection object
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError if $pdo is not a PDO connection object
+     **/
+    public function insert(\PDO $pdo){
+        // enforce the checkbookId is null (i.e., dont insert a checkbook that already exists)
+        if($this->checkbookId !==null){
+            throw(new \PDOException("not a new checkbook"));
+        }
+
+        // create query template
+        $query = "Insert INTO checkbook(checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor) VALUES(:checkbookId, :checkbookInvoiceAmount, :checkbookInvoiceDate, :checkbookInvoiceNum, :checkbookPaymentDate, :checkbookReferenceNum, :checkbookVendor)";
+        $statement = $pdo->prepare($query);
+
+        //bind the member variables to the place holders in the template
+        $formattedDate = $this->checkbookInvoiceDate->format("Y-m-d H:i:s");
+        $parameters = ["checkbookId" => $this->checkbookId, "checkbookInvoiceAmount" => $this->checkbookInvoiceAmount, "checkbookInvoiceDate" => $formattedDate, "checkbookInvoiceNum" => $this->checkbookInvoiceNum, "checkbookPaymentDate" => $formattedDate, "checkbookReferenceNum" => $this->checkbookReferenceNum, "checkbookVendor" => $this->checkbookVendor];
+        $statement->execute($parameters);
+        // update the null checkbookId with what mySQL just gave us
+        $this->checkbookId = intval($pdo->lastInserId());
     }
 }
