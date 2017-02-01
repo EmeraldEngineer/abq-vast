@@ -183,6 +183,7 @@ public function insert(\PDO $pdo) {
 	}
 	/**
 	 * create query template
+	 * This is a change
 	**/
 	$query = "insert INTO criteria(criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue) VALUES(:criteriaId, :criteriaFieldId, :criteriaShareId, :criteriaOperator, :criteriaValue):;
 	$statement = $pdo->prepare($query);
