@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\sfinkel\Share;
+namespace Edu\Cnm\Abqvast;
 
 require_once("autoload.php");
 
@@ -27,13 +27,14 @@ class Share {
 	 * @var string $shareUrl
 	 **/
 	private $shareUrl;
+
 	/**
 	 * constructor for this Share
 	 *
 	 * @param int|null $newShareId id of this Share or null is a new Share
-	 *	@param string $newShareUrl string containing the url of the Share
+	 * @param string $newShareUrl string containing the url of the Share
 	 * @param string $newShareImage string containing the image name of Share
-	 *	@throws \InvalidArgumentException if data types are not valid
+	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g. strings too long, negative integers)
 	 * @throws \TypeError if data violates type hints
 	 * @throws \Exception if some other exception occurs
@@ -43,29 +44,29 @@ class Share {
 			$this->setShareId($newShareId);
 			$this->setShareUrl($newShareUrl);
 			$this->setShareImage($newShareImage);
-		}	catch(\InvalidArgumentException $invalidArgument) {
+		} catch(\InvalidArgumentException $invalidArgument) {
 
 			// rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-		}	catch(\RangeException $range) {
+		} catch(\RangeException $range) {
 			// rethrow the exception to the caller
 			throw(new \RangeException($range->getMessage(), 0, $range));
 		} catch(\TypeError $typeError) {
 			// rethrow the exception to the caller
 			throw(new \TypeError($typeError->getMessage(), 0, $typeError));
-		}	catch(\Exception $exception) {
+		} catch(\Exception $exception) {
 			// rethrow the exception to the caller
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
 	}
 
 	/**
- 	* accessor method for share id
- 	*
- 	* @return int|null value of share id
- 	**/
+	 * accessor method for share id
+	 *
+	 * @return int|null value of share id
+	 **/
 	public function getShareId() {
-		return($this->shareId);
+		return ($this->shareId);
 	}
 
 	/**
@@ -97,7 +98,7 @@ class Share {
 	 * @return string value of share image
 	 **/
 	public function getShareImage() {
-		return($this->shareImage);
+		return ($this->shareImage);
 	}
 
 	/**
@@ -132,7 +133,7 @@ class Share {
 	 *
 	 **/
 	public function getShareUrl() {
-		return($this->shareUrl);
+		return ($this->shareUrl);
 	}
 
 	/**
@@ -183,6 +184,7 @@ class Share {
 		//update the null shareId with what mySQL just gave us
 		$this->shareId = intval($pdo->lastInsertId());
 	}
+
 	/**
 	 * deletes this Share from mySQL
 	 *
@@ -212,6 +214,58 @@ class Share {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function update(\PDO $pdo) {
-		//enforce the shareId
+		//enforce the shareId is not null(i.e., don't update the share that hasn't been inserted)
+		if($this->shareId === null) {
+			throw(new \PDOException("unable to update a share that does not exist"));
+		}
+
+		//create a query template
+		$query = "UPDATE share SET shareId = :shareId, shareImage = :shareImage, shareUrl = shareUrl WHERE shareId = :shareId";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$parameters = ["shareId" => $this->shareId, "shareImage" => $this->shareImage, "shareUrl" => $this->shareUrl];
+		$statement->execute($parameters);
 	}
+
+	/**
+	 * gets Share by shareId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $shareId share id to search by
+	 * @return \SplFixedArray SplFixedArray of Share found
+	 * @throws \PDOException when my SQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getShareByShareId(\PDO $pdo, int $shareId) {
+		// sanitize the share id before searching
+		if($shareId <= 0) {
+			throw(new \RangeException("share id must be positive"));
+		}
+
+		// create query template
+		$query = "SELECT shareId, shareImage, shareUrl FROM share WHERE shareId = :shareId";
+		$statement = $pdo->prepare($query);
+
+		//bind the share id to the place holder in the template
+		$parameters = ["shareId" => $shareId];
+		$statement->execute($parameters);
+
+		//build and array of shares
+		$shares = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$share = new Share($row["shareId"], $row["shareImage"], $row[shareUrl]);
+				$shares[$shares->key()] = $share;
+				$shares->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($shares);
+	}
+
+
 }
