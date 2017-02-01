@@ -65,7 +65,7 @@ class Criteria implements \JsonSerializable {
 	 * @return int value for criteriaId
 	 **/
 	public function getCriteriaId() {
-		return ($this->profileId);
+		return ($this->criteriaId);
 	}
 	/**
 	 * mutator method for criteriaId
@@ -86,5 +86,84 @@ class Criteria implements \JsonSerializable {
 		//convert and store the criteriaId
 		$this->criteriaId = $setCriteriaId;
 	}
+
+	/**
+	 * accessor method for criteriaFieldId
+	 * @return int value for criteriaFieldId
+	 **/
+	public function getCriteriaFieldId() {
+		return ($this->criteriaFieldId);
+	}
+	/**
+	 * mutator method for criteriaFieldId
+	 * @param int newCriteriaFieldId
+	 * @throws \RangeException if $newCriteriaFieldId is not positive
+	 * @throws \TypeError if $newCriteriaFieldId is not an integer
+	 **/
+	public function setCriteriaFieldId(int $newCriteriaFieldId) {
+		if($setCriteriaFieldId <= 0) {
+			throw(new \RangeException("criteriaFieldId is not positive"));
+		}
+		$this->criteriaFieldId = $newCriteriaFieldId;
+	}
+	/**
+	 * Accessor method for criteriaShareId
+	 * @return int value of criteriaShareId
+	 **/
+	public function getCriteriaShareId(){
+		return($this->criteriaShareId);
+	}
+	/**
+	 * mutator for criteriaShareId
+	 * @param int $newCriteriaShareId
+	 * @throws \RangeException if $newCriteriaShareId is not positive
+	 * @throws \TypeError if $newCriteriaShareId is not an integer
+	 **/
+	public function setCriteriaShareId(int $newCriteriaShareId) {
+		if($setCriteriaShareId <=0) {
+			throw(new \RangeException("criteriaShareId is not positive"));
+		}
+		$this->criteriaShareId = $newCriteriaShareId;
+	}
+	/**
+	 * accessor method for criteriaOperator
+	 **/
+	public function getCriteriaOperator(){
+		return($this->criteriaOperator);
+	}
+	/**
+	 * mutator for criteria Operator
+	 * @param string $newCriteriaOperator
+	 * @throws \RangeException if $newCriteriaOperator is > 4 characters
+	 * @throws \TypeError if $newCriteriaOperator is not a string
+	 **/
+	public function setCriteriaOperator(string $newCriteriaOperator) {
+		$newCriteriaOperator = trim($newCriteriaOperator);
+		$newCriteriaOperator = filter_var($newCriteriaOperator, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCriteriaOperator) === true) {
+			throw(new \InvalidArgumentException("operator can't be empty or insecure"));
+		}
+		if(strlen($newCriteriaOperator) > 4) {
+			throw(new \RangeException("operator cannot be greater than four characters"));
+		}
+		$this->criteriaOperator = $newCriteriaOperator;
+	}
+	/**
+	 * accesor method for criteriaValue
+	 **/
+	public function getCriteriaValue(){
+		return($this->criteriaValue);
+	}
+	/**
+	 * mutator for criteriaValue
+	 * @param int $newCriteriaValue
+	 * @throw \RangeException if $newCriteriaValue is not positive
+	 * @throw \TypeError if $newCriteriaValue is not an integer
+	 **/
+	public function setCriteriaValue(int $newCriteriaValue) {
+		if($newCriteriaValue <= 0) {
+			throw(new RangeException("criteriaValue is not positive"));
+		}
+		$this->criteriaValue = $newCriteriaValue;
+	}
 }
-// This is a change!
