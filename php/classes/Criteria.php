@@ -167,3 +167,4 @@ class Criteria implements \JsonSerializable {
 		$this->criteriaValue = $newCriteriaValue;
 	}
 }
+// this is a change
