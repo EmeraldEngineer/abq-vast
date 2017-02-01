@@ -331,6 +331,17 @@ class Checkbook implements \JsonSerializable {
      * @throws \TypeError if $pdo is not a PDO connection object
      **/
     public function update(\PDO $pdo){
-
+        // enforce the checkbookId is not null (i.e., don't update a checkbook that hasn't been inserted)
+        if($this->checkbookId === null){
+            throw(new \PDOException("unable to update a checkbook that does not exist"));
+        }
+        // create query template
+        $query = "UPDATE checkbook SET checkbookId = :checkbookId, checkbookInvoiceAmount = :checkbookInvoiceAmount, checkbookInvoiceDate = :checkbookInvoiceDate, checkbookInvoiceNum = :checkbookInvoiceNum, checkbookPaymentDate = :checkbookPaymentDate, checkbookReferenceNum = :checkbookReferenceNum, checkbookVendor = :checkbookVendor WHERE checkbookId = :checkbookId";
+        $statement = $pdo->prepare($query);
+        // bind the member variables to the place holders in the template
+        $formattedDate1 = $this->checkbookInvoiceDate->format("Y-m-d H:i:s");
+        $formattedDate2 = $this->checkbookPaymentDate->format("Y-m-d H:i:s");
+        $parameters = ["checkbookId" => $this->checkbookId, "checkbookInvoiceAmount" => $this->checkbookInvoiceAmount, "checkbookInvoiceDate" => $formattedDate1, "checkbookInvoiceNum" => $this->checkbookInvoiceNum, "checkbookPaymentDate" => $formattedDate2, "checkbookReferenceNum" => $this ->checkbookReferenceNum, "checkbookVendor" => $this->checkbookVendor];
+        $statement->execute($parameters);
     }
 }
