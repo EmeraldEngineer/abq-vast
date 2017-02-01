@@ -176,22 +176,22 @@ class Criteria implements \JsonSerializable {
  * @throws \TypeError if $pdo is not a PDO connection object
  **/
 
-public function insert(\PDO $pdo) {
-	// enforce criteriaId is null
-	if($this->criteriaId !==null) {
-		throw(new \PDOException("not a new criteria"));
-	}
-	/**
-	 * create query template
-	 * This is a change again
-	**/
-	$query = "insert INTO criteria(criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue) VALUES(:criteriaId, :criteriaFieldId, :criteriaShareId, :criteriaOperator, :criteriaValue):;
+	public function insert(\PDO $pdo) {
+		// enforce criteriaId is null
+		if($this->criteriaId !==null) {
+			throw(new \PDOException("not a new criteria"));
+		}
+		/**
+		 * create query template
+		 * This is a change again
+		 **/
+		$query = "insert INTO criteria(criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue) VALUES(:criteriaId, :criteriaFieldId, :criteriaShareId, :criteriaOperator, :criteriaValue):;
 	$statement = $pdo->prepare($query);
 	
 	/**
 	* bind the member variables to the place holders
 	**/
-	$parameters = ["criteriaId" => $this->criteriaId, "criteriaFieldId" => $this->criteriaFieldId, "criteriaShareId" => $this->criteriaShareId, "criteriaOperator" => $this->criteriaOperator, "criteriaValue" => $this->criteriaValue];
+		$parameters = ["criteriaId" => $this->criteriaId, "criteriaFieldId" => $this->criteriaFieldId, "criteriaShareId" => $this->criteriaShareId, "criteriaOperator" => $this->criteriaOperator, "criteriaValue" => $this->criteriaValue];
 	
 	}
 }
