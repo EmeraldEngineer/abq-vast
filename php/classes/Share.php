@@ -265,6 +265,7 @@ class Share {
 			}
 		}
 		return($shares);
+
 	}
 
 
