@@ -258,8 +258,7 @@ class Checkbook implements \JsonSerializable {
      * accessor method for Vendor content
      * @return string value of vendor content
      **/
-    public function getCheckbookVendor()
-    {
+    public function getCheckbookVendor() {
         return ($this->checkbookVendor);
     }
     /**
@@ -269,9 +268,9 @@ class Checkbook implements \JsonSerializable {
      * @throws \RangeException if $newCheckbookVendor is not a to long
      * @throws \TypeError if $newCheckbookVendor is not a string
      **/
-    public function setCheckbookVendor(string $newCheckbookVendor){
+    public function setCheckbookVendor(string $newCheckbookVendor) {
         /**verify vendor is secure */
-        $newCheckbookVendor = filter_var($newCheckbookVendor, FILTER_SANITIZE_STRING);
+        $newCheckbookVendor = filter_var($newCheckbookVendor, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
         if(empty($newCheckbookVendor) === true) {
             throw(new \InvalidArgumentException("vendor content is empty or insecure"));
         }
