@@ -336,7 +336,7 @@ class Checkbook implements \JsonSerializable {
             throw(new \PDOException("Invoice amount is invalid"));
         }
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount CREATES checkbookInvoiceAmount";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount = :checkbookInvoiceAmount";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice amount to the place holder in the template
@@ -364,15 +364,16 @@ class Checkbook implements \JsonSerializable {
      * gets the checkbook by Invoice Date
      *
      * @param \PDO connection object
-     * @param Date $checkbookInvoiceDate
+     * @param \DateInterval $checkbookInvoiceDate
      * @return \SplFixedArray SplFixedArray of checkbooks found
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookInvoiceDate(\PDO $pdo, Date $checkbookInvoiceDate) {
-        // sanitize the description before searching
-        $checkbookInvoiceDate = trim($checkbookInvoiceDate);
-        $checkbookInvoiceDate = filter_var($checkbookInvoiceDate, FILTER_SANITIZE_STRING);
-        if (!Date::createFromFormat('d/m/Y', $checkbookInvoiceDate))
+    public static function getCheckbookByCheckbookInvoiceDate(\PDO $pdo, $checkbookInvoiceSunriseDate, $checkbookInvoiceSunsetDate) {
+        // one doesn't simply use dates without using ValidateDate
+
+        // I don't always write WHERE clauses, but when I do, reformat dates and use an AND operator
+
+        // just shutup and take my prepared statement
     }
 }
