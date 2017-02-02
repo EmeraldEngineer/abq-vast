@@ -55,8 +55,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \TypeError if data types violate type
      * @throws \Exception if some other exception occurs
      */
-    public function __construct(int $newCheckbookId = null, string $newCheckbookInvoiceAmount, string $newCheckbookInvoiceDate, string $newCheckbookInvoiceNum, string $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor)
-    {
+    public function __construct(int $newCheckbookId = null, string $newCheckbookInvoiceAmount, string $newCheckbookInvoiceDate, string $newCheckbookInvoiceNum, string $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
         try{
             $this->setCheckbookId($newCheckbookId);
             $this->setCheckbookInvoiceAmount($newCheckbookInvoiceAmount);
@@ -65,10 +64,10 @@ class Checkbook implements \JsonSerializable {
             $this->setCheckbookPaymentDate($newCheckbookPaymentDate);
             $this->setCheckbookReferenceNum($newCheckbookReferenceNum);
             $this->setCheckbookVendor($newCheckbookVendor);
-        } catch (\InvalidArgumentException $invalidArgument){
+        } catch (\InvalidArgumentException $invalidArgument) {
             //**rethrow the exception to the caller */
             throw(new\InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-        }  catch(\RangeException $range){
+        }  catch(\RangeException $range) {
             //** rethrow the exception to the caller**/
             throw(new\RangeException($range->getMessage(), 0, $range));
         } catch (\TypeError $typeError) {
@@ -83,8 +82,7 @@ class Checkbook implements \JsonSerializable {
     /** accessor method for checkbookId
      * @return int|null value of checkbook id
      **/
-    public function getCheckbookId()
-    {
+    public function getCheckbookId() {
         return ($this->checkbookId);
     }
 
@@ -94,9 +92,9 @@ class Checkbook implements \JsonSerializable {
      * @throws \RangeException if $newCheckbookId is not positive
      * @throws \TypeError if $newCheckbookId is not an integer
      **/
-    public function setCheckbookId(int $newCheckbookId = null){
+    public function setCheckbookId(int $newCheckbookId = null) {
         //**base case: if the checkbook is null
-        if ($newCheckbookId ===null){
+        if ($newCheckbookId ===null) {
             $this->checkbookId = null;
             return;
         }
@@ -109,10 +107,9 @@ class Checkbook implements \JsonSerializable {
     }
     /**
      * accessor method for Invoice amount
-     * @return string value of invoice amount
+     * @return float value of invoice amount
      **/
-    public function getCheckbookInvoiceAmount()
-    {
+    public function getCheckbookInvoiceAmount() {
         return($this->checkbookInvoiceAmount);
     }
     /**
@@ -129,7 +126,7 @@ class Checkbook implements \JsonSerializable {
      *
      * @return \DateTime value of invoice date
      **/
-    public function getCheckbookInvoiceDate(){
+    public function getCheckbookInvoiceDate() {
         return($this->checkbookInvoiceDate);
     }
     /**
@@ -139,18 +136,18 @@ class Checkbook implements \JsonSerializable {
      * @throws \InvalidArgumentException if $newCheckbookInvoiceDate is not a valid object or string
      * @throws \RangeException if $newCheckbookInvoiceDate is a date that does not exist
      **/
-    public function setCheckbookInvoiceDate($newCheckbookInvoiceDate = null){
+    public function setCheckbookInvoiceDate($newCheckbookInvoiceDate = null) {
         // base case: if the date is null, use the current date and time
-        if($newCheckbookInvoiceDate === null){
+        if($newCheckbookInvoiceDate === null) {
             $this->checkbookInvoiceDate = new \DateTime();
             return;
         }
         // store invoice date
         try {
             $newCheckbookInvoiceDate = self::validateDateTime($newCheckbookInvoiceDate);
-        } catch(\InvalidArgumentException $invalidArgument){
+        } catch(\InvalidArgumentException $invalidArgument) {
             throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-        } catch(\RangeException $range){
+        } catch(\RangeException $range) {
             throw(new \RangeException($range->getMessage(), 0, $range));
         }
         $this->checkbookInvoiceDate =$newCheckbookInvoiceDate;
@@ -159,8 +156,7 @@ class Checkbook implements \JsonSerializable {
      * accessor method for Invoice Number
      * @return string value of invoice number
      **/
-    public function getCheckbookInvoiceNum()
-    {
+    public function getCheckbookInvoiceNum() {
         return ($this->checkbookInvoiceNum);
     }
     /**
@@ -170,14 +166,14 @@ class Checkbook implements \JsonSerializable {
      * @throws \RangeException if $newCheckbookInvoiceNum is to long > 62
      * @throws \TypeError if $newCheckbookInvoiceNum
      **/
-    public function setCheckbookInvoiceNum(string $newCheckbookInvoiceNum){
+    public function setCheckbookInvoiceNum(string $newCheckbookInvoiceNum) {
         //** verify invoice number is secure */
         $newCheckbookInvoiceNum = filter_var($newCheckbookInvoiceNum, FILTER_SANITIZE_STRING);
-        if (empty($newCheckbookInvoiceNum) === true){
+        if (empty($newCheckbookInvoiceNum) === true) {
             throw(new \InvalidArgumentException("invoice number is empty or insecure"));
         }
         //** verify invoice number will fit in the database */
-        if(strlen($newCheckbookInvoiceNum) > 62){
+        if(strlen($newCheckbookInvoiceNum) > 62) {
             throw(new \RangeException("invoice number is to long"));
         }
         /** store the Invoice number in database */
@@ -188,7 +184,7 @@ class Checkbook implements \JsonSerializable {
      *
      * @return \DateTime value of payment date
      **/
-    public function getCheckbookPaymentDate(){
+    public function getCheckbookPaymentDate() {
         return($this->checkbookPaymentDate);
     }
     /**
@@ -198,9 +194,9 @@ class Checkbook implements \JsonSerializable {
      * @throws \InvalidArgumentException if $newCheckbookPaymentDate payment date as a DateTime object or string
      * @throws \RangeException if $newCheckbookPaymentDate is a date that does not exist
      **/
-    public function setCheckbookPaymentDate($newCheckbookPaymentDate = null){
+    public function setCheckbookPaymentDate($newCheckbookPaymentDate = null) {
         // base case: if the date is null, use the current date and time
-        if($newCheckbookPaymentDate === null){
+        if($newCheckbookPaymentDate === null) {
             $this->checkbookPaymentDate = new \DateTime();
             return;
         }
@@ -209,7 +205,7 @@ class Checkbook implements \JsonSerializable {
             $newCheckbookPaymentDate = self ::validateDateTime($newCheckbookPaymentDate);
         } catch(\InvalidArgumentException $invalidArgument){
             throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-        } catch(\RangeException $range){
+        } catch(\RangeException $range) {
             throw(new \RangeException($range->getMessage(), 0, $range));
         }
         $this->checkbookPaymentDate = $newCheckbookPaymentDate;
@@ -218,25 +214,23 @@ class Checkbook implements \JsonSerializable {
      * accessor method for Reference Number
      * @return string of Reference number content
      **/
-    public function getCheckbookReferenceNum()
-    {
+    public function getCheckbookReferenceNum() {
         return ($this->checkbookReferenceNum);
     }
     /** mutator method for reference number
      * @param string $newCheckbookReferenceNum
-     *@throws \InvalidArgumentException if $newCheckbookReferenceNum is insecure
+     * @throws \InvalidArgumentException if $newCheckbookReferenceNum is insecure
      * @throws \RangeException if $newCheckbookReferenceNum is > 42
      * @throws \TypeError if $newCheckbookReferenceNum is not a string
      */
-    public function setCheckbookReferenceNum (string $newCheckbookReferenceNum)
-    {
+    public function setCheckbookReferenceNum (string $newCheckbookReferenceNum) {
         //** verify the reference number is secure */
         $newCheckbookReferenceNum = filter_var($newCheckbookReferenceNum, FILTER_SANITIZE_STRING);
         if(empty($newCheckbookReferenceNum) === true){
             throw(new \InvalidArgumentException("Reference number is empty or insecure"));
         }
         /** verify the Reference number will fit in the database **/
-        if (strlen($newCheckbookReferenceNum) > 42) {
+        if (strlen($newCheckbookReferenceNum) > 42){
             throw(new \RangeException("Reference number is to long"));
         }
         /** store reference number */
@@ -272,9 +266,9 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError if $pdo is not a PDO connection object
      **/
-    public function insert(\PDO $pdo){
+    public function insert(\PDO $pdo) {
         // enforce the checkbookId is null (i.e., dont insert a checkbook that already exists)
-        if($this->checkbookId !==null){
+        if($this->checkbookId !==null) {
             throw(new \PDOException("not a new checkbook"));
         }
 
@@ -300,9 +294,9 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookId(\PDO $pdo, int $checkbookId){
+    public static function getCheckbookByCheckbookId(\PDO $pdo, int $checkbookId) {
         // sanitize the checkbookId before searching
-        if($checkbookId <= 0){
+        if($checkbookId <= 0) {
             throw(new \PDOException("checkbook id is not positive"));
         }
         // create query template
@@ -316,13 +310,45 @@ class Checkbook implements \JsonSerializable {
             $checkbookId = null;
             $statement->setFetchMode(\PDO::FETCH_ASSOC);
             $row = $statement->fetch();
-            if($row !==false){
+            if($row !==false) {
                 $checkbookId = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
             }
-        } catch(\Exception $exception){
+        } catch(\Exception $exception) {
             // if the row couldn't be converted, rethrow it
             throw(new \PDOException($exception->getMessage(), 0, $exception));
         }
         return($checkbookId);
+    }
+
+    /**
+     * gets the checkbook by Invoice Amount
+     *
+     * @param \PDO $pdo PDO connection object
+     * @param float $checkbookInvoiceAmount invoice amount to search for
+     * @return \SplFixedArray SplFixedArray of Checkbook found
+     * @throws \PDOException whe mySQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
+    public static function getCheckbookByCheckbookInvoiceAmount(\PDO $pdo, float $checkbookInvoiceAmount) {
+        // sanitize the description before searching
+        $checkbookInvoiceAmount = trim($checkbookInvoiceAmount);
+        if(empty($checkbookInvoiceAmount) === true) {
+            throw(new \PDOException("Invoice amount is invalid"));
+        }
+        // create query template
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount CREATES checkbookInvoiceAmount";
+        $statement = $pdo->prepare($query);
+
+        // bind the checkbook invoice amount to the place holder in th etemplate
+        $checkbookInvoiceAmount = "%checkbookInvoiceAmount%";
+        $parameters = ["checkbookInvoiceAmount" => $checkbookInvoiceAmount];
+        $statement->execute($parameters);
+
+        // build an array of checkbooks
+        $checkbooks = new \SplFixedArray($statement->rowCount());
+        $statement->setFetchMode(\PDO::FETCH_ASSOC);
+        while(($row = $statement->fetch() !== false)) {
+
+        }
     }
 }
