@@ -364,7 +364,8 @@ class Checkbook implements \JsonSerializable {
      * gets the checkbook by Invoice Date
      *
      * @param \PDO connection object
-     * @param \DateInterval $checkbookInvoiceDate
+     * @param \DateTime $checkbookInvoiceSunriseDate
+     * @param \DateTime $checkbookInvoiceSunsetDate
      * @return \SplFixedArray SplFixedArray of checkbooks found
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
