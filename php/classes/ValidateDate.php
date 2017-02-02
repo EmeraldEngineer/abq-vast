@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Abqvast;
+namespace Edu\Cnm\AbqVast;
 
 /**
  * Trait to Validate a mySQL Date
