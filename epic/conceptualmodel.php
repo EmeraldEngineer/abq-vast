@@ -54,7 +54,7 @@
             <a href="persona-adriana.php">Adriana</a>
             <a href="persona-maricela.php">Maricela</a>
             <a href="use-cases.php">Use Case</a>
-            <img src="../images/showmethemoneyERD.svg" />
+            <img src="../images/abqvastERD.svg" />
         </main>
     </body>
 </html>
