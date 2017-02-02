@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Abqvast;
+namespace Edu\Cnm\AbqVast;
 
 require_once("autoload.php");
 /**
@@ -117,22 +117,10 @@ class Checkbook implements \JsonSerializable {
     }
     /**
      * mutator method for invoice amount
-     * @param string $newCheckbookInvoiceAmount
-     * @throws \InvalidArgumentException if $newCheckbookInvoiceAmount is not a string or a insecure
-     * @throws \RangeException if $newCheckbookInvoiceAmount is not to long
+     * @param float $newCheckbookInvoiceAmount
      * @throws \TypeError if $newCheckbook is to long
      */
-    public function setCheckbookInvoiceAmount(float $newCheckbookInvoiceAmount)
-    {
-        //**verify the invoice amount is secure */
-        $newCheckbookInvoiceAmount = filter_var($newCheckbookInvoiceAmount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-        if(empty($newCheckbookInvoiceAmount) === true){
-            throw(new \InvalidArgumentException("Invoice amount is empty or insecure"));
-        }
-        //** verify the invoice amount will fit in the data base */
-        if (strlen($newCheckbookInvoiceAmount)){
-            throw(new \RangeException("Invoice to lone"));
-        }
+    public function setCheckbookInvoiceAmount(float $newCheckbookInvoiceAmount) {
         //** store invoice amount */
         $this->checkbookInvoiceAmount = $newCheckbookInvoiceAmount;
     }
@@ -237,7 +225,7 @@ class Checkbook implements \JsonSerializable {
     /** mutator method for reference number
      * @param string $newCheckbookReferenceNum
      *@throws \InvalidArgumentException if $newCheckbookReferenceNum is insecure
-     * @throws \RangeException if $newCheckbookReferenceNum is > 82
+     * @throws \RangeException if $newCheckbookReferenceNum is > 42
      * @throws \TypeError if $newCheckbookReferenceNum is not a string
      */
     public function setCheckbookReferenceNum (string $newCheckbookReferenceNum)
