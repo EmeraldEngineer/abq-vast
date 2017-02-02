@@ -153,15 +153,16 @@ class Share implements \JsonSerializable {
 		}
 
 		//verify the share url will fit into the database
-		if(strlen($newShareUrl) > 64) ;
-		throw(new \RangeException("Share URL is too long"));
+		if(strlen($newShareUrl) > 64) {
+			throw(new \RangeException("Share URL is too long"));
+		}
 
 		//store the new share url
 		$this->shareUrl = $newShareUrl;
 	}
 
 	/**
-	 *inserts this share image into mySQL
+	 * inserts this share image into mySQL
 	 *
 	 * @param \PDO $pdo PDO Connection object
 	 * @throws \PDOException when mySQL related errors occur
