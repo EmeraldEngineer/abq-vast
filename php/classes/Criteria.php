@@ -250,6 +250,9 @@ class Criteria implements \JsonSerializable {
 			throw(new \PDOException("criteria id is not positive"));
 		}
 		//create query template
-		$query = "SELECT criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue
+		$query = "SELECT criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue FROM criteria WHERE criteriaId = :criteriaId";
+		$statement = $pdo->prepare($query);
+		//bind the criteriaId to the place holder in the template
+		 
 	
 }
