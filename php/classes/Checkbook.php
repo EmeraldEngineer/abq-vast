@@ -339,7 +339,7 @@ class Checkbook implements \JsonSerializable {
         $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount CREATES checkbookInvoiceAmount";
         $statement = $pdo->prepare($query);
 
-        // bind the checkbook invoice amount to the place holder in th etemplate
+        // bind the checkbook invoice amount to the place holder in the template
         $checkbookInvoiceAmount = "%checkbookInvoiceAmount%";
         $parameters = ["checkbookInvoiceAmount" => $checkbookInvoiceAmount];
         $statement->execute($parameters);
@@ -348,7 +348,31 @@ class Checkbook implements \JsonSerializable {
         $checkbooks = new \SplFixedArray($statement->rowCount());
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch() !== false)) {
-
+            try {
+                $checkbook = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"]. $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbooks[$checkbooks->key()] = $checkbook;
+                $checkbooks->next();
+            } catch(\Exception $exception) {
+                // if the row couldn't be converted, rethrow it
+                throw(new \PDOException($exception->getMessage(), 0, $exception));
+            }
         }
+        return($checkbooks);
+    }
+
+    /**
+     * gets the checkbook by Invoice Date
+     *
+     * @param \PDO connection object
+     * @param Date $checkbookInvoiceDate
+     * @return \SplFixedArray SplFixedArray of checkbooks found
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
+    public static function getCheckbookByCheckbookInvoiceDate(\PDO $pdo, Date $checkbookInvoiceDate) {
+        // sanitize the description before searching
+        $checkbookInvoiceDate = trim($checkbookInvoiceDate);
+        $checkbookInvoiceDate = filter_var($checkbookInvoiceDate, FILTER_SANITIZE_STRING);
+        if (!Date::createFromFormat('d/m/Y', $checkbookInvoiceDate))
     }
 }
