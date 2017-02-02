@@ -181,17 +181,75 @@ class Criteria implements \JsonSerializable {
 		if($this->criteriaId !==null) {
 			throw(new \PDOException("not a new criteria"));
 		}
-		/**
-		 * create query template
+		/** create query template
 		 * This is a change again
 		 **/
-		$query = "insert INTO criteria(criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue) VALUES(:criteriaId, :criteriaFieldId, :criteriaShareId, :criteriaOperator, :criteriaValue):;
-	$statement = $pdo->prepare($query);
+		$query = "Insert INTO criteria(criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue) VALUES(:criteriaId, :criteriaFieldId, :criteriaShareId, :criteriaOperator, :criteriaValue):;
+		$statement = $pdo->prepare($query);
 	
 	/**
 	* bind the member variables to the place holders
 	**/
 		$parameters = ["criteriaId" => $this->criteriaId, "criteriaFieldId" => $this->criteriaFieldId, "criteriaShareId" => $this->criteriaShareId, "criteriaOperator" => $this->criteriaOperator, "criteriaValue" => $this->criteriaValue];
-	
+		$statement->execute($parameters);
+	//update the null criteriaId with what mySQL output
+		$this->criteriaId = intval($pdo->lastInsertId());
 	}
+	
+	//*
+	* deletes checkbook from mySQL
+	*@param \PDO $pdo PDO connection object
+	*@throws \PDOException when mySQL related errors occur
+	*@throws \TypeError if $pdo is not a PDO connection object
+	**/
+	public function delete(\PDO $pdo) {
+	// enforce the criteriaId is not null
+		if($this->criteriaId === null) {
+			throw(new \PDOException("unable to update a criteria that does not exist"));
+		}
+		//create query template
+		$query = "DELETE FROM criteria WHERE criteriaId = :criteriaId";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the place holder in the template
+		$paramenters = ["criteriaId" => $this->criteriaId];
+		$statement->execute($parameters);
+	}
+	
+	/**
+	* updates the criteria in mySQL
+	*@param \PDO $pdo PDO connection object
+	*@throws \PDOException when mySQL errors occur
+	*@throws \TypeError if $pdo is not a PDO connection object
+	**/
+	
+	public function update(\PDO $pdo) {
+		//enforce the criteriaId is not null (don't update a criteria that hasn't been inserted)
+		if($this->criteriaId === null) {
+			throw(new \PDOException("unable to update a criteria that does not exist"));
+		}
+		//create query template
+		$query = "UPDATE criteriaId SET criteriaId = :criteriaId, criteriaFieldId = :criteriaFieldId, criteriaShareId = :criteriaShareId, criteriaOperator = :criteriaOperator, criteriaValue = :criteriaValue WHERE criteriaId = :criteriaId";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the placeholders in the template
+		$parameters = ["criteriaId" => $this->criteriaId, "criteriaFieldId" => $this->criteriaFieldId, "criteriaShareId" => $this->criteriaShareId, "criteriaOperator" => $this->criteriaOperator, "criteriaValue" => $this->criteriaValue];
+		$statement->execute($parameters);
+	}
+	/**
+	* get criteria by criteriaId
+	*
+	*@param \PDO $pdo PDO connection object
+	*@param int $criteriaId criteria id to search for
+	*@return Criteria|null Criteria found or null if not found
+	*@throws \PDOException when mySQL related errors occur
+	*@throws \TypeError when variables are not the correct data type
+	**/
+	
+	public static function getCriteriaIdByCriteriaId(\PDO $pdo, int $criteriaId) {
+		//sanitize the criteriaId before searching
+		if($criteriaId <= 0) {
+			throw(new \PDOException("criteria id is not positive"));
+		}
+		//create query template
+		$query = "SELECT criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue
+	
 }
