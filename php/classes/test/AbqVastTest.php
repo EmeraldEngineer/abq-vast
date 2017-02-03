@@ -54,7 +54,12 @@ abstract class AbqVastTest extends \ PHPUnit_Extensions_Database_Testcase {
 	}
 
 	/**
-	 * templates
+	 * templates the tearDown method that runs after each test; this method expunges the database after each run
+	 *
+	 * @return \PHPUnit_Extensions_Database_Operation_IDatabaseOperation delete command for the database
 	 **/
+	public final function getTearDownOperation() {
+		return(\PHPUnit_Extensions_Database_Operation_Factory::DELETE_ALL());
+	}
 }
 
