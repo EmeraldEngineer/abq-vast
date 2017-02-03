@@ -376,5 +376,13 @@ class Checkbook implements \JsonSerializable {
         // I don't always write WHERE clauses, but when I do, reformat dates and use an AND operator
 
         // just shutup and take my prepared statement
+        $checkbookInvoiceSunriseDate = date_sunrise($checkbookInvoiceSunriseDate);
+        $checkbookInvoiceSunsetDate = date_sunset($checkbookInvoiceSunsetDate);
+        if(empty($checkbookInvoiceSunriseDate) === true) {
+            throw(new \PDOException("InvoiceSunrise date is invalid"));
+        }
+        if(empty($checkbookInvoiceSunsetDate) === true) {
+            throw(new \PDOException("InvoiceSunset date is invalid"));
+        }
     }
 }
