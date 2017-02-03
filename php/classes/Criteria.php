@@ -264,4 +264,10 @@ class Criteria implements \JsonSerializable {
 			if($row !==false) {
 				$criteriaId = new Criteria($row["criteriaId"], $row["criteriaFieldId"], $row["criteriaShareId"], $row["criteriaOperator"], $row["criteriaValue"]);
 			}
+		} catch(\Exception $exception) {
+			// if new row could not be converted, rethrow it.
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($criteriaId);
+	}
 }
