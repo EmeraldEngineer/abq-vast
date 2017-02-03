@@ -196,7 +196,7 @@ class Criteria implements \JsonSerializable {
 		$this->criteriaId = intval($pdo->lastInsertId());
 	}
 	
-	//*
+	/**
 	* deletes checkbook from mySQL
 	*@param \PDO $pdo PDO connection object
 	*@throws \PDOException when mySQL related errors occur
@@ -211,7 +211,7 @@ class Criteria implements \JsonSerializable {
 		$query = "DELETE FROM criteria WHERE criteriaId = :criteriaId";
 		$statement = $pdo->prepare($query);
 		//bind the member variables to the place holder in the template
-		$paramenters = ["criteriaId" => $this->criteriaId];
+		$parameters = ["criteriaId" => $this->criteriaId];
 		$statement->execute($parameters);
 	}
 	
@@ -252,15 +252,14 @@ class Criteria implements \JsonSerializable {
 		//create query template
 		$query = "SELECT criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue FROM criteria WHERE criteriaId = :criteriaId";
 		$statement = $pdo->prepare($query);
-		//bind the c
-		riteriaId to the place holder in the template
-		$parameters = ["criteriaId" => $checkbookId];
+		//criteriaId to the place holder in the template
+		$parameters = ["criteriaId" => $criteriaId];
 		$statement->execute($parameters);
 		//grab the checkbook from mySQL
 		try {
 			$criteriaId = null;
 			$statement->setFetchMode(\PDO::FETCH_ASOC);
-			$row = $statement->fetch();($row
+			$row = $statement->fetch();
 			if($row !==false) {
 				$criteriaId = new Criteria($row["criteriaId"], $row["criteriaFieldId"], $row["criteriaShareId"], $row["criteriaOperator"], $row["criteriaValue"]);
 			}
