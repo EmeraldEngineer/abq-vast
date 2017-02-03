@@ -390,10 +390,8 @@ class Checkbook implements \JsonSerializable {
 
         // bind the checkbook invoice date to the place holder in the template
         $checkbookInvoiceSunriseDate = "%checkbookInvoiceSunriseDate%";
-        $parameters = ["checkbookInvoiceSunriseDate" => $checkbookInvoiceSunriseDate];
-        $statement->execute($parameters);
         $checkbookInvoiceSunsetDate = "%checkbookInvoiceSunsetDate%";
-        $parameters = ["checkbookInvoiceSunsetDate" => $checkbookInvoiceSunsetDate];
+        $parameters = ["checkbookInvoiceSunriseDate" => $checkbookInvoiceSunriseDate, "checkbookInvoiceSunsetDate" => $checkbookInvoiceSunsetDate];
         $statement->execute($parameters);
 
         // build an array of invoice dates
