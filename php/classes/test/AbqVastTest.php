@@ -61,5 +61,13 @@ abstract class AbqVastTest extends \ PHPUnit_Extensions_Database_Testcase {
 	public final function getTearDownOperation() {
 		return(\PHPUnit_Extensions_Database_Operation_Factory::DELETE_ALL());
 	}
+
+	/**
+	 * sets up the database connection and provides it to PHPUnit
+	 *
+	 * @see <https://phpunit.de/manual/current/en/database.html#database.configuration-of-a-phpunit-database-testcase>
+	 * @return \PHPUnit_Extensions_Database_DB_IDatabaseConnection PHPUnit database connection interface
+	 **/
+	public
 }
 
