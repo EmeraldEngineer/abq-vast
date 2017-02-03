@@ -402,7 +402,9 @@ class Checkbook implements \JsonSerializable {
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch()) !== false) {
             try {
-                $datetime =new \DateInterval($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"]. $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbookInvoiceSunriseDate = self::validateDate($checkbookInvoiceSunriseDate);
+                $checkbookInvoiceSunsetDate = self::validateDate($checkbookInvoiceSunsetDate);
+                $datetime = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"]. $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
                 $datetime[$datetime->key()] = $datetime;
                 $datetime->next();
             } catch(\Exception $exception) {
