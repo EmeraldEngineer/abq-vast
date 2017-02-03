@@ -385,7 +385,7 @@ class Checkbook implements \JsonSerializable {
             throw(new \PDOException("InvoiceSunset date is invalid"));
         }
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceSunRiseDate AND checkbookInvoiceSunsetDate = :checkbookInvoiceSunriseDate, :checkbookInvoiceSunsetDate";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceDate >= :checkbookInvoiceSunriseDate AND <= :checkbookInvoiceSunsetDate";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice date to the place holder in the template
