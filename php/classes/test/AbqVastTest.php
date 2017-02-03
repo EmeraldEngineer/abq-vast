@@ -2,7 +2,7 @@
 namespace Edu\Cnm\AbqVast\Test;
 
 // grab the encrypted properties file
-require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+require_once("/etc/apache2/abqvast-sfinkel/encrypted-config.php");
 
 /**
  * Abstract class containing universal and project specific mySQL parameters
@@ -68,6 +68,23 @@ abstract class AbqVastTest extends \ PHPUnit_Extensions_Database_Testcase {
 	 * @see <https://phpunit.de/manual/current/en/database.html#database.configuration-of-a-phpunit-database-testcase>
 	 * @return \PHPUnit_Extensions_Database_DB_IDatabaseConnection PHPUnit database connection interface
 	 **/
-	public
-}
+	public final function getConnection () {
+		// if the connection hasn't been established, create it
+		if($this->connection === null) {
+			// connect to mySQL and provide the interface to PHPUnit
+				$config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
+				$pdo =  connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
+				$this->connection = $this->createDefaultDBConnection($pdo, $config["database"]);
+		}
+		return($this->connection);
+	}
 
+	/**
+	 * returns the actual PDO object; this is a convenience method
+	 *
+	 * @return \PDO active PDO object
+	 **/
+	public final function getPDO() {
+		return($this->getConnection()->getConnection());
+	}
+}
