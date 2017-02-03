@@ -349,7 +349,7 @@ class Checkbook implements \JsonSerializable {
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch() !== false)) {
             try {
-                $checkbook = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"]. $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbook = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
                 $checkbooks[$checkbooks->key()] = $checkbook;
                 $checkbooks->next();
             } catch(\Exception $exception) {
@@ -404,7 +404,7 @@ class Checkbook implements \JsonSerializable {
             try {
                 $checkbookInvoiceSunriseDate = self::validateDate($checkbookInvoiceSunriseDate);
                 $checkbookInvoiceSunsetDate = self::validateDate($checkbookInvoiceSunsetDate);
-                $datetime = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"]. $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $datetime = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
                 $datetime[$datetime->key()] = $datetime;
                 $datetime->next();
             } catch(\Exception $exception) {
