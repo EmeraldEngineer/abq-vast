@@ -252,7 +252,16 @@ class Criteria implements \JsonSerializable {
 		//create query template
 		$query = "SELECT criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue FROM criteria WHERE criteriaId = :criteriaId";
 		$statement = $pdo->prepare($query);
-		//bind the criteriaId to the place holder in the template
-		 
-	
+		//bind the c
+		riteriaId to the place holder in the template
+		$parameters = ["criteriaId" => $checkbookId];
+		$statement->execute($parameters);
+		//grab the checkbook from mySQL
+		try {
+			$criteriaId = null;
+			$statement->setFetchMode(\PDO::FETCH_ASOC);
+			$row = $statement->fetch();($row
+			if($row !==false) {
+				$criteriaId = new Criteria($row["criteriaId"], $row["criteriaFieldId"], $row["criteriaShareId"], $row["criteriaOperator"], $row["criteriaValue"]);
+			}
 }
