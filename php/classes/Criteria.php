@@ -184,7 +184,7 @@ class Criteria implements \JsonSerializable {
 		/** create query template
 		 * This is a change again
 		 **/
-		$query = "Insert INTO criteria(criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue) VALUES(:criteriaId, :criteriaFieldId, :criteriaShareId, :criteriaOperator, :criteriaValue):;
+		$query = "Insert INTO criteria(criteriaId, criteriaFieldId, criteriaShareId, criteriaOperator, criteriaValue) VALUES(:criteriaId, :criteriaFieldId, :criteriaShareId, :criteriaOperator, :criteriaValue)";
 		$statement = $pdo->prepare($query);
 	
 	/**
