@@ -389,8 +389,6 @@ class Checkbook implements \JsonSerializable {
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice date to the place holder in the template
-        $checkbookInvoiceSunriseDate = "%checkbookInvoiceSunriseDate%";
-        $checkbookInvoiceSunsetDate = "%checkbookInvoiceSunsetDate%";
         $parameters = ["checkbookInvoiceSunriseDate" => $checkbookInvoiceSunriseDate, "checkbookInvoiceSunsetDate" => $checkbookInvoiceSunsetDate];
         $statement->execute($parameters);
 
@@ -411,5 +409,45 @@ class Checkbook implements \JsonSerializable {
             }
         }
         return($datetime);
+    }
+    /**
+     * gets the checkbook by Invoice Number
+     *
+     *@param \PDO $pdo PDO connection object
+     *@param string $checkbookInvoiceNum checkbook content to search for
+     *@return \SplFixedArray SplFixedArray of checkbooks found
+     *@throws \PDOException when mySQL related errors occur
+     *@throws \TypeError whe variables are not the correct data type
+     **/
+    public static function getCheckbookByCheckbookInvoiceNum(\PDO $pdo, string $checkbookInvoiceNum) {
+        // sanitize the description before searching
+        $checkbookInvoiceNum = trim($checkbookInvoiceNum);
+        $checkbookInvoiceNum = filter_var($checkbookInvoiceNum, FILTER_SANITIZE_STRING);
+        if(empty($checkbookInvoiceNum) === true) {
+            throw(new \PDOException("Invoice Number is invalid"));
+        }
+
+        // create query template
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceNum = :checkbookInvoiceNum";
+
+        // bind the checkbook invoice number to the place holder in the template
+        $checkbookInvoiceNum = "%checkbookInvoiceNum%";
+        $parameters = ["checkbookInvoiceNum" => $checkbookInvoiceNum];
+        $statement->execute($parameters);
+
+        // build an array of checkbooks
+        $checkbooks = new \SplFixedArray($statement->rowCount());
+        $statement->setFetchMode(\PDO::FETCH_ASSOC);
+        while(($row = $statement->fetch()) !==false) {
+            try {
+                $checkbook = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbooks[$checkbooks->key()] = $checkbook;
+                $checkbooks->next();
+            } catch(\Exception $exception) {
+                // if the row couldn't be converted, rethrow it
+                throw(new \PDOException($exception->getMessage(), 0, $exception));
+            }
+        }
+        return($checkbooks);
     }
 }
