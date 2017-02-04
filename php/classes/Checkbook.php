@@ -509,8 +509,15 @@ class Checkbook implements \JsonSerializable {
         $checkbookReferenceNum = trim($checkbookReferenceNum);
         $checkbookReferenceNum = filter_var($checkbookReferenceNum, FILTER_SANITIZE_STRING);
         if(empty($checkbookReferenceNum) === true) {
-            throw(new \PDOException("Reference Number is invlaid"));
+            throw(new \PDOException("Reference Number is invalid"));
         }
+
+        // create query template
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookReferenceNum = :checkbookReferenceNum";
+        $statement->execute($parameters);
+
+        // bind the checkbook Reference Number to the place holder in the template
+        $checkbookReferenceNum = "%$checkbookReferenceNum%";
     }
 
 }
