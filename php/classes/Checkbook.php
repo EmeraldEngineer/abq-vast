@@ -429,6 +429,7 @@ class Checkbook implements \JsonSerializable {
 
         // create query template
         $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceNum = :checkbookInvoiceNum";
+        $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice number to the place holder in the template
         $checkbookInvoiceNum = "%checkbookInvoiceNum%";
@@ -450,4 +451,66 @@ class Checkbook implements \JsonSerializable {
         }
         return($checkbooks);
     }
+    /**
+     * gets the checkbook by Payment Date
+     *
+     * @param \PDO connection object
+     * @param \DateTime $checkbookPaymentSunriseDate
+     * @param \DateTime $checkbookPaymentSunsetDate
+     * @return \SplFixedArray SplFixedArray of checkbooks found
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
+    public static function getCheckbookByCheckbookPaymentDate(\PDO $pdo, $checkbookPaymentSunriseDate, $checkbookPaymentSunsetDate) {
+        // continuation of trying the sunrise and sunset
+        $checkbookPaymentSunriseDate = date_sunrise($checkbookPaymentSunriseDate);
+        $checkbookPaymentSunsetDate = date_sunset($checkbookPaymentSunsetDate);
+        if(empty($checkbookPaymentSunriseDate) === true) {
+            throw(new \PDOException("PaymentSunrise date is invalid"));
+        }
+        if(empty($checkbookPaymentSunsetDate) === true) {
+            throw(new \PDOException("PaymentSunset date is invalid"));
+        }
+        // create query template
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookPaymentDate >= :checkbookPaymentSunriseDate AND <= :checkbookPaymentSunsetDate";
+        $statement = $pdo->prepare($query);
+
+        // bind the checkbook invoice date to the placeholder in the template
+        $parameters = ["checkbookPaymentSunriseDate" => $checkbookPaymentSunriseDate, "checkbookPaymentSunsetDate" => $checkbookPaymentSunsetDate];
+        $statement->execute($parameters);
+
+        // build an array of invoice dates
+
+        $datetime = new \SplFixedArray($statement->rowCount());
+        $statement->setFetchMode(\PDO::FETCH_ASSOC);
+        while(($row = $statement->fetch()) !== false) {
+            try {
+                $checkbookPaymentSunriseDate = self::validateDate($checkbookPaymentSunriseDate);
+                $checkbookPaymentSunsetDate = self::validateDate($checkbookPaymentSunsetDate);
+                $datetime = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $datetime[$datetime->key()] = $datetime;
+                $datetime->next();
+            } catch(\Exception $exception) {
+                // if the row couldn't be converted, rethrow it
+                throw(new \PDOexception($exception->getMessage(), 0, $exception));
+            }
+        }
+        return($datetime);
+    }
+    /**
+     * @param \PDO $pdo PDO connection object
+     * @param string $checkbookReferenceNum reference number to search for
+     * @return \SplFixedArray SplFixedArray of checkbook found
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
+    public static function getCheckbookByCheckbookReferenceNum(\PDO $pdo, string $checkbookReferenceNum) {
+        // sanitize the description before searching
+        $checkbookReferenceNum = trim($checkbookReferenceNum);
+        $checkbookReferenceNum = filter_var($checkbookReferenceNum, FILTER_SANITIZE_STRING);
+        if(empty($checkbookReferenceNum) === true) {
+            throw(new \PDOException("Reference Number is invlaid"));
+        }
+    }
+
 }
