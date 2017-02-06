@@ -46,7 +46,7 @@ class Checkbook implements \JsonSerializable {
      * @param int $newCheckbookId id of this checkbook
      * @param string $newCheckbookInvoiceAmount invoice amount for this checkbook
      * @param \DateTime|string|null $newCheckbookInvoiceDate invoice date for this checkbook
-     * @param float $newCheckbookInvoiceNum invoice number for this checkbook
+     * @param string $newCheckbookInvoiceNum invoice number for this checkbook
      * @param \DateTime|string|null $newCheckbookPaymentDate payment date for this checkbook
      * @param string $newCheckbookReferenceNum reference number for this checkbook
      * @param string $newCheckbookVendor vendor name on checkbook
@@ -522,7 +522,7 @@ class Checkbook implements \JsonSerializable {
         $statement->execute($parameters);
 
         // build an array of reference numbers
-        $checkbooks = new \SplFixedArray($statement->rowCount());
+        $checkbookReferenceNum = new \SplFixedArray($statement->rowCount());
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch()) !== false) {
             try {
@@ -556,6 +556,66 @@ class Checkbook implements \JsonSerializable {
         // create query template
         $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookVendor = :checkbookVendor";
         $statement = $pdo->prepare($query);
+
+        // bind the vendor content to the place holder int he template
+        $checkbookVendor
+            = "%checkbookVendor%";
+        $parameters = ["checkbookVendor" => $checkbookVendor];
+        $checkbookVendor->execute($checkbookVendor);
+
+        // build an array of vendors
+        $checkbookVendor = new \SplFixedArray($statement->rowCount());
+        $statement->setFetchMode(\PDO::FETCH_ASOC);
+        while(($row = $statement->fetch()) !== false) {
+            try{
+                $checkbookVendor = new Checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbookVendor[$checkbookVendor->key()] = $checkbookVendor;
+            } catch(\Exception $exception) {
+                // if the row couldn't be converted, rethrow it
+                throw(new \PDOException($exception->getMessage(), 0, $exception));
+            }
+        }
+        return($checkbookVendor);
+    }
+    /**
+     * gets all of checkbooks
+     *
+     * @param \PDO $pdo PDO connection object
+     * @return \SplFixedArray SplFixedArray
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
+    public static function getAllCheckbookIds(\PDO $pdo) {
+        // create query template
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook";
+        $statement = $pdo->prepare($query);
+        $statement->execute();
+
+        // build an array of checkbooks
+        $checkbook = new \SplFixedArray($statement->rowCount());
+        $statement->setFetchMode(\PDO::FETCH_ASSOC);
+        while (($row = $statement->fetch()) !== false) {
+            try {
+                $checkbook = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbook[$checkbook->key()] = $checkbook;
+                $checkbook->next();
+            } catch (\Exception $exception) {
+                // if the row couldn't be converted, rethrow it
+                throw(new \PDOException($exception->getMessage(), 0, $exception));
+            }
+        }
+        return ($checkbook);
     }
 
+    /**
+     * formats the state variables for JSON serialization
+     *
+     * @return array resulting state variables to serialize
+     **/
+    public function jsonSErialize() {
+        $fields = get_object_vars($this);
+        $fields["checkbookInvoiceDate"] = $this->checkbookInvoiceDate->getTimestamp() *1000;
+        $fields["checkbookPaymentDate"] = $this->checkbookPaymentDate->getTimestamp() *1000;
+        return($fields);
+}
 }
