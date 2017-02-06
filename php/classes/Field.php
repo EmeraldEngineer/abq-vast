@@ -1,7 +1,7 @@
 <?php
 
 require_once("autoload.php");
-
+// FIXME: add namespace, implement jsonSerializable
 /**
  * ABQ Vast Field profile
  *

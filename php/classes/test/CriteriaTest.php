@@ -8,20 +8,22 @@
  */
 namespace Edu\Cnm\AbqVast\Test;
 
-use Edu\Cnm\AbqVast\{Criteria};
+use Edu\Cnm\AbqVast\{
+	Criteria, Field, Share
+};
 
+// TODO: add share and field reference dependency classes (use)
 //grab the project test parameters
 require_once("AbqVastTest.php");
 
 //grab the class under scrutiny
-require_once(dirname(__DIR__) . "/classes/autoload.php");
+require_once(dirname(__DIR__) . "/autoload.php");
 
 /**
  * PHPUnit test for the Criteria class.
  * @see Criteria
  * @author Taylor McCarthy <tmccarthy4@cnm.edu>
  **/
-
 class CriteriaTest extends AbqVastTest {
 	/**
 	 * content of criteriaId
@@ -56,14 +58,14 @@ class CriteriaTest extends AbqVastTest {
 	/**
 	 * create dependent objects before running each test
 	 **/
-	public function final setUp() {
+	public final function setUp() {
 		//run the default setup method first
 		parent::setUp();
 
 		//create and insert foreign field
-		$this->field = new Field(null, passN, T);
+		$this->field = new Field(null, passN, "S");
 		$this->field->insert($this->getPDO());
-}
+	}
 
 	/**
 	 * test inserting a valid criteria and verify that the mySQL data matches.
@@ -73,7 +75,7 @@ class CriteriaTest extends AbqVastTest {
 		$numRows = $this->getConnection()->getRowCount("criteria");
 
 		// create a new criteria and insert into mySQL
-		$criteria = new Criteria(null, null, null, $this->VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
+		$criteria = new Criteria(null, $this->field->getFieldId(), $this->share->getShareId(), $this->VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
 		$criteria->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations.
