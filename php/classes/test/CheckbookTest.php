@@ -54,4 +54,33 @@ class CheckbookTest extends AbqVastTest {
      * @var CheckbookId checkbook
      **/
     protected $checkbookId = null;
+    /**
+     * create dependent objects before running each test
+     **/
+    public final function setUp() {
+        // run the default setUp() method first
+        parent::setUp();
+        // create and insert a CheckbookId to own the test Checkbook
+        $this->checkbookId = new Checkbook(null, "@phpunit", "test@phpunit.de");
+        $this->checkbookId->insert($this->getPDO());
+        // calculate the date (just use the time the unit test was setup...)
+        $this->VALID_CHECKBOOKINVOICEDATE = new \DateTime();
+        $this->VALID_CHECKBOOKPAYMENTDATE = new \DateTime();
+    }
+    /**
+     * test inserting a valid Checkbook and verify that the actual mySQL data matches
+     **/
+    public function testInsertValidCheckbook() {
+        // count the number of rows and save it for later
+        $numRows = $this->getConnection()->getRowCount("checkbook");
+
+        // create a new Checkbook and insert into mySQL
+        $checkbook = new Checkbook(null, $this->checkbookId->getCheckbookId(), $this->VALID_CHECKBOOKID, $checkbook->insert($this->getPDO()));
+
+        // grab the data from mySQL and enforce the fields match our expectations
+        $pdoCheckbook = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookId());
+        $this->assertEquals($numRows + 1, $this->getConnection()->getConnection()->getRowCount("checkbook"));
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbookk->getCheckbookId());
+
+    }
 }
