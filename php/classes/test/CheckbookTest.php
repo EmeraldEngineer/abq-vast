@@ -83,6 +83,5 @@ class CheckbookTest extends AbqVastTest {
         $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->checkbook->getCheckbookInvoiceAmount());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALIDCHECKBOOKINVOICEDATE);
-
     }
 }

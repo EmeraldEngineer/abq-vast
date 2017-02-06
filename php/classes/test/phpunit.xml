@@ -1,0 +1,15 @@
+<phpunit>
+    <testsuites>
+        <testsuite name="AbqVast">
+            <file>CheckbookTest.php</file>
+            <file>CriteriaTest.php</file>
+            <file>FieldTest.php</file>
+            <file>Share.php</file>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../classes</directory>
+        </whitelist>
+    </filter>
+</phpunit>
