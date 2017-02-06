@@ -2,7 +2,7 @@
 namespace Edu\Cnm\AbqVast\Test;
 
 // grab the encrypted properties file
-require_once("/etc/apache2/abqvast-sfinkel/encrypted-config.php");
+require_once("/etc/apache2/abqvast-mysql/encrypted-config.php");
 
 /**
  * Abstract class containing universal and project specific mySQL parameters
