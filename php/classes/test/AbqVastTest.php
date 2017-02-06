@@ -2,7 +2,7 @@
 namespace Edu\Cnm\AbqVast\Test;
 
 // grab the encrypted properties file
-require_once("/etc/apache2/abqvast-mysql/encrypted-config.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 /**
  * Abstract class containing universal and project specific mySQL parameters
@@ -37,8 +37,8 @@ abstract class AbqVastTest extends \ PHPUnit_Extensions_Database_Testcase {
 			// add all the tables for the project here
 			$dataset->addTable("checkbook");
 			$dataset->addTable("field");
-			$dataset->addTable("criteria");
 			$dataset->addTable("share");
+			$dataset->addTable("criteria");
 			return ($dataset);
 		}
 

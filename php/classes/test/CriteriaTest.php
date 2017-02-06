@@ -31,13 +31,13 @@ class CriteriaTest extends AbqVastTest {
 
 	/**
 	 * content of criteriaFieldId
-	 * @var $CRITERIAFIELDID criteriafieldid
+	 * @var $CRITERIAFIELDID criteriaFieldId
 	 **/
 	protected $VALID_CRITERIAFIELDID = null;
 
 	/**
 	 * content of criteriaShareId
-	 * @var $CRITERIASHAREID criteriashareid
+	 * @var $CRITERIASHAREID criteriaShareId
 	 **/
 	protected $VALID_CRITERIASHAREID = null;
 
@@ -54,6 +54,18 @@ class CriteriaTest extends AbqVastTest {
 	protected $VALID_CRITERIAVALUE = 500;
 
 	/**
+	 * create dependent objects before running each test
+	 **/
+	public function final setUp() {
+		//run the default setup method first
+		parent::setUp();
+
+		//create and insert foreign field
+		$this->field = new Field(null, passN, T);
+		$this->field->insert($this->getPDO());
+}
+
+	/**
 	 * test inserting a valid criteria and verify that the mySQL data matches.
 	 **/
 	public function testInsertValidCriteria() {
@@ -63,6 +75,10 @@ class CriteriaTest extends AbqVastTest {
 		// create a new criteria and insert into mySQL
 		$criteria = new Criteria(null, null, null, $this->VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
 		$criteria->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations.
+		$pdoCriteria = Criteria::getCriteriaIdByCriteriaId($this->getPDO(), $criteria->getCriteriaId());
+
 
 	}
 

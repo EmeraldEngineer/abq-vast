@@ -1,4 +1,5 @@
 <?php
+// FIXME: convert criteriaValue to varchar(82)
 namespace Edu\Cnm\AbqVast;
 
 require_once("autoload.php");
