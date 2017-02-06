@@ -536,5 +536,26 @@ class Checkbook implements \JsonSerializable {
         }
         return($checkbooks);
     }
+    /**
+     * gets the checkbook by vendor
+     *
+     * @param \PDO $pdo PDO connection object
+     * @param string $checkbookVendor checkbook content to search for
+     * @return \SplFixedArray SplFixedArray of Vendors found
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
+    public static function getCheckbookByCheckbookVendor(\PDO $pdo, string $checkbookVendor) {
+       // sanitize the description before searching
+        $checkbookVendor = trim($checkbookVendor);
+        $checkbookVendor = filter_var($checkbookVendor, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+        if(empty($checkbookVendor) === true) {
+            throw(new \PDOException("Vendor content is invalid"));
+        }
+
+        // create query template
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookVendor = :checkbookVendor";
+        $statement = $pdo->prepare($query);
+    }
 
 }
