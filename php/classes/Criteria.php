@@ -1,4 +1,7 @@
 <?php
+namespace Edu\Cnm\AbqVast;
+
+require_once("autoload.php");
 /**
  * Criteria class, allows the user to select what data they would like to graph.
  * @author Taylor McCarthy <tmccarthy4@cnm.edu>
@@ -269,4 +272,8 @@ class Criteria implements \JsonSerializable {
 		}
 		return($criteriaId);
 	}
+	public function jsonSerialize() {
+	return(get_object_vars($this));
+
+}
 }
