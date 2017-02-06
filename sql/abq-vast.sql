@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS share;
 DROP TABLE IF EXISTS criteria;
+DROP TABLE IF EXISTS share;
 DROP TABLE IF EXISTS field;
 DROP TABLE IF EXISTS checkbook;
 CREATE TABLE checkbook(
@@ -20,6 +20,15 @@ CREATE TABLE field(
   fieldType CHAR(1) NOT NULL,
   PRIMARY KEY(fieldId)
 );
+
+CREATE TABLE share(
+	shareId INT UNSIGNED AUTO_INCREMENT NOT NULL,
+	shareImage VARCHAR(64) NOT NULL,
+	shareUrl VARCHAR(64) NOT NULL,
+	UNIQUE(shareUrl),
+	PRIMARY KEY(shareId)
+);
+
 CREATE TABLE criteria(
   criteriaId INT UNSIGNED AUTO_INCREMENT NOT NULL,
   criteriaFieldId INT UNSIGNED NOT NULL,
@@ -29,10 +38,4 @@ CREATE TABLE criteria(
   PRIMARY KEY(criteriaId),
   FOREIGN KEY(criteriaFieldId) REFERENCES field(fieldId),
   FOREIGN KEY(criteriaShareId) REFERENCES share(shareId)
-);
-CREATE TABLE share(
-  shareId INT UNSIGNED AUTO_INCREMENT NOT NULL,
-  shareImage VARCHAR(64) NOT NULL,
-  shareUrl VARCHAR(64) NOT NULL,
-  UNIQUE(shareUrl)
 );
