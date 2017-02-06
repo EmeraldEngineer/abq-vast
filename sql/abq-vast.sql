@@ -25,7 +25,7 @@ CREATE TABLE criteria(
   criteriaFieldId INT UNSIGNED NOT NULL,
   criteriaShareId INT UNSIGNED NOT NULL,
   criteriaOperator VARCHAR(4)NOT NULL,
-  criteriaValue INT UNSIGNED NOT NULL,
+  criteriaValue VARCHAR(82) NOT NULL,
   PRIMARY KEY(criteriaId),
   FOREIGN KEY(criteriaFieldId) REFERENCES field(fieldId),
   FOREIGN KEY(criteriaShareId) REFERENCES share(shareId)
