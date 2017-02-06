@@ -612,7 +612,7 @@ class Checkbook implements \JsonSerializable {
      *
      * @return array resulting state variables to serialize
      **/
-    public function jsonSErialize() {
+    public function jsonSerialize() {
         $fields = get_object_vars($this);
         $fields["checkbookInvoiceDate"] = $this->checkbookInvoiceDate->getTimestamp() *1000;
         $fields["checkbookPaymentDate"] = $this->checkbookPaymentDate->getTimestamp() *1000;
