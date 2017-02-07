@@ -160,7 +160,7 @@ class Criteria implements \JsonSerializable {
 	}
 	/**
 	 * mutator for criteriaValue
-	 * @param int $newCriteriaValue
+	 * @param string $newCriteriaValue
 	 * @throw \InvalidArgumentException if $newCriteriaValue is empty or insecure
 	 * @throw \RangeException if $newCriteriaValue is greater than 82 characters
 	 **/
@@ -267,7 +267,7 @@ class Criteria implements \JsonSerializable {
 		//grab the checkbook from mySQL
 		try {
 			$criteriaId = null;
-			$statement->setFetchMode(\PDO::FETCH_ASOC);
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !==false) {
 				$criteriaId = new Criteria($row["criteriaId"], $row["criteriaFieldId"], $row["criteriaShareId"], $row["criteriaOperator"], $row["criteriaValue"]);

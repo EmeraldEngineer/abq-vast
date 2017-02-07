@@ -63,8 +63,10 @@ class CriteriaTest extends AbqVastTest {
 		parent::setUp();
 
 		//create and insert foreign field
-		$this->field = new Field(null, passN, "S");
+		$this->field = new Field(null, "passN", "S");
 		$this->field->insert($this->getPDO());
+		$this->share = new Share(null, "passShI", "passShU");
+		$this->share->insert($this->getPDO());
 	}
 
 	/**
@@ -77,11 +79,27 @@ class CriteriaTest extends AbqVastTest {
 		// create a new criteria and insert into mySQL
 		$criteria = new Criteria(null, $this->field->getFieldId(), $this->share->getShareId(), $this->VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
 		$criteria->insert($this->getPDO());
-
+	// TODO: ask about why assertEquals instead of assertSame
 		//grab the data from mySQL and enforce the fields match our expectations.
 		$pdoCriteria = Criteria::getCriteriaIdByCriteriaId($this->getPDO(), $criteria->getCriteriaId());
-
-
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("criteria"));
+		$this->assertEquals($pdoCriteria->getCriteriaId(), $this->VALID_CRITERIAID);
+		$this->assertEquals($pdoCriteria->getCriteriaFieldId(), $this->field->getFieldId());
+		$this->assertEquals($pdoCriteria->getCriteriaShareId(), $this->share->getShareId());
+		$this->assertEquals($pdoCriteria->getCriteriaOperator(), $this->VALID_CRITERIAOPERATOR);
+		$this->assertEquals($pdoCriteria->getCriteriaValue(), $this->VALID_CRITERIAVALUE);
 	}
+
+	/**
+	 * test inserting a Criteria that already exists
+	 * @expectedException PDOException
+	 **/
+	public function testInsertInvalidCriteria() {
+		//create a criteria will a non null criteria id and watch the world burn
+		$criteria = new Criteria(AbqVastTest::INVALID_KEY, $this->VALID_CRITERIAID, $this->field->getFieldId, $this->share->getShareId);
+		$criteria->insert($this->getPDO());
+	}
+
+
 
 }
