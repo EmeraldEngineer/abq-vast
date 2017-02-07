@@ -100,6 +100,18 @@ class CriteriaTest extends AbqVastTest {
 		$criteria->insert($this->getPDO());
 	}
 
+	/**
+	 * test updating a criteria, editing it, then updating it
+	 **/
+	public function testUpdateValidCriteria() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("criteria");
+
+		//create a new criteria and insert it into mySQL
+		$criteria = new Criteria(null, $this->field->getFieldId(), $this->share->getShareId(), $this->VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
+		criteria->insert($this->getPDO());
+	}
+
 
 
 }
