@@ -57,7 +57,7 @@ class ShareTest extends AbqVastTest {
 	 *
 	 * @expectedException \PDOException
 	 **/
-	public function testUpdateValidShare() {
+	public function testInsertInvalidShare() {
 		// create a profile with a non null shareId and watch it fail
 		$share = new Share(AbqVastTest::INVALID_KEY, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
 		$share->insert($this->getPDO());
@@ -94,7 +94,89 @@ class ShareTest extends AbqVastTest {
 		//create a Share and and try to update it without actually inserting it
 		$share = new Share(null, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
 		$share->insert($this->getPDO());
-
-
 	}
+
+	/**
+	 * test creating a Share and then deleting it
+	 **/
+	public function testDeleteValidShare() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("share");
+
+		//create a new share and insert into mySQL
+		$share = new Share(null, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
+		$share->insert($this->getPDO());
+
+		//delete the share from mySQL
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("share"));
+		$share->delete($this->getPDO());
+
+		//grab the data from mySQL and enforce the Share does not exist
+		$pdoShare = Share::getShareByShareId($this->getPDO(), $share->getShareId());
+		$this->assertNull($pdoShare);
+		$this->assertSame($numRows, $this->getConnection()->getRowCount("share"));
+		}
+
+	/**
+	 * test deleting a Share that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testDeleteInvalidShare() {
+		//create a share and try to delete it without actually inserting it
+		$share = new Share(null, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
+		$share->delete($this->getPDO());
+		}
+
+	/**
+	 * test inserting a profile and regrabbing it from mySQL
+	 **/
+	public function testGetValidShareByShareId() {
+		//count number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("share");
+
+		//create a new share and insert it into mySQL
+		$share = new Share(null, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
+		$share->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$pdoShare = Share::getShareByShareId($this->getPDO(), $share->getShareId());
+		$this->assertSame($numRows + 1, $this->getConnection->getRowCount("share"));
+		$this->assertSame($pdoShare->getShareImage(), $this->VALID_SHAREIMAGE);
+		$this->assertSame($pdoShare->getShareUrl(), $this->VALID_SHAREURL);
+		}
+
+		/**
+		 * test grabbing a share that does not exist
+		 **/
+		public function testGetInvalidShareByShareId() {
+			//grab a Share id that exceeds the maximum allowable share id
+			$share = Share::getShareByShareId($this->getPDO(), AbqVastTest::INVALID_KEY);
+			$this->assertNull($share);
+		}
+
+		public function testGetValidShareByShareImage() {
+			//count number of rows and save it for later
+			$numRows = $this->getConnection()->getRowCount("share");
+
+			//create a share and insert into mySQL
+			$share = new Share(null, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
+			$share->insert($this->getPDO());
+
+			//grab the data from my SQL and enforce the fields match our expectations
+			$pdoShare = Share::getShareByShareImage($this->getPDO(), $this->VALID_SHAREIMAGE);
+			$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("share"));
+			$this->assertSame($pdoShare->getShareImage(), $this->VALID_SHAREIMAGE);
+			$this->assertSame($pdoShare->getShareUrl(), $this->VALID_SHAREURL);
+		}
+
+		/**
+		 * test grabbing a share by Image that does not exist
+		 **/
+		public function testGetInvalidShareByShareImage() {
+			//grab an Image that does not exist
+			$share = Share::getShareByShareImage($this->getPDO(), "Who Lost the Image?");
+		}
+
+
 }
