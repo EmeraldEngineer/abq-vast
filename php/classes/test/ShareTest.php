@@ -19,36 +19,38 @@ require_once(dirname(__DIR__) . "/autoload.php");
  **/
 class ShareTest extends AbqVastTest {
 	/**
-	 * content of the Share
-	 * @var string $VALID_SHARECONTENT
+	 * valid share image
+	 * @var string $VALID_SHAREIMAGE
 	 **/
-	protected $VALID_SHARECONTENT = "PHPUnit test passing";
+	protected $VALID_SHAREIMAGE = "PHPUnit test passing";
 	/**
-	 * content of the updated Share
-	 * @var string $VALID_SHARECONTENT2
+	 * valid share url
+	 * @var string $VALID_SHAREURL
 	 **/
-	protected $VALID_SHARECONTENT2 = "PHPUnit test still passing";
+	protected $VALID_SHAREURL = "PHPUnit test still passing";
+	/**
+	*
+	**/
+	protected $share = null;
 
 	/**
-	 * create dependent objects before running each test
+	 * test inserting a valid profile and verify that the actual mySQL data matches
 	 **/
-	public final function setUp() {
-		// run the default setUp() method first
-		parent::setUp();
+	public function testInsertValidProfile() {
 
-		// create and insert a Profile to own the test Share
-		$this->share = new Share(null, "@phpunit", "test@phpunit.de", "+12125551212");
-		$this->share->insert($this->getPDO());
-	}
-
-	/**
-	 * test inserting a valid Share and verify that the actual mySQL data matches
-	 **/
-	public function testInsertValidShare() {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("share");
 
-		//create a new share and insert into mySQL
-		$share = new Share(null, $this->share	)
+		//create a new profile and insert into mySQL
+		$share = new Share(null, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
+		$share->insert($this->getPDO());
+
+		//grab the data from mySQL and enforce the fields match our expectations
+		$pdoShare = Share::getShareByShareId($this->getPDO(), $share->getShareId());
+		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("share"));
+		$this->assertSame($pdoShare->getShareImage(), $this->VALID_SHAREIMAGE);
+		$this->assertSame($pdoShare->getShareUrl(), $this->VALID_SHAREURL);
 	}
+
+
 }
