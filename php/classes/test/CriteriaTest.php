@@ -109,7 +109,7 @@ class CriteriaTest extends AbqVastTest {
 
 		//create a new criteria and insert it into mySQL
 		$criteria = new Criteria(null, $this->field->getFieldId(), $this->share->getShareId(), $this->VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
-		criteria->insert($this->getPDO());
+		$criteria->insert($this->getPDO());
 	}
 
 
