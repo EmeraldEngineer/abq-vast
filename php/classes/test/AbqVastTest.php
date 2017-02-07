@@ -50,7 +50,7 @@ abstract class AbqVastTest extends \ PHPUnit_Extensions_Database_Testcase {
 	 * @return \PHPUnit_Extensions_Database_Operation_Composite array containing delete and insert commands
 	 **/
 	public final function getSetUpOperation() {
-		return new \PHPUnit_Extension_Database_Operation_Composite(array(PHPUnit_Extension_Database_Operation_Factory::DELETE_ALL(), \PHPUnit_Extensions_Database_Operation_Factory::INSERT()));
+		return new \PHPUnit_Extensions_Database_Operation_Composite(array(\PHPUnit_Extensions_Database_Operation_Factory::DELETE_ALL(), \PHPUnit_Extensions_Database_Operation_Factory::INSERT()));
 	}
 
 	/**
