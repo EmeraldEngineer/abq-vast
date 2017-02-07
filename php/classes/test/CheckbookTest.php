@@ -75,7 +75,8 @@ class CheckbookTest extends AbqVastTest {
         $numRows = $this->getConnection()->getRowCount("checkbook");
 
         // create a new Checkbook and insert into mySQL
-        $checkbook = new Checkbook(null, $this->checkbookId->getCheckbookId(), $this->VALID_CHECKBOOKID, $checkbook->insert($this->getPDO()));
+        $checkbook = new Checkbook(null, $this->checkbookId->getCheckbookId(), $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        $checkbook->insert($this->getPDO());
 
         // grab the data from mySQL and enforce the fields match our expectations
         $pdoCheckbook = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookId());
@@ -89,14 +90,34 @@ class CheckbookTest extends AbqVastTest {
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->checkbook->getCheckbookVendor);
     }
     /**
-     * test grabbing a Checkbook by checkbook id
+     * test inserting a Checkbook that already exists
+     *
+     * @expectedException
      **/
-    public function testGetValidCheckbookByCheckbookId() {
+    public function testInsertInvalidCheckbook(){
+        // create a Checkbook with a non null checkbook id and watch it fail
+        $checkbook = new Checkbook(CheckbookTest::INVALID_KEY, $this->checkbookId->checkbookId(), $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        $checkbook->insert($this->getPDO());
+    }
+    /**
+     * test grabbing a Checkbook by checkbook Invoice Amount
+     **/
+    public function testGetValidCheckbookByCheckbookInvoiceAmount() {
         // count the number of rows and save it for later
         $numRows = $this->getConnection()->getRowcount("checkbook");
 
-        // create a new Checkbook and insert to into mySQL
-        $checkbook = new Checkbook(null, $this->checkbookId_>getCheckbookId(), $this->VALID_CHECKBOOKID, $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        // create a new Checkbook and insert it into mySQL
+        $checkbook = new Checkbook(null, $this->checkbookId->getCheckbookId(), $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
         $checkbook->insert($this->getPDO());
+        // grab the data from mySQL and enforce the fields match our expectations
+        $pdoCheckbook = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookId());
+        $this->assertEquals($numRows + 1, $this->getConnection()->getConnection()->getRowCount("checkbook"));
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbook->getCheckbookId());
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->checkbook->getCheckbookInvoiceAmount());
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALIDCHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoicNum(), $this->checkbook->getCheckbookInvoiceNum());
+        $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate(), $this->VALIDCHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->checkbook->getCheckbookReferenceNum);
+        $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->checkbook->getCheckbookVendor);
     }
 }
