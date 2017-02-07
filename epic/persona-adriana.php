@@ -11,7 +11,7 @@
         <strong>Profession:</strong> Investigative Journalist<br>
         <strong>Technology:</strong> Apple iOS 7, Apple OS Sierra<br>
         <strong>Attitudes and Behaviors: </strong> Adriana wants information can share on her twitter and other social media channels to help inform her audience about government spending habits. Because she has strong ethics as a journalist, she needs any app she uses to have the most up-to-date and reliable data.<br>
-        <strong>Goals:</strong> Adriana plans to use showmethemoney.com to keep current on city spending as opposed to searching through endless data on the city's website. She will also need a way to download the raw .csv or .xml files.<br>
+        <strong>Goals:</strong> Adriana plans to use showmethemoney.com to current on city spending as opposed to searching through endless data on the city's website. She will also need a way to download the raw .csv or .xml files.<br>
         <a href="index.php">Index</a><br>
         <a href="persona-aaron.php">Aaron</a><br>
         <a href="persona-maricela.php">Maricela</a><br>

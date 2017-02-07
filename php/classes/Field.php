@@ -1,5 +1,5 @@
 <?php
-
+namespace Edu\Cnm\AbqVast;
 require_once("autoload.php");
 // FIXME: add namespace, implement jsonSerializable
 /**
@@ -10,21 +10,21 @@ require_once("autoload.php");
  * @author Adam Pedroza <apedroza6@cnm.edu>
  * @version
  **/
-class Field implements \jsonSerialize {
+class Field implements \JsonSerializable {
 	/**
 	 * id for the Field; This is a primary key; unique
 	 * @var int $fieldId
 	 * **/
 	private $fieldId;
-		/**
-		 * idetifies the Field using a Field Name;
-		 * @var string $fieldName
-		 * **/
+	/**
+	 * idetifies the Field using a Field Name;
+	 * @var string $fieldName
+	 * **/
 	private $fieldName;
-			/**
-			 * idetifies the Field Type;
-			 * @var string $fieldType
-			 * **/
+	/**
+	 * idetifies the Field Type;
+	 * @var string $fieldType
+	 * **/
 	private $fieldType;
 
 	/**
@@ -57,6 +57,7 @@ class Field implements \jsonSerialize {
 			throw(new \Exception($exception->getMessage(), 0, $exception));
 		}
 	}
+
 	/**
 	 * accessor method for field id
 	 *
@@ -124,15 +125,6 @@ class Field implements \jsonSerialize {
 	}
 
 	/**
-	 * accessor method for field type
-	 *
-	 * @return string value of field type
-	 **/
-	public function getFieldType() {
-		return ($this->fieldType);
-	}
-
-	/**
 	 * mutator method for field name
 	 *
 	 * @param string $newFieldType new value of field name
@@ -156,3 +148,8 @@ class Field implements \jsonSerialize {
 		//store the field name
 		$this->fieldName = $newFieldName;
 	}
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		return($fields);
+	}
+}
