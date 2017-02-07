@@ -73,7 +73,7 @@ abstract class AbqVastTest extends \ PHPUnit_Extensions_Database_Testcase {
 		if($this->connection === null) {
 			// connect to mySQL and provide the interface to PHPUnit
 				$config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
-				$pdo =  connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
+				$pdo =  connectToEncryptedMySQL("/etc/apache2/capstone-mysql/AbqVast.ini");
 				$this->connection = $this->createDefaultDBConnection($pdo, $config["database"]);
 		}
 		return($this->connection);

@@ -7,7 +7,7 @@ use Edu\Cnm\AbqVast\{Checkbook};
 require_once("AbqVastTest.php");
 
 // grab the class under scrutiny
-require_once(dirname(__DIR__) . "/classes/autoload.php");
+require_once(dirname(__DIR__) . "/autoload.php");
 
 /**
  * Full PHPUnit test for the checkbook class
@@ -83,5 +83,20 @@ class CheckbookTest extends AbqVastTest {
         $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->checkbook->getCheckbookInvoiceAmount());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALIDCHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoicNum(), $this->checkbook->getCheckbookInvoiceNum());
+        $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate(), $this->VALIDCHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->checkbook->getCheckbookReferenceNum);
+        $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->checkbook->getCheckbookVendor);
+    }
+    /**
+     * test grabbing a Checkbook by checkbook id
+     **/
+    public function testGetValidCheckbookByCheckbookId() {
+        // count the number of rows and save it for later
+        $numRows = $this->getConnection()->getRowcount("checkbook");
+
+        // create a new Checkbook and insert to into mySQL
+        $checkbook = new Checkbook(null, $this->checkbookId_>getCheckbookId(), $this->VALID_CHECKBOOKID, $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        $checkbook->insert($this->getPDO());
     }
 }
