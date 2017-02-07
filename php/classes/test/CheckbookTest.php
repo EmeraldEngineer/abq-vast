@@ -84,7 +84,7 @@ class CheckbookTest extends AbqVastTest {
         $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->checkbook->getCheckbookInvoiceAmount());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALIDCHECKBOOKINVOICEDATE);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoicNum(), $this->checkbook->getCheckbookInvoiceNum());
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->checkbook->getCheckbookInvoiceNum());
         $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate(), $this->VALIDCHECKBOOKPAYMENTDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->checkbook->getCheckbookReferenceNum);
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->checkbook->getCheckbookVendor);
@@ -125,5 +125,14 @@ class CheckbookTest extends AbqVastTest {
         $this->assertEquals($pdoCheckbook->getCheckbookInvoicePaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOOKREFERENCENUM);
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
+    }
+
+    /**
+     * test grabbing a Checkbook by content that does not exist
+     **/
+    public function testGetInvalidCheckbookByCheckbookInvoiceAmount(){
+        // grab a invoice amount by searching for content that does not exist
+        $checkbook = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), "you will find nothing");
+        $this->assertCount(0, $checkbook);
     }
 }
