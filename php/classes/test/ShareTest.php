@@ -175,8 +175,32 @@ class ShareTest extends AbqVastTest {
 		 **/
 		public function testGetInvalidShareByShareImage() {
 			//grab an Image that does not exist
-			$share = Share::getShareByShareImage($this->getPDO(), "Who Lost the Image?");
+			$share = Share::getShareByShareImage($this->getPDO(), "Image? What Image?");
 		}
 
+		/**
+		 * test grabbing a share by URL
+		 **/
+	public function testGetValidShareByShareUrl() {
+		//count number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("share");
 
+		//create a share and insert into mySQL
+		$share = new Share(null, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
+		$share->insert($this->getPDO());
+
+		//grab the data from my SQL and enforce the fields match our expectations
+		$pdoShare = Share::getShareByShareUrl($this->getPDO(), $this->VALID_SHAREURL);
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("share"));
+		$this->assertSame($pdoShare->getShareImage(), $this->VALID_SHAREIMAGE);
+		$this->assertSame($pdoShare->getShareUrl(), $this->VALID_SHAREURL);
+	}
+
+	/**
+	 * test grabbing a share by Url that does not exist
+	 **/
+	public function testGetInvalidShareByShareUrl() {
+		//grab an Url that does not exist
+		$share = Share::getShareByShareUrl($this->getPDO(), "The Url Does Not Exist - No Go");
+	}
 }
