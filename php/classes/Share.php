@@ -40,7 +40,7 @@ class Share implements \JsonSerializable {
 	 * @throws \TypeError if data violates type hints
 	 * @throws \Exception if some other exception occurs
 	 **/
-	public function __construct(int $newShareId, string $newShareUrl, string $newShareImage) {
+	public function __construct(int $newShareId = null, string $newShareUrl, string $newShareImage) {
 		try {
 			$this->setShareId($newShareId);
 			$this->setShareImage($newShareImage);

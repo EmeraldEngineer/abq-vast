@@ -75,7 +75,7 @@ class ShareTest extends AbqVastTest {
 		$share->insert($this->getPDO());
 
 		//edit the share and update it in mySQL
-		$share->setShareByShareId($this->VALID_SHAREIMAGE);
+		$share->setShareId($this->VALID_SHAREIMAGE);
 		$share->update($this->getPDO());
 
 		//grabd the data from mySQL and enforce the fields to match our expectations
