@@ -30,7 +30,7 @@ class Criteria implements \JsonSerializable {
 	private $criteriaOperator;
 	/**
 	 * value of criteria
-	 * @var int $criteraValue
+	 * @var string $criteraValue
 	 **/
 	private $criteriaValue;
 	/**
@@ -45,7 +45,7 @@ class Criteria implements \JsonSerializable {
 	 * @throws \TypeError if data types violate type hints.
 	 * @throws \Exception if any other exception occurs.
 	 **/
-	public function __construct(int $newCriteriaId = null, int $newCriteriaFieldId, int $newCriteriaShareId, string $newCriteriaOperator, int $newCriteriaValue) {
+	public function __construct(int $newCriteriaId = null, int $newCriteriaFieldId, int $newCriteriaShareId, string $newCriteriaOperator, string $newCriteriaValue) {
 		try {
 			$this->setCriteriaId($newCriteriaId);
 			$this->setCriteriaFieldId($newCriteriaFieldId);
@@ -161,12 +161,17 @@ class Criteria implements \JsonSerializable {
 	/**
 	 * mutator for criteriaValue
 	 * @param int $newCriteriaValue
-	 * @throw \RangeException if $newCriteriaValue is not positive
-	 * @throw \TypeError if $newCriteriaValue is not an integer
+	 * @throw \InvalidArgumentException if $newCriteriaValue is empty or insecure
+	 * @throw \RangeException if $newCriteriaValue is greater than 82 characters
 	 **/
-	public function setCriteriaValue(int $newCriteriaValue) {
-		if($newCriteriaValue <= 0) {
-			throw(new RangeException("criteriaValue is not positive"));
+	public function setCriteriaValue(string $newCriteriaValue) {
+		$newCriteriaValue = trim($newCriteriaValue);
+		$newCriteriaValue = filter_var($newCriteriaValue, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCriteriaValue) === true) {
+			throw(new \InvalidArgumentException("value cannot be empty or insecure"));
+		}
+		if(strlen($newCriteriaValue) > 82) {
+			throw(new \RangeException("value cannot be greater than 82 characters"));
 		}
 		$this->criteriaValue = $newCriteriaValue;
 	}
