@@ -52,5 +52,49 @@ class ShareTest extends AbqVastTest {
 		$this->assertSame($pdoShare->getShareUrl(), $this->VALID_SHAREURL);
 	}
 
+	/**
+	 * test inserting a share that already exists
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testUpdateValidShare() {
+		// create a profile with a non null shareId and watch it fail
+		$share = new Share(AbqVastTest::INVALID_KEY, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
+		$share->insert($this->getPDO());
+	}
 
+	/**
+	 * test inserting a Share, editing it, and then updating it
+	 **/
+	public function testUpdateValidShare() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("share");
+
+		//create a new share and insert into mySQL
+		$share = new Share(null, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
+		$share->insert($this->getPDO());
+
+		//edit the share and update it in mySQL
+		$share->setShareByShareId($this->VALID_SHAREIMAGE);
+		$share->update($this->getPDO());
+
+		//grabd the data from mySQL and enforce the fields to match our expectations
+		$pdoShare = Share::getShareByShareId($this->getPDO(), $share->getShareId());
+		$this->assertSame($numRows + 1, $this->getConnection()->getRowCount("share"));
+		$this->assertSame($pdoShare->getShareImage(), $this->VALID_SHAREIMAGE);
+		$this->assertSame($pdoShare->getShareUrl(), $this->VALID_SHAREURL);
+	}
+
+	/**
+	 * test updating a Share that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testUpdateInvalidShare() {
+		//create a Share and and try to update it without actually inserting it
+		$share = new Share(null, $this->VALID_SHAREIMAGE, $this->VALID_SHAREURL);
+		$share->insert($this->getPDO());
+
+
+	}
 }
