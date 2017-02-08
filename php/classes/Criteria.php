@@ -205,32 +205,6 @@ class Criteria implements \JsonSerializable {
 	//update the null criteriaId with what mySQL output
 		$this->criteriaId = intval($pdo->lastInsertId());
 	}
-	
-	/**
-	* deletes checkbook from mySQL
-	*@param \PDO $pdo PDO connection object
-	*@throws \PDOException when mySQL related errors occur
-	*@throws \TypeError if $pdo is not a PDO connection object
-	**/
-	public function delete(\PDO $pdo) {
-	// enforce the criteriaId is not null
-		if($this->criteriaId === null) {
-			throw(new \PDOException("unable to update a criteria that does not exist"));
-		}
-		//create query template
-		$query = "DELETE FROM criteria WHERE criteriaId = :criteriaId";
-		$statement = $pdo->prepare($query);
-		//bind the member variables to the place holder in the template
-		$parameters = ["criteriaId" => $this->criteriaId];
-		$statement->execute($parameters);
-	}
-
-	/**
-	* updates the criteria in mySQL
-	*@param \PDO $pdo PDO connection object
-	*@throws \PDOException when mySQL errors occur
-	*@throws \TypeError if $pdo is not a PDO connection object
-	**/
 
 	/**
 	* get criteria by criteriaId

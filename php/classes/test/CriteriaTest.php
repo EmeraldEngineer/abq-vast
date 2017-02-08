@@ -96,6 +96,11 @@ class CriteriaTest extends AbqVastTest {
 		$criteria->insert($this->getPDO());
 	}
 
+	public function testGetValidCriteriaBByCriteriaId() {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("criteria");
+
+	}
 
 
 
