@@ -32,16 +32,13 @@ class CriteriaTest extends AbqVastTest {
 	protected $VALID_CRITERIAID = null;
 
 	/**
-	 * content of criteriaFieldId
-	 * @var $CRITERIAFIELDID criteriaFieldId
+	 * field foreign key
 	 **/
-	protected $VALID_CRITERIAFIELDID = null;
-
+	protected $field = null;
 	/**
-	 * content of criteriaShareId
-	 * @var $CRITERIASHAREID criteriaShareId
+	 * share foreign key
 	 **/
-	protected $VALID_CRITERIASHAREID = null;
+	protected $share = null;
 
 	/**
 	 * content of criteriaOperator
@@ -51,9 +48,9 @@ class CriteriaTest extends AbqVastTest {
 
 	/**
 	 * content of criteriaValue
-	 * @var int $VALID_CRITERIAVALUE
+	 * @var string $VALID_CRITERIAVALUE
 	 **/
-	protected $VALID_CRITERIAVALUE = 500;
+	protected $VALID_CRITERIAVALUE = "passValue";
 
 	/**
 	 * create dependent objects before running each test
@@ -79,7 +76,6 @@ class CriteriaTest extends AbqVastTest {
 		// create a new criteria and insert into mySQL
 		$criteria = new Criteria(null, $this->field->getFieldId(), $this->share->getShareId(), $this->VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
 		$criteria->insert($this->getPDO());
-	// TODO: ask about why assertEquals instead of assertSame
 		//grab the data from mySQL and enforce the fields match our expectations.
 		$pdoCriteria = Criteria::getCriteriaIdByCriteriaId($this->getPDO(), $criteria->getCriteriaId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("criteria"));
@@ -100,17 +96,8 @@ class CriteriaTest extends AbqVastTest {
 		$criteria->insert($this->getPDO());
 	}
 
-	/**
-	 * test updating a criteria, editing it, then updating it
-	 **/
-	public function testUpdateValidCriteria() {
-		//count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("criteria");
 
-		//create a new criteria and insert it into mySQL
-		$criteria = new Criteria(null, $this->field->getFieldId(), $this->share->getShareId(), $this->VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
-		$criteria->insert($this->getPDO());
-	}
+
 
 
 

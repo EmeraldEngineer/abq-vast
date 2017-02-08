@@ -223,26 +223,14 @@ class Criteria implements \JsonSerializable {
 		$parameters = ["criteriaId" => $this->criteriaId];
 		$statement->execute($parameters);
 	}
-	
+
 	/**
 	* updates the criteria in mySQL
 	*@param \PDO $pdo PDO connection object
 	*@throws \PDOException when mySQL errors occur
 	*@throws \TypeError if $pdo is not a PDO connection object
 	**/
-	
-	public function update(\PDO $pdo) {
-		//enforce the criteriaId is not null (don't update a criteria that hasn't been inserted)
-		if($this->criteriaId === null) {
-			throw(new \PDOException("unable to update a criteria that does not exist"));
-		}
-		//create query template
-		$query = "UPDATE criteriaId SET criteriaId = :criteriaId, criteriaFieldId = :criteriaFieldId, criteriaShareId = :criteriaShareId, criteriaOperator = :criteriaOperator, criteriaValue = :criteriaValue WHERE criteriaId = :criteriaId";
-		$statement = $pdo->prepare($query);
-		//bind the member variables to the placeholders in the template
-		$parameters = ["criteriaId" => $this->criteriaId, "criteriaFieldId" => $this->criteriaFieldId, "criteriaShareId" => $this->criteriaShareId, "criteriaOperator" => $this->criteriaOperator, "criteriaValue" => $this->criteriaValue];
-		$statement->execute($parameters);
-	}
+
 	/**
 	* get criteria by criteriaId
 	*
