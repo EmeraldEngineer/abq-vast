@@ -135,4 +135,112 @@ class CheckbookTest extends AbqVastTest {
         $checkbook = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), "you will find nothing");
         $this->assertCount(0, $checkbook);
     }
+    /**
+     * test grabbing Checkbook by checkbook Invoice Date
+     **/
+    public function testGetValidCheckbookByCheckbookInvoiceDate() {
+        // count the number of rows and save it for later
+        $numRows = $this->getConnection()->getRowCount("checkbook");
+
+        // create a new Checkbook and insert it into mySQL
+        $checkbook = new Checkbook(null, $this->checkbookId->getCheckbookId(), $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        $checkbook->insert($this->getPDO());
+
+        // grab the data from mySQL and enforce the fields match our expectations
+        $results = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookInvoiceDate());
+        $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
+        $this->asserCount(1, $results);
+        $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
+
+        // grab the result from the array and validate it
+        $pdoCheckbook = $results[0];
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbook->getCheckbookId());
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoicePaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOOKREFERENCENUM);
+        $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
+    }
+
+    /**
+     * test grabbing a Checkbook by content that does not exist
+     **/
+    public function testGetInvalidCheckbookByCheckbookInvoiceDate() {
+        // grab a invoice date by searching for content that does not exist
+        $checkbook = Checkbook::getCheckbookByCheckbookInvoiceDate($this->getPDO(), "you will find nothing");
+        $this->asserCount(0, $checkbook);
+    }
+    /**
+     * test grabbing Checkbook by checkbook Invoice Number
+     **/
+    public function testGetValidCheckbookByCheckbookInvoiceNum() {
+        // count the number of rows and save it for later
+        $numRows = $this->getConnection()->getRowCount("checkbook");
+
+        // create a new Checkbook and insert it into mySQL
+        $checkbook = new Checkbook(null, $this->checkbookId->getCheckbookId(), $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        $checkbook->insert($this->getPDO());
+
+        // grab the data from mySQL and enforce the fields match our expectations
+        $results = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookInvoiceNum());
+        $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
+        $this->asserCount(1, $results);
+        $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
+
+        // grab the result from the array and validate it
+        $pdoCheckbook = $results[0];
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbook->getCheckbookId());
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoicePaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOOKREFERENCENUM);
+        $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
+    }
+
+    /**
+     * test grabbing a Checkbook by content that does not exist
+     **/
+    public function testGetInvalidCheckbookByCheckbookInvoiceNum() {
+        // grab a invoice date by searching for content that does not exist
+        $checkbook = Checkbook::getCheckbookByCheckbookInvoiceNum($this->getPDO(), "you will find nothing");
+        $this->asserCount(0, $checkbook);
+    }
+    /**
+     * test grabbing Checkbook by checkbook Invoice Number
+     **/
+    public function testGetValidCheckbookByCheckbookPaymentDate() {
+        // count the number of rows and save it for later
+        $numRows = $this->getConnection()->getRowCount("checkbook");
+
+        // create a new Checkbook and insert it into mySQL
+        $checkbook = new Checkbook(null, $this->checkbookId->getCheckbookId(), $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        $checkbook->insert($this->getPDO());
+
+        // grab the data from mySQL and enforce the fields match our expectations
+        $results = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookPaymentDate());
+        $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
+        $this->asserCount(1, $results);
+        $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
+
+        // grab the result from the array and validate it
+        $pdoCheckbook = $results[0];
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbook->getCheckbookId());
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoicePaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOOKREFERENCENUM);
+        $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
+    }
+
+    /**
+     * test grabbing a Checkbook by content that does not exist
+     **/
+    public function testGetInvalidCheckbookByCheckbookPaymentDate() {
+        // grab a invoice date by searching for content that does not exist
+        $checkbook = Checkbook::getCheckbookByCheckbookInvoiceNum($this->getPDO(), "you will find nothing");
+        $this->asserCount(0, $checkbook);
+    }
 }
