@@ -23,7 +23,7 @@ class CheckbookTest extends AbqVastTest {
      * Invoice Amount of the Checkbook
      * @var float $VALID_CHECKBOOKINVOICEAMOUNT
      **/
-    protected $VALID_CHECKBOOKINVOICEAMOUNT = "PHPUnit test passing";
+    protected $VALID_CHECKBOOKINVOICEAMOUNT = 3.34;
     /**
      * timestamp of the checkbook; this starts as null and is assigned later
      * @var DateTime $VALID_CHECKBOOKINVOICEDATE
