@@ -3,8 +3,8 @@
         <testsuite name="AbqVast">
             <file>CheckbookTest.php</file>
         <!--    <file>CriteriaTest.php</file>
-            <file>FieldTest.php</file> -->
-            <file>ShareTest.php</file>
+            <file>FieldTest.php</file>
+            <file>ShareTest.php</file> -->
         </testsuite>
     </testsuites>
     <filter>
