@@ -51,7 +51,7 @@ class CheckbookTest extends AbqVastTest {
     protected $VALID_CHECKBOOKVENDOR = "PHPUnit test passing";
     /**
      * Id that created the checkbook; this is for the primary key relations
-     * @var CheckbookId checkbook
+     * @var Checkbook checkbookId
      **/
     protected $checkbookId = null;
     /**

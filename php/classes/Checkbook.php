@@ -55,7 +55,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \TypeError if data types violate type
      * @throws \Exception if some other exception occurs
      */
-    public function __construct(int $newCheckbookId = null, float $newCheckbookInvoiceAmount, $newCheckbookInvoiceDate, string  $newCheckbookInvoiceNum, $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
+    public function __construct(int $newCheckbookId = null, float $newCheckbookInvoiceAmount,  $newCheckbookInvoiceDate, string  $newCheckbookInvoiceNum,  $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
         try{
             $this->setCheckbookId($newCheckbookId);
             $this->setCheckbookInvoiceAmount($newCheckbookInvoiceAmount);
