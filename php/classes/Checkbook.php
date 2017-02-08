@@ -44,7 +44,7 @@ class Checkbook implements \JsonSerializable {
     /**
      * constructor for this checkbook
      * @param int $newCheckbookId id of this checkbook
-     * @param string $newCheckbookInvoiceAmount invoice amount for this checkbook
+     * @param float $newCheckbookInvoiceAmount invoice amount for this checkbook
      * @param \DateTime|string|null $newCheckbookInvoiceDate invoice date for this checkbook
      * @param string $newCheckbookInvoiceNum invoice number for this checkbook
      * @param \DateTime|string|null $newCheckbookPaymentDate payment date for this checkbook
@@ -55,7 +55,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \TypeError if data types violate type
      * @throws \Exception if some other exception occurs
      */
-    public function __construct(int $newCheckbookId = null, string $newCheckbookInvoiceAmount, string $newCheckbookInvoiceDate, string $newCheckbookInvoiceNum, string $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
+    public function __construct(int $newCheckbookId = null, float $newCheckbookInvoiceAmount, $newCheckbookInvoiceDate, string  $newCheckbookInvoiceNum, $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
         try{
             $this->setCheckbookId($newCheckbookId);
             $this->setCheckbookInvoiceAmount($newCheckbookInvoiceAmount);
@@ -268,19 +268,20 @@ class Checkbook implements \JsonSerializable {
      **/
     public function insert(\PDO $pdo) {
         // enforce the checkbookId is null (i.e., dont insert a checkbook that already exists)
-        if($this->checkbookId !==null) {
+        if($this->checkbookId !== null) {
             throw(new \PDOException("not a new checkbook"));
         }
 
         // create query template
-        $query = "Insert INTO checkbook(checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor) VALUES(:checkbookId, :checkbookInvoiceAmount, :checkbookInvoiceDate, :checkbookInvoiceNum, :checkbookPaymentDate, :checkbookReferenceNum, :checkbookVendor)";
+        $query = "Insert INTO checkbook(checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor) VALUES(:checkbookInvoiceAmount, :checkbookInvoiceDate, :checkbookInvoiceNum, :checkbookPaymentDate, :checkbookReferenceNum, :checkbookVendor)";
         $statement = $pdo->prepare($query);
 
         //bind the member variables to the place holders in the template
         $formattedDate1 = $this->checkbookInvoiceDate->format("Y-m-d H:i:s");
         $formattedDate2 = $this->checkbookPaymentDate->format("Y-m-d H:i:s");
-        $parameters = ["checkbookId" => $this->checkbookId, "checkbookInvoiceAmount" => $this->checkbookInvoiceAmount, "checkbookInvoiceDate" => $formattedDate1, "checkbookInvoiceNum" => $this->checkbookInvoiceNum, "checkbookPaymentDate" => $formattedDate2, "checkbookReferenceNum" => $this->checkbookReferenceNum, "checkbookVendor" => $this->checkbookVendor];
+        $parameters = ["checkbookInvoiceAmount" => $this->checkbookInvoiceAmount, "checkbookInvoiceDate" => $formattedDate1, "checkbookInvoiceNum" => $this->checkbookInvoiceNum, "checkbookPaymentDate" => $formattedDate2, "checkbookReferenceNum" => $this->checkbookReferenceNum, "checkbookVendor" => $this->checkbookVendor];
         $statement->execute($parameters);
+
         // update the null checkbookId with what mySQL just gave us
         $this->checkbookId = intval($pdo->lastInsertId());
     }
