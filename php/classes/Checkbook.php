@@ -301,7 +301,7 @@ class Checkbook implements \JsonSerializable {
             throw(new \PDOException("checkbook id is not positive"));
         }
         // create query template
-        $query = "SELECT checkbookId, checkbookInoiceAmount, checkbookInvoiceDate, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookId = :checkbookId";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookId = :checkbookId";
         $statement = $pdo->prepare($query);
         // bind the checkbook id to the place holder in the template
         $parameters = ["checkbookId" => $checkbookId];
