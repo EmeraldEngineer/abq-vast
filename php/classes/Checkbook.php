@@ -94,7 +94,7 @@ class Checkbook implements \JsonSerializable {
      **/
     public function setCheckbookId(int $newCheckbookId = null) {
         //**base case: if the checkbook is null
-        if ($newCheckbookId ===null) {
+        if ($newCheckbookId === null) {
             $this->checkbookId = null;
             return;
         }
