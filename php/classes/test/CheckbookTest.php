@@ -94,7 +94,7 @@ class CheckbookTest extends AbqVastTest {
      **/
     public function testInsertInvalidCheckbook(){
         // create a Checkbook with a non null checkbook id and watch it fail
-        $checkbook = new Checkbook(CheckbookTest::INVALID_KEY, $this->checkbookId->checkbookId(), $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        $checkbook = new Checkbook(CheckbookTest::INVALID_KEY, $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
         $checkbook->insert($this->getPDO());
     }
     /**
