@@ -73,7 +73,7 @@ class CheckbookTest extends AbqVastTest {
         $numRows = $this->getConnection()->getRowCount("checkbook");
 
         // create a new Checkbook and insert into mySQL
-        $checkbook = new Checkbook(null, $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        $checkbook = new Checkbook(1, $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
         $checkbook->insert($this->getPDO());
 
         // grab the data from mySQL and enforce the fields match our expectations
