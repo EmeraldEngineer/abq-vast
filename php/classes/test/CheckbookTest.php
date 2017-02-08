@@ -318,7 +318,7 @@ class CheckbookTest extends AbqVastTest {
      **/
     public function testGetAllValidCheckbooks() {
         // count the number of rows and save it for later
-        $numRows = $this->getConnection()->getRowCount("tweet");
+        $numRows = $this->getConnection()->getRowCount("checkbook");
 
         // create a new Checkbook and insert to into mySQL
         $checkbook = new Checkbook(null, $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
