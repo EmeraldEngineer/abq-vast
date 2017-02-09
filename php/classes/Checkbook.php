@@ -144,7 +144,7 @@ class Checkbook implements \JsonSerializable {
         }
         // store invoice date
         try {
-            $newCheckbookInvoiceDate = self::validateDateTime($newCheckbookInvoiceDate);
+            $newCheckbookInvoiceDate = self::validateDate($newCheckbookInvoiceDate);
         } catch(\InvalidArgumentException $invalidArgument) {
             throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
         } catch(\RangeException $range) {
@@ -308,10 +308,10 @@ class Checkbook implements \JsonSerializable {
         $statement->execute($parameters);
         // grab the checkbook from mySQL
         try{
-            $checkbook = null;
+            $checkbookId = null;
             $statement->setFetchMode(\PDO::FETCH_ASSOC);
             $row = $statement->fetch();
-            if($row !==false) {
+            if($row !== false) {
                 $checkbook = new Checkbook($row["checkbookId"],$row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
             }
         } catch(\Exception $exception) {
