@@ -312,11 +312,11 @@ class Checkbook implements \JsonSerializable {
             $statement->setFetchMode(\PDO::FETCH_ASSOC);
             $row = $statement->fetch();
             if($row !==false) {
-                $checkbookId = new Checkbook($row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbookId = new Checkbook($row["checkbookId"],$row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
             }
         } catch(\Exception $exception) {
             // if the row couldn't be converted, rethrow it
-            throw(new \PDOException($exception->getMessage(), 0, $exception));
+            throw(new \PDOException($exception->getMessage(), null, $exception));
         }
         return($checkbookId);
     }
