@@ -148,6 +148,30 @@ class Field implements \JsonSerializable {
 		//store the field name
 		$this->fieldName = $newFieldName;
 	}
+	/**
+	 * inserts this share image into mySQL
+	 *
+	 * @param \PDO $pdo PDO Connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) {
+		//enforce the field id is null (i.e. don't insert a field id that already exists)
+		if($this->fieldId !== null) {
+			throw(new \PDOException("not a new field"));
+		}
+
+		//create query template
+		$query = "INSERT INTO field(fieldName, fieldType) VALUES(:fieldName, :fieldType)";
+		$statement = $pdo->prepare($query);
+
+		//bind the member variables to the place holders in the template
+		$parameters = ["fieldName" => $this->fieldName, "fieldType" => $this->fieldType];
+		$statement->execute($parameters);
+
+		//update the null fieldId with what mySQL just gave us
+		$this->fieldId = intval($pdo->lastInsertId());
+	}
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
 		return($fields);
