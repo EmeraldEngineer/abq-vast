@@ -216,7 +216,7 @@ class Criteria implements \JsonSerializable {
 	*@throws \TypeError when variables are not the correct data type
 	**/
 	
-	public static function getCriteriaIdByCriteriaId(\PDO $pdo, int $criteriaId) {
+	public static function getCriteriaByCriteriaId(\PDO $pdo, int $criteriaId) {
 		//sanitize the criteriaId before searching
 		if($criteriaId <= 0) {
 			throw(new \PDOException("criteria id is not positive"));
