@@ -22,12 +22,12 @@ class ShareTest extends AbqVastTest {
 	 * valid share image
 	 * @var string $VALID_SHAREIMAGE
 	 **/
-	protected $VALID_SHAREIMAGE = "PHPUnittestpassing";
+	protected $VALID_SHAREIMAGE = "valid share image";
 	/**
 	 * valid share url
 	 * @var string $VALID_SHAREURL
 	 **/
-	protected $VALID_SHAREURL = "PHPUnitteststillpassing";
+	protected $VALID_SHAREURL = "http://google.com";
 	/**
 	*
 	**/
@@ -47,9 +47,9 @@ class ShareTest extends AbqVastTest {
 
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoShare = Share::getShareByShareId($this->getPDO(), $share->getShareId());
-		$this->assertSame($numRows +1, $this->getConnection()->getRowCount("share"));
-		$this->assertSame($pdoShare->getShareImage(), $this->VALID_SHAREIMAGE);
-		$this->assertSame($pdoShare->getShareUrl(), $this->VALID_SHAREURL);
+		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("share"));
+		$this->assertEquals($pdoShare->getShareImage(), $this->VALID_SHAREIMAGE);
+		$this->assertEquals($pdoShare->getShareUrl(), $this->VALID_SHAREURL);
 	}
 
 	/**
