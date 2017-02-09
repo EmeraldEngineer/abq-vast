@@ -115,7 +115,7 @@ class CriteriaTest extends AbqVastTest {
 	/**
 	 * test grabbing a criteria that does not exist
 	 **/
-	public function testGetAll(){
+	public function testGetAll() {
 		//grab a criteria id that exceeds the maximum allowable id
 		$criteria = Criteria::getCriteriaByCriteriaId($this->getPDO(), AbqVastTest::INVALID_KEY);
 		$this->assertNull($criteria);
@@ -123,7 +123,7 @@ class CriteriaTest extends AbqVastTest {
 
 	public function testGetAllValidCriteria() {
 		// get number for rows and save it for later
-		$numRows =  $this->getConnection()->getRowCount("criteria");
+		$numRows = $this->getConnection()->getRowCount("criteria");
 
 		//create a new Criteria and insert into mySQL
 		$criteria = new Criteria(null, $this->field->getFieldId, $this->share->getShareId, $this->$VALID_CRITERIAOPERATOR, $this->$VALID_CRITERIAVALUE);
@@ -137,8 +137,9 @@ class CriteriaTest extends AbqVastTest {
 
 		//grab the results from the array and validate it
 		$pdoCriteria = $results[0];
-		$this->assertEquals->($pdoCriteria->getFieldId(), $this->field->getFieldId());
-		$this->assertEquals->($pdoCriteria->getShareId(), $this->share-getShareId());
-		$this->assertEquals->($pdoCriteria->getCriteriaOperator(), $this->VALID_CRITERIAOPERATOR);
-		$this->assertEquals->($pdoCriteria->getCriteriaValue(), $this->VALID_CRITERIAVALUE);
+		$this->assertEquals($pdoCriteria->getFieldId(), $this->field->getFieldId());
+		$this->assertEquals($pdoCriteria->getShareId(), $this->share - getShareId());
+		$this->assertEquals($pdoCriteria->getCriteriaOperator(), $this->VALID_CRITERIAOPERATOR);
+		$this->assertEquals($pdoCriteria->getCriteriaValue(), $this->VALID_CRITERIAVALUE);
+	}
 }
