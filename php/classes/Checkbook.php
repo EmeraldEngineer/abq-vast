@@ -202,7 +202,7 @@ class Checkbook implements \JsonSerializable {
         }
         // store the Payment Date
         try{
-            $newCheckbookPaymentDate = self ::validateDateTime($newCheckbookPaymentDate);
+            $newCheckbookPaymentDate = self ::validateDate($newCheckbookPaymentDate);
         } catch(\InvalidArgumentException $invalidArgument){
             throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
         } catch(\RangeException $range) {
@@ -377,14 +377,15 @@ class Checkbook implements \JsonSerializable {
         // I don't always write WHERE clauses, but when I do, reformat dates and use an AND operator
 
         // just shutup and take my prepared statement
-        $checkbookInvoiceSunriseDate = date_sunrise($checkbookInvoiceSunriseDate);
-        $checkbookInvoiceSunsetDate = date_sunset($checkbookInvoiceSunsetDate);
-        if(empty($checkbookInvoiceSunriseDate) === true) {
-            throw(new \PDOException("InvoiceSunrise date is invalid"));
-        }
-        if(empty($checkbookInvoiceSunsetDate) === true) {
-            throw(new \PDOException("InvoiceSunset date is invalid"));
-        }
+            try {
+                $checkbookInvoiceSunriseDate = self::validateDate($checkbookInvoiceSunriseDate);
+                $checkbookInvoiceSunsetDate = self::validateDate($checkbookInvoiceSunsetDate);
+            }    catch(\InvalidArgumentException $invalidArgument) {
+                throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+            } catch(\RangeException $range) {
+                throw(new \RangeException($range->getMessage(), 0, $range));
+            }
+
         // create query template
         $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceDate >= :checkbookInvoiceSunriseDate AND <= :checkbookInvoiceSunsetDate";
         $statement = $pdo->prepare($query);

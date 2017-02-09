@@ -79,7 +79,6 @@ class CheckbookTest extends AbqVastTest {
         // grab the data from mySQL and enforce the fields match our expectations
         $pdoCheckbook = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookId());
         $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("checkbook"));
-        $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
@@ -90,7 +89,7 @@ class CheckbookTest extends AbqVastTest {
     /**
      * test inserting a Checkbook that already exists
      *
-     * @expectedException
+     * @expectedException \PDOException
      **/
     public function testInsertInvalidCheckbook(){
         // create a Checkbook with a non null checkbook id and watch it fail
