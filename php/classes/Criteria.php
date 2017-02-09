@@ -6,7 +6,7 @@ require_once("autoload.php");
 /**
  * Criteria class, allows the user to select what data they would like to graph.
  * @author Taylor McCarthy <tmccarthy4@cnm.edu>
- * This is a change
+ * This is a change again
  **/
 class Criteria implements \JsonSerializable {
 	/**
