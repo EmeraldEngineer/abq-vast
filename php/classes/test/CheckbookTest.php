@@ -78,7 +78,7 @@ class CheckbookTest extends AbqVastTest {
 
         // grab the data from mySQL and enforce the fields match our expectations
         $pdoCheckbook = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookId());
-        $this->assertEquals($numRows + 1, $this->getConnection()->getConnection()->getRowCount("checkbook"));
+        $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("checkbook"));
         $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->checkbook->getCheckbookInvoiceAmount());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALIDCHECKBOOKINVOICEDATE);
