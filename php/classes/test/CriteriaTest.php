@@ -105,15 +105,40 @@ class CriteriaTest extends AbqVastTest {
 		$criteria->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
-		$pdoCriteria = Criteria::getCriteriaIdByCriteriaId($this->getPDO(), $criteria->getCriteriaId());
+		$pdoCriteria = Criteria::getCriteriaByCriteriaId($this->getPDO(), $criteria->getCriteriaId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("criteria"));
 		$this->assertEquals($pdoCriteria->getCriteriaId(), $this->criteria->getCriteriaId());
 		$this->assertEquals($pdoCriteria->getCriteriaOperator(), $this->VALID_CRITERIAOPERATOR);
 		$this->assertEquals($pdoCriteria->getCriteriaValue(), $this->VALID_CRITERIAVALUE);
 	}
 
+	/**
+	 * test grabbing a criteria that does not exist
+	 **/
+	public function testGetAll(){
+		//grab a criteria id that exceeds the maximum allowable id
+		$criteria = Criteria::getCriteriaByCriteriaId($this->getPDO(), AbqVastTest::INVALID_KEY);
+		$this->assertNull($criteria);
+	}
 
+	public function testGetAllValidCriteria() {
+		// get number for rows and save it for later
+		$numRows =  $this->getConnection()->getRowCount("criteria");
 
+		//create a new Criteria and insert into mySQL
+		$criteria = new Criteria(null, $this->field->getFieldId, $this->share->getShareId, $this->$VALID_CRITERIAOPERATOR, $this->$VALID_CRITERIAVALUE);
+		$criteria->insert($this->getPDO());
 
+		//grab the data from mySQL and enforce the fields match our expectations
+		$results = Criteria::getAllCriteria($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("criteria"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Tmccarthy4\\abq-vast\\Criteria", $results);
 
+		//grab the results from the array and validate it
+		$pdoCriteria = $results[0];
+		$this->assertEquals->($pdoCriteria->getFieldId(), $this->field->getFieldId());
+		$this->assertEquals->($pdoCriteria->getShareId(), $this->share-getShareId());
+		$this->assertEquals->($pdoCriteria->getCriteriaOperator(), $this->VALID_CRITERIAOPERATOR);
+		$this->assertEquals->($pdoCriteria->getCriteriaValue(), $this->VALID_CRITERIAVALUE);
 }
