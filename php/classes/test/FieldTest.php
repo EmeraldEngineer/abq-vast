@@ -67,7 +67,7 @@ class FieldTest extends AbqVastTest {
 	 * test grabbing a field that does not exist
 	 **/
 	public function testGetInvalidFieldByFieldId() {
-		//grab a Field id that exceeds the maximum allowable share id
+		//grab a Field id that exceeds the maximum allowable field id
 		$field = Field::getFieldByFieldId($this->getPDO(), AbqVastTest::INVALID_KEY);
 		$this->assertNull($field);
 	}
