@@ -333,6 +333,15 @@ class Checkbook implements \JsonSerializable {
      **/
     public static function getCheckbookByCheckbookInvoiceAmount(\PDO $pdo, float $checkbookInvoiceLowAmount, float $checkbookInvoiceHighAmount) {
         // create query template
+        try {
+            $checkbookInvoiceLowAmount = self::setCheckbookInvoiceAmount($checkbookInvoiceLowAmount);
+            $checkbookInvoiceHighAmount = self::setCheckbookInvoiceAmount($checkbookInvoiceHighAmount);
+        } catch(\InvalidArgumentException $invalidArgument) {
+            throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+        } catch(\RangeException $range) {
+            throw(new \RangeException($range->getMessage(), 0, $range));
+        }
+        // create query template
         $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount = :checkbookInvoiceAmount";
         $statement = $pdo->prepare($query);
 
@@ -341,19 +350,21 @@ class Checkbook implements \JsonSerializable {
         $statement->execute($parameters);
 
         // build an array of Invoice amounts
-        $checkbooks = new \SplFixedArray($statement->rowCount());
+        $checkbookInvoiceAmount = new \SplFixedArray($statement->rowCount());
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch() !== false)) {
             try {
-                $checkbookInvoiceLowAmount = self ::setCheckbookInvoiceAmount($checkbookInvoiceLowAmount);
-                $checkbookInvoiceHighAmount = self ::setCheckbookInvoiceAmount($checkbookInvoiceHighAmount);
-                $checkbooks = new checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbookInvoiceLowAmount = self::getCheckbookInvoiceAmount($checkbookInvoiceLowAmount);
+                $checkbookInvoiceHighAmount = self::getCheckbookInvoiceAmount($checkbookInvoiceHighAmount);
+                $checkbookInvoiceAmount = new checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbookInvoiceAmount[$checkbookInvoiceAmount->key()] = $checkbookInvoiceAmount;
+                $checkbookInvoiceAmount->next();
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
-                throw(new \PDOException($exception->getMessage(), 0, $exception));
+                thwor(new \PDOException($exception->getMessage(), 0, $exception));
             }
         }
-        return($checkbooks);
+        return($checkbookInvoiceAmount);
     }
 
     /**
@@ -402,7 +413,7 @@ class Checkbook implements \JsonSerializable {
                 $datetime->next();
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
-                throw(new \PDOexception($exception->getMessage(), 0, $exception));
+                throw(new \PDOException($exception->getMessage(), 0, $exception));
             }
         }
         return($datetime);
@@ -511,7 +522,7 @@ class Checkbook implements \JsonSerializable {
 
         // create query template
         $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookReferenceNum = :checkbookReferenceNum";
-        $statement = $pdo->prepate($query);
+        $statement = $pdo->prepare($query);
 
         // bind the checkbook Reference Number to the place holder in the template
         $checkbookReferenceNum = "%$checkbookReferenceNum%";
@@ -523,7 +534,7 @@ class Checkbook implements \JsonSerializable {
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch()) !== false) {
             try {
-                $checkbooks = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbookReferenceNum = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
                 $checkbooks[$checkbooks->key()] = $checkbookReferenceNum;
                 $checkbooks->next();
             } catch(\Exception $exception) {
@@ -531,7 +542,7 @@ class Checkbook implements \JsonSerializable {
                 throw(new \PDOException($exception->getMessage(), 0, $exception));
             }
         }
-        return($checkbooks);
+        return($checkbookReferenceNum);
     }
     /**
      * gets the checkbook by vendor
@@ -555,18 +566,18 @@ class Checkbook implements \JsonSerializable {
         $statement = $pdo->prepare($query);
 
         // bind the vendor content to the place holder int he template
-        $checkbookVendor
-            = "%checkbookVendor%";
+        $checkbookVendor = "%$checkbookVendor%";
         $parameters = ["checkbookVendor" => $checkbookVendor];
-        $checkbookVendor->execute($checkbookVendor);
+        $statement->execute($parameters);
 
         // build an array of vendors
         $checkbookVendor = new \SplFixedArray($statement->rowCount());
-        $statement->setFetchMode(\PDO::FETCH_ASOC);
+        $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch()) !== false) {
             try{
                 $checkbookVendor = new Checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
                 $checkbookVendor[$checkbookVendor->key()] = $checkbookVendor;
+                $checkbookVendor->next();
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
                 throw(new \PDOException($exception->getMessage(), 0, $exception));

@@ -109,7 +109,7 @@ class CheckbookTest extends AbqVastTest {
 
         // grab the data from mySQL and enforce the fields match our expectations
         // pass in both arguments into the method call (Low and High)
-        $results = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), $checkbook->getCheckbookInvoiceAmount(), $checkbook->getCheckbookInvoiceLowAmount(), $checkbook->getCheckbookInvoiceHighAmount());
+        $results = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), $checkbook->getcheckbookInvoiceLowAmount(), $checkbook->getCheckbookInvoiceHighAmount());
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->assertCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
@@ -130,7 +130,7 @@ class CheckbookTest extends AbqVastTest {
      **/
     public function testGetInvalidCheckbookByCheckbookInvoiceAmount(){
         // grab a invoice amount by searching for content that does not exist
-        $checkbook = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), M_PI);
+        $checkbook = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), $this->getCheckbookInvoiceLowAmount(), $this->getCheckbookInvoiceHightAmount(), M_PI);
         $this->assertCount(0, $checkbook);
     }
     /**
@@ -145,7 +145,7 @@ class CheckbookTest extends AbqVastTest {
         $checkbook->insert($this->getPDO());
 
         // grab the data from mySQL and enforce the fields match our expectations
-        $results = Checkbook::getCheckbookByCheckbookInvoiceDate($this->getPDO(), $checkbook->getCheckbookInvoiceDate());
+        $results = Checkbook::getCheckbookByCheckbookInvoiceDate($this->getPDO(), $checkbook->getCheckbookInvoiceSuriseDate(), $checkbook->getCheckbookInoviceSusetDate());
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->asserCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
@@ -166,7 +166,7 @@ class CheckbookTest extends AbqVastTest {
      **/
     public function testGetInvalidCheckbookByCheckbookInvoiceDate() {
         // grab a invoice date by searching for content that does not exist
-        $checkbook = Checkbook::getCheckbookByCheckbookInvoiceDate($this->getPDO(), "you will find nothing");
+        $checkbook = DateTime::getCheckbookByCheckbookInvoiceDate($this->getPDO(), "you will find nothing");
         $this->asserCount(0, $checkbook);
     }
     /**
@@ -181,7 +181,7 @@ class CheckbookTest extends AbqVastTest {
         $checkbook->insert($this->getPDO());
 
         // grab the data from mySQL and enforce the fields match our expectations
-        $results = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookInvoiceNum());
+        $results = Checkbook::getCheckbookByCheckbookInoviceNum($this->getPDO(), $checkbook->getCheckbookInvoiceNum());
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->asserCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
@@ -203,7 +203,7 @@ class CheckbookTest extends AbqVastTest {
     public function testGetInvalidCheckbookByCheckbookInvoiceNum() {
         // grab a invoice date by searching for content that does not exist
         $checkbook = Checkbook::getCheckbookByCheckbookInvoiceNum($this->getPDO(), "you will find nothing");
-        $this->asserCount(0, $checkbook);
+        $this->assertCount(0, $checkbook);
     }
     /**
      * test grabbing Checkbook by checkbook Invoice Number
@@ -217,7 +217,7 @@ class CheckbookTest extends AbqVastTest {
         $checkbook->insert($this->getPDO());
 
         // grab the data from mySQL and enforce the fields match our expectations
-        $results = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookPaymentDate());
+        $results = Checkbook::getCheckbookByCheckbookPaymentDate($this->getPDO(), $checkbook->getCheckbookPaymentSunriseDate(), $checkbook->getcheckbookSunsetDate());
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->asserCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
@@ -238,7 +238,7 @@ class CheckbookTest extends AbqVastTest {
      **/
     public function testGetInvalidCheckbookByCheckbookPaymentDate() {
         // grab a invoice date by searching for content that does not exist
-        $checkbook = Checkbook::getCheckbookByCheckbookInvoiceNum($this->getPDO(), "you will find nothing");
+        $checkbook = DateTime::getCheckbookByCheckbookPaymentDate($this->getPDO(), "you will find nothing");
         $this->assertCount(0, $checkbook);
     }
     /**
@@ -253,7 +253,7 @@ class CheckbookTest extends AbqVastTest {
         $checkbook->insert($this->getPDO());
 
         // grab the data from mySQL and enforce the fields match our expectations
-        $results = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookReferenceNum());
+        $results = Checkbook::getCheckbookByCheckbookReferenceNum($this->getPDO(), $checkbook->getCheckbookReferenceNum());
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->asserCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
@@ -289,7 +289,7 @@ class CheckbookTest extends AbqVastTest {
         $checkbook->insert($this->getPDO());
 
         // grab the data from mySQL and enforce the fields match our expectations
-        $results = Checkbook::getCheckbookByCheckbookId($this->getPDO(), $checkbook->getCheckbookVendor());
+        $results = Checkbook::getCheckbookByCheckbookVendor($this->getPDO(), $checkbook->getCheckbookVendor());
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->asserCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
@@ -310,8 +310,8 @@ class CheckbookTest extends AbqVastTest {
      **/
     public function testGetInvalidCheckbookByCheckbookVendor() {
         // grab a invoice date by searching for content that does not exist
-        $checkbook = Checkbook::getCheckbookByCheckbookInvoiceNum($this->getPDO(), "you will find nothing");
-        $this->asserCount(0, $checkbook);
+        $checkbook = Checkbook::getCheckbookByCheckbookVendor($this->getPDO(), "you will find nothing");
+        $this->assertCount(0, $checkbook);
     }
     /**
      * test grabbing all Checkbooks
