@@ -127,6 +127,12 @@ class CriteriaTest extends AbqVastTest {
 		$criteria->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match out expectations.
+		$results = Criteria::getAllCriteria($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("criteria"));
+		$this->asserCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Criteria", $results);
+
+		//grab the result from the array and validate it
 		$pdoCriteria = $results[0];
 		$this->assertEquals($pdoCriteria->getCriteriaId(),$this->criteria->getCriteriaId());
 		$this->assertEquals($pdoCriteria->getFieldId(), $this->field->getFieldId());
