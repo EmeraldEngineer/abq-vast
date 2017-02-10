@@ -1,5 +1,4 @@
 <?php
-// FIXME: convert criteriaValue to varchar(82)
 namespace Edu\Cnm\AbqVast;
 
 require_once("autoload.php");
@@ -31,7 +30,7 @@ class Criteria implements \JsonSerializable {
 	private $criteriaOperator;
 	/**
 	 * value of criteria
-	 * @var string $criteraValue
+	 * @var string $criteriaValue
 	 **/
 	private $criteriaValue;
 	/**
