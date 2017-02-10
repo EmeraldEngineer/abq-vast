@@ -312,47 +312,42 @@ class Checkbook implements \JsonSerializable {
             $statement->setFetchMode(\PDO::FETCH_ASSOC);
             $row = $statement->fetch();
             if($row !== false) {
-                $checkbook = new Checkbook($row["checkbookId"],$row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbookId = new Checkbook($row["checkbookId"],$row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
             }
         } catch(\Exception $exception) {
             // if the row couldn't be converted, rethrow it
             throw(new \PDOException($exception->getMessage(), 0, $exception));
         }
-        return($checkbook);
+        return($checkbookId);
     }
 
     /**
      * gets the checkbook by Invoice Amount
      *
      * @param \PDO $pdo PDO connection object
-     * @param float $checkbookInvoiceAmount invoice amount to search for
+     * @param float $checkbookInvoiceLowAmount Lower invoice amount to search for
+     * @param float $checkbookInvoiceHighAmount Higher invoice amount to search for
      * @return \SplFixedArray SplFixedArray of Checkbook found
      * @throws \PDOException whe mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookInvoiceAmount(\PDO $pdo, float $checkbookInvoiceAmount) {
-        // sanitize the description before searching
-        $checkbookInvoiceAmount = trim($checkbookInvoiceAmount);
-        if(empty($checkbookInvoiceAmount) === true) {
-            throw(new \PDOException("Invoice amount is invalid"));
-        }
+    public static function getCheckbookByCheckbookInvoiceAmount(\PDO $pdo, float $checkbookInvoiceLowAmount, float $checkbookInvoiceHighAmount) {
         // create query template
         $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount = :checkbookInvoiceAmount";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice amount to the place holder in the template
-        $checkbookInvoiceAmount = "%checkbookInvoiceAmount%";
-        $parameters = ["checkbookInvoiceAmount" => $checkbookInvoiceAmount];
+        $parameters = ["checkbookInvoiceLowAmount" => $checkbookInvoiceLowAmount, "checkbookInvoiceHighAmount" => $checkbookInvoiceHighAmount];
         $statement->execute($parameters);
 
-        // build an array of checkbooks
+        // build an array of Invoice amounts
         $checkbooks = new \SplFixedArray($statement->rowCount());
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch() !== false)) {
             try {
-                $checkbook = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
-                $checkbooks[$checkbooks->key()] = $checkbook;
-                $checkbooks->next();
+                $checkbookInvoiceLowAmount = self ::setCheckbookInvoiceAmount($checkbookInvoiceLowAmount);
+                $checkbookInvoiceHighAmount = self ::setCheckbookInvoiceAmount($checkbookInvoiceHighAmount);
+                $checkbooks = new checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
                 throw(new \PDOException($exception->getMessage(), 0, $exception));
@@ -465,8 +460,8 @@ class Checkbook implements \JsonSerializable {
      **/
     public static function getCheckbookByCheckbookPaymentDate(\PDO $pdo, $checkbookPaymentSunriseDate, $checkbookPaymentSunsetDate) {
         // continuation of trying the sunrise and sunset
-        $checkbookPaymentSunriseDate = date_sunrise($checkbookPaymentSunriseDate);
-        $checkbookPaymentSunsetDate = date_sunset($checkbookPaymentSunsetDate);
+        $checkbookPaymentSunriseDate = date($checkbookPaymentSunriseDate);
+        $checkbookPaymentSunsetDate = date($checkbookPaymentSunsetDate);
         if(empty($checkbookPaymentSunriseDate) === true) {
             throw(new \PDOException("PaymentSunrise date is invalid"));
         }
