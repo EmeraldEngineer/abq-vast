@@ -18,7 +18,7 @@ require_once(dirname(__DIR__) . "/autoload.php");
  * @author Adan Pedroza <apedroza6@cnm.edu>
  **/
 class FieldTest extends AbqVastTest {
-	/**
+	/**comment
 	 * valid field type
 	 * @var string $VALID_FIELDTYPE
 	 **/
