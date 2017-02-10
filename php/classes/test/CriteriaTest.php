@@ -109,7 +109,10 @@ class CriteriaTest extends AbqVastTest {
 		$this->assertEquals($pdoCriteria->getCriteriaValue(), $this->VALID_CRITERIAVALUE);
 	}
 
-	public function testGetAll() {
+	/**
+	 * test grabbing a criteria that does not exist
+	 **/
+	public function testGetInvalidCriteriaByCriteriaId() {
 		//grab a criteria id that exceeds the maximum allowable id
 		$criteria = Criteria::getCriteriaByCriteriaId($this->getPDO(), AbqVastTest::INVALID_KEY);
 		$this->assertNull($criteria);
