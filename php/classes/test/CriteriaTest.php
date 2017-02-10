@@ -90,7 +90,7 @@ class CriteriaTest extends AbqVastTest {
 	 **/
 	public function testInsertInvalidCriteria() {
 		//create a criteria will a non null criteria id and watch the world burn
-		$criteria = new Criteria(AbqVastTest::INVALID_KEY, $this->VALID_CRITERIAID, $this->field->getFieldId(), $this->share->getShareId());
+		$criteria = new Criteria(AbqVastTest::INVALID_KEY, $this->field->getFieldId(), $this->share->getShareId(), $this->VALID_CRITERIAOPERATOR,$this->VALID_CRITERIAVALUE);
 		$criteria->insert($this->getPDO());
 	}
 
@@ -107,6 +107,12 @@ class CriteriaTest extends AbqVastTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("criteria"));
 		$this->assertEquals($pdoCriteria->getCriteriaOperator(), $this->VALID_CRITERIAOPERATOR);
 		$this->assertEquals($pdoCriteria->getCriteriaValue(), $this->VALID_CRITERIAVALUE);
+	}
+
+	public function testGetAll() {
+		//grab a criteria id that exceeds the maximum allowable id
+		$criteria = Criteria::getCriteriaByCriteriaId($this->getPDO(), AbqVastTest::INVALID_KEY);
+		$this->assertNull($criteria);
 	}
 
 }
