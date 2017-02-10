@@ -115,9 +115,12 @@ class Field implements \JsonSerializable {
 			throw(new \InvalidArgumentException("Field Type is empty or insecure"));
 		}
 
-		//verify field type will fit into the database
-		if(strlen($newFieldType) > 1) {
+/*		//verify field type will fit into the database
+		if(strlen($newFieldType) == 1) {
 			throw(new \RangeException("Field Type is too large"));
+		}*/
+		if ( $newFieldType !="d" || $newFieldType !="n" || $newFieldType !="s") {
+			throw(new \InvalidArgumentException("not a valid field type"));
 		}
 
 		//store the field type

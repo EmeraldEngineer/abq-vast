@@ -22,7 +22,7 @@ class FieldTest extends AbqVastTest {
 	 * valid field type
 	 * @var string $VALID_FIELDTYPE
 	 **/
-	protected $VALID_FIELDTYPE = "valid field type";
+	protected $VALID_FIELDTYPE = "d";
 	/**
 	 * valid field name
 	 * @var string $VALID_FIELDNAME
