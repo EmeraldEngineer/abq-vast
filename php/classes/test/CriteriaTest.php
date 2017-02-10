@@ -127,7 +127,7 @@ class CriteriaTest extends AbqVastTest {
 		$criteria->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match out expectations.
-		$pdoCriteria = results[0];
+		$pdoCriteria = $results[0];
 		$this->assertEquals($pdoCriteria->getCriteriaId(),$this->criteria->getCriteriaId());
 		$this->assertEquals($pdoCriteria->getFieldId(), $this->field->getFieldId());
 		$this->assertEquals($pdoCriteria->getShareId(), $this->share->getShareId());
