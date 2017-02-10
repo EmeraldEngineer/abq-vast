@@ -109,10 +109,10 @@ class CheckbookTest extends AbqVastTest {
 
         // grab the data from mySQL and enforce the fields match our expectations
         // pass in both arguments into the method call (Low and High)
-        $results = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), $checkbook->getCheckbookInvoiceAmount(), $checkbook->);
+        $results = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), $checkbook->getCheckbookInvoiceAmount(), $checkbook->getCheckbookInvoiceLowAmount(), $checkbook->getCheckbookInvoiceHighAmount());
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->assertCount(1, $results);
-        $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);7
+        $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
 
         // grab the result from the array and validate it
         $pdoCheckbook = $results[0];
