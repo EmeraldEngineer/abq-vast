@@ -90,7 +90,7 @@ class CriteriaTest extends AbqVastTest {
 	 **/
 	public function testInsertInvalidCriteria() {
 		//create a criteria will a non null criteria id and watch the world burn
-		$criteria = new Criteria(AbqVastTest::INVALID_KEY, $this->VALID_CRITERIAID, $this->field->getFieldId, $this->share->getShareId);
+		$criteria = new Criteria(AbqVastTest::INVALID_KEY, $this->VALID_CRITERIAID, $this->field->getFieldId(), $this->share->getShareId());
 		$criteria->insert($this->getPDO());
 	}
 
@@ -99,7 +99,7 @@ class CriteriaTest extends AbqVastTest {
 		$numRows = $this->getConnection()->getRowCount("criteria");
 
 		//create a new criteria and insert into mySQL
-		$criteria = new Criteria(null, $this->field->getFieldId, $this->share->getShareId, $this->$VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
+		$criteria = new Criteria(null, $this->field->getFieldId(), $this->share->getShareId(), $this->$VALID_CRITERIAOPERATOR, $this->VALID_CRITERIAVALUE);
 		$criteria->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
@@ -123,7 +123,7 @@ class CriteriaTest extends AbqVastTest {
 		$numRows = $this->getConnection()->getRowCount("criteria");
 
 		//create a new Criteria and insert into mySQL
-		$criteria = new Criteria(null, $this->field->getFieldId, $this->share->getShareId, $this->$VALID_CRITERIAOPERATOR, $this->$VALID_CRITERIAVALUE);
+		$criteria = new Criteria(null, $this->field->getFieldId(), $this->share->getShareId(), $this->$VALID_CRITERIAOPERATOR, $this->$VALID_CRITERIAVALUE);
 		$criteria->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match out expectations.
