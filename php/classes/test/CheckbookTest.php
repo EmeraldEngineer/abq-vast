@@ -83,7 +83,7 @@ class CheckbookTest extends AbqVastTest {
         $this->VALID_CHECKBOOKINVOICESUNSETDATE->add(new \DateInterval("P10D"));
 
         $this->VALID_CHECKBOOKPAYMENTSUNRISEDATE = new \DateTime();
-        $this->VALID_CHECKBOOKPAYMENTSUNRISEDATE->sub(new \DateInterval('P10D'));
+        $this->VALID_CHECKBOOKPAYMENTSUNRISEDATE->sub(new \DateInterval("P10D"));
 
         $this->VALID_CHECKBOOKPAYMENTDATE = new \DateTime();
 
