@@ -26,8 +26,9 @@ class CheckbookTest extends AbqVastTest {
      * @var float $VALID_CHECKBOOKINVOICEHIGHAMOUNT
      **/
     protected $VALID_CHECKBOOKINVOICEAMOUNT = 3.1;
-    private $VALID_CHECKBOOKINVOICELOWAMOUNT = 1;
-    private $VALID_CHECKBOOKINVOICEHIGHAMOUNT = 2.1;
+    protected $VALID_CHECKBOOKINVOICELOWAMOUNT = 1;
+    protected $VALID_CHECKBOOKINVOICEHIGHAMOUNT = 4.1;
+
     /**
      * timestamp of the checkbook; this starts as null and is assigned later
      * @var /Date $VALID_CHECKBOOKINVOICEDATE
@@ -72,8 +73,6 @@ class CheckbookTest extends AbqVastTest {
         parent::setUp();
 
         // calculate the date (just use the time the unit test was setup...)
-
-
         $this->VALID_CHECKBOOKINVOICESUNRISEDATE  = new \DateTime();
         $this->VALID_CHECKBOOKINVOICESUNRISEDATE->sub(new \DateInterval("P10D"));
 
@@ -88,7 +87,6 @@ class CheckbookTest extends AbqVastTest {
 
         $this->VALID_CHECKBOOKPAYMENTDATE = new \DateTime();
         $this->VALID_CHECKBOOKPAYMENTDATE = $this->VALID_CHECKBOOKPAYMENTDATE->format('Y-m-d');
-
 
         $this->VALID_CHECKBOOKPAYMENTSUNSETDATE = new \DateTime();
         $this->VALID_CHECKBOOKPAYMENTSUNSETDATE->add(new \DateInterVal("P10D"));
@@ -115,6 +113,7 @@ class CheckbookTest extends AbqVastTest {
         $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOKREFERENCENUM);
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
     }
+
     /**
      * test inserting a Checkbook that already exists
      *
@@ -138,11 +137,11 @@ class CheckbookTest extends AbqVastTest {
 
         // grab the data from mySQL and enforce the fields match our expectations
         // pass in both arguments into the method call (Low and High)
-        $results = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), $this->VALID_CHECKBOOKINVOICELOWAMOUNT, $this->VALID_CHECKBOOKINVOICEHIGHAMOUNT);
+        $results = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), $this ->VALID_CHECKBOOKINVOICELOWAMOUNT, $this->VALID_CHECKBOOKINVOICEHIGHAMOUNT);
+
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->assertCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
-
 
         // grab the result from the array and validate it
         $pdoCheckbook = $results[0];

@@ -55,7 +55,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \TypeError if data types violate type
      * @throws \Exception if some other exception occurs
      */
-    public function __construct(int $newCheckbookId = null, float $newCheckbookInvoiceAmount,  $newCheckbookInvoiceDate, string  $newCheckbookInvoiceNum,  $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
+    public function __construct(int $newCheckbookId = null, float $newCheckbookInvoiceAmount, $newCheckbookInvoiceDate, string  $newCheckbookInvoiceNum,  $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
         try{
             $this->setCheckbookId($newCheckbookId);
             $this->setCheckbookInvoiceAmount($newCheckbookInvoiceAmount);
@@ -142,7 +142,7 @@ class Checkbook implements \JsonSerializable {
             $this->checkbookInvoiceDate = new \DateTime();
             return;
         }
-        
+
         // store invoice date
         try {
             $newCheckbookInvoiceDate = self::validateDate($newCheckbookInvoiceDate);
@@ -339,7 +339,7 @@ class Checkbook implements \JsonSerializable {
      **/
     public static function getCheckbookByCheckbookInvoiceAmount(\PDO $pdo, float $checkbookInvoiceLowAmount, float $checkbookInvoiceHighAmount) {
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount >= :checkbookInvoiceLowAmount AND checkbookInvoiceAmount<= :checkbookInvoiceHighAmount";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount >= :checkbookInvoiceLowAmount AND checkbookInvoiceAmount <= :checkbookInvoiceHighAmount";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice amount to the place holder in the template
@@ -348,21 +348,19 @@ class Checkbook implements \JsonSerializable {
         $statement->execute($parameters);
 
         // build an array of Invoice amounts
-        $checkbookInvoiceAmount = new \SplFixedArray($statement->rowCount());
+        $checkbooks = new \SplFixedArray($statement->rowCount());
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
-        while(($row = $statement->fetch() !== false)) {
+        while(($row = $statement->fetch()) !== false) {
             try {
-                $checkbookInvoiceLowAmount = self::setCheckbookInvoiceAmount($checkbookInvoiceLowAmount);
-                $checkbookInvoiceHighAmount = self::setCheckbookInvoiceAmount($checkbookInvoiceHighAmount);
-                $checkbookInvoiceAmount = new checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
-                $checkbookInvoiceAmount[$checkbookInvoiceAmount->key()] = $checkbookInvoiceAmount;
-                $checkbookInvoiceAmount->next();
+                $checkbookInvoiceAmount = new Checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbooks[$checkbooks->key()] = $checkbookInvoiceAmount;
+                $checkbooks->next();
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
                 throw(new \PDOException($exception->getMessage(), 0, $exception));
             }
         }
-        return($checkbookInvoiceAmount);
+        return($checkbooks);
     }
 
     /**
@@ -384,14 +382,14 @@ class Checkbook implements \JsonSerializable {
         // I don't always write WHERE clauses, but when I do, reformat dates and use an AND operator
 
         // just shutup and take my prepared statement
-            try {
-                $checkbookInvoiceSunriseDate = self::validateDate($checkbookInvoiceSunriseDate);
-                $checkbookInvoiceSunsetDate = self::validateDate($checkbookInvoiceSunsetDate);
-            }    catch(\InvalidArgumentException $invalidArgument) {
-                throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
-            } catch(\RangeException $range) {
-                throw(new \RangeException($range->getMessage(), 0, $range));
-            }
+        try {
+            $checkbookInvoiceSunriseDate = self::validateDate($checkbookInvoiceSunriseDate);
+            $checkbookInvoiceSunsetDate = self::validateDate($checkbookInvoiceSunsetDate);
+        }    catch(\InvalidArgumentException $invalidArgument) {
+            throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+        } catch(\RangeException $range) {
+            throw(new \RangeException($range->getMessage(), 0, $range));
+        }
 
         // create query template
         $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceDate <= :checkbookInvoiceSunriseDate AND checkbookInvoiceDate >= :checkbookInvoiceSunsetDate";
@@ -516,6 +514,7 @@ class Checkbook implements \JsonSerializable {
         return($checkbooks);
     }
     /**
+     * FIXME: add description field
      * @param \PDO $pdo PDO connection object
      * @param string $checkbookReferenceNum reference number to search for
      * @return \SplFixedArray SplFixedArray of checkbook found
@@ -555,16 +554,16 @@ class Checkbook implements \JsonSerializable {
         return($checkbooks);
     }
     /**
-     * gets the checkbook by vendor
+     * gets the checkbooks by vendor
      *
      * @param \PDO $pdo PDO connection object
      * @param string $checkbookVendor checkbook content to search for
-     * @return \SplFixedArray SplFixedArray of Vendors found
+     * @return \SplFixedArray SplFixedArray of checkbooks found by vendor
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
     public static function getCheckbookByCheckbookVendor(\PDO $pdo, string $checkbookVendor) {
-       // sanitize the description before searching
+        // sanitize the description before searching
         $checkbookVendor = trim($checkbookVendor);
         $checkbookVendor = filter_var($checkbookVendor, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
         if(empty($checkbookVendor) === true) {
@@ -635,5 +634,5 @@ class Checkbook implements \JsonSerializable {
         $fields["checkbookInvoiceDate"] = $this->checkbookInvoiceDate->getTimestamp() *1000;
         $fields["checkbookPaymentDate"] = $this->checkbookPaymentDate->getTimestamp() *1000;
         return($fields);
-}
+    }
 }
