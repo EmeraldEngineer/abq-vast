@@ -73,8 +73,8 @@ class Share implements \JsonSerializable {
 	 * mutator method for share id
 	 *
 	 * @param int|null $newShareId new value of share id
-	 * @throws \RangeException if $newTweetId is not positive
-	 * @throws \TypeError if $newTweetId is not an integer
+	 * @throws \RangeException if $newFieldId is not positive
+	 * @throws \TypeError if $newFieldId is not an integer
 	 **/
 	public function setShareId(int $newShareId = null) {
 		// base case: if the share id is null, this is a new share without a mySQL assigned id (yet) and will also reference criteria share id
