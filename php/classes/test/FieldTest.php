@@ -1,4 +1,5 @@
 <?php
+// FIXME: add tests
 namespace Edu\Cnm\AbqVast\Test;
 
 use Edu\Cnm\AbqVast\{Field};
@@ -20,14 +21,16 @@ require_once(dirname(__DIR__) . "/autoload.php");
 class FieldTest extends AbqVastTest {
 	/**comment
 	 * valid field type
+	 * @var string $VALID_FIELDNAME
+	 **/
+	protected $VALID_FIELDNAME = "valid fieldname";
+
+	/**
+	 * valid field name
 	 * @var string $VALID_FIELDTYPE
 	 **/
 	protected $VALID_FIELDTYPE = "d";
-	/**
-	 * valid field name
-	 * @var string $VALID_FIELDNAME
-	 **/
-	protected $VALID_FIELDNAME = "http://google.com";
+
 	/**
 	 *
 	 **/
@@ -42,11 +45,14 @@ class FieldTest extends AbqVastTest {
 		$numRows = $this->getConnection()->getRowCount("field");
 
 		//create a new profile and insert into mySQL
-		$field = new Field(null, $this->VALID_FIELDTYPE, $this->VALID_FIELDNAME);
+		$field = new Field(null, $this->VALID_FIELDNAME, $this->VALID_FIELDTYPE);
 		$field->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoField = Field::getFieldByFieldId($this->getPDO(), $field->getFieldId());
+
+		var_dump($field);
+
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("field"));
 		$this->assertEquals($pdoField->getFieldType(), $this->VALID_FIELDTYPE);
 		$this->assertEquals($pdoField->getFieldName(), $this->VALID_FIELDNAME);

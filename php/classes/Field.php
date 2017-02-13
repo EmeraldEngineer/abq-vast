@@ -1,7 +1,8 @@
 <?php
 namespace Edu\Cnm\AbqVast;
 require_once("autoload.php");
-// FIXME: add namespace, implement jsonSerializable
+// FIXME: add getFieldByFieldId() method, add getFieldName() accessor...
+
 /**
  * ABQ Vast Field profile
  *
@@ -104,22 +105,24 @@ class Field implements \JsonSerializable {
 	 *
 	 * @param string $newFieldType new value of field type
 	 * @throws \InvalidArgumentException if $newFieldType is not a string
-	 * @throws \RangeException if $newFieldType is > 1 character
+	 * @throws \RangeException if $newFieldType is !== 1 character
 	 * @throws \TypeError if $newFieldType is not a string
 	 **/
 	public function setFieldType(string $newFieldType) {
 		//verify the field type is a string
 		$newFieldType = trim($newFieldType);
 		$newFieldType = filter_var($newFieldType, FILTER_SANITIZE_STRING);
+
 		if(empty($newFieldType) === true) {
 			throw(new \InvalidArgumentException("Field Type is empty or insecure"));
 		}
 
-/*		//verify field type will fit into the database
-		if(strlen($newFieldType) == 1) {
-			throw(new \RangeException("Field Type is too large"));
-		}*/
-		if ( $newFieldType !="d" || $newFieldType !="n" || $newFieldType !="s") {
+		//verify field type will fit into the database
+		if(strlen($newFieldType) !== 1) {
+			throw(new \RangeException("Field Type is incorrect"));
+		}
+
+		if(($newFieldType !== "d")) {
 			throw(new \InvalidArgumentException("not a valid field type"));
 		}
 
