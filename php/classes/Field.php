@@ -1,7 +1,7 @@
 <?php
 namespace Edu\Cnm\AbqVast;
 require_once("autoload.php");
-// FIXME: add getFieldByFieldId() method, add getFieldName() accessor...
+// FIXME: add getFieldByFieldId(), add getFieldName() accessor...
 
 /**
  * ABQ Vast Field profile
@@ -132,6 +132,16 @@ class Field implements \JsonSerializable {
 	public function getFieldType() {
 		return ($this->fieldType);
 	}
+
+	/**
+	 * accessor method for field name
+	 *
+	* @return string value of field name
+	 **/
+	public function getFieldName() {
+		return ($this->fieldName);
+	}
+
 
 	/**
 	 * mutator method for field type
