@@ -45,7 +45,7 @@ class Checkbook implements \JsonSerializable {
      * constructor for this checkbook
      * @param int $newCheckbookId id of this checkbook
      * @param float $newCheckbookInvoiceAmount invoice amount for this checkbook
-     * @param \DateTime|string|null $newCheckbookInvoiceDate invoice date for this checkbook
+     * @param \DateTime|string $newCheckbookInvoiceDate invoice date for this checkbook
      * @param string $newCheckbookInvoiceNum invoice number for this checkbook
      * @param \DateTime|string|null $newCheckbookPaymentDate payment date for this checkbook
      * @param string $newCheckbookReferenceNum reference number for this checkbook
@@ -72,7 +72,7 @@ class Checkbook implements \JsonSerializable {
             throw(new\RangeException($range->getMessage(), 0, $range));
         } catch (\TypeError $typeError) {
             //**rethrow the exception to the caller**//
-            throw(new\TypeError($typeError));
+            throw(new\TypeError($typeError->getMessage(), 0 , $typeError));
         } catch (\Exception $exception) {
             // rethrow exception to the caller
             throw(new\Exception($exception->getMessage(), 0, $exception));
@@ -251,10 +251,15 @@ class Checkbook implements \JsonSerializable {
      * @throws \TypeError if $newCheckbookVendor is not a string
      **/
     public function setCheckbookVendor(string $newCheckbookVendor) {
+
         /**verify vendor is secure */
+        $newCheckbookVendor = trim($newCheckbookVendor);
         $newCheckbookVendor = filter_var($newCheckbookVendor, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
         if(empty($newCheckbookVendor) === true) {
             throw(new \InvalidArgumentException("vendor content is empty or insecure"));
+        }
+        if(strlen($newCheckbookVendor) > 82 ) {
+            throw(new \RangeException("vendor content too large"));
         }
         /**store the vendor cotent**/
         $this->checkbookVendor = $newCheckbookVendor;
@@ -333,10 +338,11 @@ class Checkbook implements \JsonSerializable {
      **/
     public static function getCheckbookByCheckbookInvoiceAmount(\PDO $pdo, float $checkbookInvoiceLowAmount, float $checkbookInvoiceHighAmount) {
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount >= :checkbookInvoiceLowAmount AND <= :checkbookInvoiceHighAmount";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount >= :checkbookInvoiceLowAmount AND checkbookInvoiceAmount<= :checkbookInvoiceHighAmount";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice amount to the place holder in the template
+
         $parameters = ["checkbookInvoiceLowAmount" => $checkbookInvoiceLowAmount, "checkbookInvoiceHighAmount" => $checkbookInvoiceHighAmount];
         $statement->execute($parameters);
 
@@ -362,13 +368,16 @@ class Checkbook implements \JsonSerializable {
      * gets the checkbook by Invoice Date
      *
      * @param \PDO connection object
-     * @param \DateTime $checkbookInvoiceSunriseDate
-     * @param \DateTime $checkbookInvoiceSunsetDate
+     * @param \DateTime|string $checkbookInvoiceSunriseDate
+     * @param \DateTime|string $checkbookInvoiceSunsetDate
      * @return \SplFixedArray SplFixedArray of checkbooks found
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
     public static function getCheckbookByCheckbookInvoiceDate(\PDO $pdo, $checkbookInvoiceSunriseDate, $checkbookInvoiceSunsetDate) {
+        if ((empty($checkbookInvoiceSunriseDate) === true)  || (empty($checkbookInvoiceSunsetDate) === true)) {
+            throw(new \InvalidArgumentException("date is empty or null"));
+        }
         // one doesn't simply use dates without using ValidateDate
 
         // I don't always write WHERE clauses, but when I do, reformat dates and use an AND operator
@@ -384,31 +393,35 @@ class Checkbook implements \JsonSerializable {
             }
 
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceDate >= :checkbookInvoiceSunriseDate AND <= :checkbookInvoiceSunsetDate";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceDate <= :checkbookInvoiceSunriseDate AND checkbookInvoiceDate >= :checkbookInvoiceSunsetDate";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice date to the place holder in the template
-        $parameters = ["checkbookInvoiceSunriseDate" => $checkbookInvoiceSunriseDate, "checkbookInvoiceSunsetDate" => $checkbookInvoiceSunsetDate];
+        $formattedSunriseDate = $checkbookInvoiceSunriseDate->format("Y-m-d");
+        $formattedSunsetDate = $checkbookInvoiceSunsetDate->format("Y-m-d");
+        $parameters = ["checkbookInvoiceSunriseDate" => $formattedSunriseDate, "checkbookInvoiceSunsetDate" => $formattedSunsetDate];
         $statement->execute($parameters);
 
         // build an array of invoice dates
 
-        $datetime = new \SplFixedArray($statement->rowCount());
+        $checkbooks = new \SplFixedArray($statement->rowCount());
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch()) !== false) {
             try {
                 $checkbookInvoiceSunriseDate = self::validateDate($checkbookInvoiceSunriseDate);
                 $checkbookInvoiceSunsetDate = self::validateDate($checkbookInvoiceSunsetDate);
-                $datetime = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
-                $datetime[$datetime->key()] = $datetime;
-                $datetime->next();
+                $checkbooks = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbooks[$checkbooks->key()] = $checkbooks;
+                $checkbooks->next();
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
                 throw(new \PDOException($exception->getMessage(), 0, $exception));
             }
         }
-        return($datetime);
+        return($checkbooks);
     }
+
+
     /**
      * gets the checkbook by Invoice Number
      *
@@ -462,39 +475,44 @@ class Checkbook implements \JsonSerializable {
      **/
     public static function getCheckbookByCheckbookPaymentDate(\PDO $pdo, $checkbookPaymentSunriseDate, $checkbookPaymentSunsetDate) {
         // continuation of trying the sunrise and sunset
-        $checkbookPaymentSunriseDate = date($checkbookPaymentSunriseDate);
-        $checkbookPaymentSunsetDate = date($checkbookPaymentSunsetDate);
-        if(empty($checkbookPaymentSunriseDate) === true) {
-            throw(new \PDOException("PaymentSunrise date is invalid"));
+        if((empty($checkbookPaymentSunriseDate) === true) || (empty($checkbookPaymentSunsetDate) === true)) {
+            throw(new \InvalidArgumentException("date is empty or null"));
         }
-        if(empty($checkbookPaymentSunsetDate) === true) {
-            throw(new \PDOException("PaymentSunset date is invalid"));
+        try {
+            $checkbookPaymentSunriseDate = self::validateDate($checkbookPaymentSunriseDate);
+            $checkbookPaymentSunsetDate = self::validateDate($checkbookPaymentSunsetDate);
+        } catch(\InvalidArgumentException $invalidArgument) {
+            throw(new \InvalidArumentException($invalidArgument->getMessage(), 0, $invalidArgument));
+        } catch(\RangeException $range) {
+            throw(new \RangeException($range->getMessage(), 0, $range));
         }
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookPaymentDate >= :checkbookPaymentSunriseDate AND <= :checkbookPaymentSunsetDate";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookPaymentDate <= :checkbookPaymentSunriseDate AND checkbookPaymentDate >= :checkbookPaymentSunsetDate";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice date to the placeholder in the template
-        $parameters = ["checkbookPaymentSunriseDate" => $checkbookPaymentSunriseDate, "checkbookPaymentSunsetDate" => $checkbookPaymentSunsetDate];
+        $formattedSunriseDate2 = $checkbookPaymentSunriseDate->format("Y-m-d");
+        $formattedSunsetDate2 = $checkbookPaymentSunsetDate->format("Y-m-d");
+        $parameters = ["checkbookPaymentSunriseDate" => $formattedSunriseDate2, "checkbookPaymentSunsetDate" => $formattedSunsetDate2];
         $statement->execute($parameters);
 
         // build an array of invoice dates
 
-        $datetime = new \SplFixedArray($statement->rowCount());
+        $checkbooks = new \SplFixedArray($statement->rowCount());
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch()) !== false) {
             try {
                 $checkbookPaymentSunriseDate = self::validateDate($checkbookPaymentSunriseDate);
                 $checkbookPaymentSunsetDate = self::validateDate($checkbookPaymentSunsetDate);
-                $datetime = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
-                $datetime[$datetime->key()] = $datetime;
-                $datetime->next();
+                $checkbooks = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbooks[$checkbooks->key()] = $checkbooks;
+                $checkbooks->next();
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
                 throw(new \PDOexception($exception->getMessage(), 0, $exception));
             }
         }
-        return($datetime);
+        return($checkbooks);
     }
     /**
      * @param \PDO $pdo PDO connection object
