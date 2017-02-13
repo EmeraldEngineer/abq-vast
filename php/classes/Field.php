@@ -67,6 +67,38 @@ class Field implements \JsonSerializable {
 	public function getFieldId() {
 		return ($this->fieldId);
 	}
+	/**
+	 * accessor method for getFieldByFieldId
+	 *
+	 *@return field|null
+	 **/
+	public static function getFieldByFieldId (\PDO $pdo, int $fieldId) {
+		//sanitize the field id before searching
+		if($fieldId <=0) {
+			throw(new \RangeException("field id is not positive"));
+		}
+		//create query templet
+		$query = "SELECT fieldId, FieldName, fieldType FROM field WHERE fieldId = :fieldId";
+		$statement = $pdo->prepare($query);
+
+		//bind the field id to the place holder in the template
+		$perameters = ["fieldId" => $fieldId];
+		$statement = $pdo->prepare($query);
+
+		//grab the field from mySQL
+		try {
+				$field = null;
+				$statement->setFetchMode(\PDO::FETCH_ASSOC);
+				$row = $statement->fetch();
+				if($row !== false) {
+					$field = new Field($row["fieldId"], $row["fieldName"], $row["fieldType"]);
+				}
+
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->get message(),0,$exception))
+		}
+	}
 
 	/**
 	 * mutator method for field id
