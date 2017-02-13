@@ -45,7 +45,7 @@ class Checkbook implements \JsonSerializable {
      * constructor for this checkbook
      * @param int $newCheckbookId id of this checkbook
      * @param float $newCheckbookInvoiceAmount invoice amount for this checkbook
-     * @param \DateTime|string $newCheckbookInvoiceDate invoice date for this checkbook
+     * @param \DateTime|string|null $newCheckbookInvoiceDate invoice date for this checkbook
      * @param string $newCheckbookInvoiceNum invoice number for this checkbook
      * @param \DateTime|string|null $newCheckbookPaymentDate payment date for this checkbook
      * @param string $newCheckbookReferenceNum reference number for this checkbook
@@ -142,6 +142,7 @@ class Checkbook implements \JsonSerializable {
             $this->checkbookInvoiceDate = new \DateTime();
             return;
         }
+        
         // store invoice date
         try {
             $newCheckbookInvoiceDate = self::validateDate($newCheckbookInvoiceDate);
