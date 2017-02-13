@@ -67,60 +67,27 @@ class Field implements \JsonSerializable {
 	public function getFieldId() {
 		return ($this->fieldId);
 	}
-	/**
-	 * accessor method for getFieldByFieldId
-	 *
-	 *@return field|null
-	 **/
-	public static function getFieldByFieldId (\PDO $pdo, int $fieldId) {
-		//sanitize the field id before searching
-		if($fieldId <=0) {
-			throw(new \RangeException("field id is not positive"));
-		}
-		//create query templet
-		$query = "SELECT fieldId, FieldName, fieldType FROM field WHERE fieldId = :fieldId";
-		$statement = $pdo->prepare($query);
-
-		//bind the field id to the place holder in the template
-		$perameters = ["fieldId" => $fieldId];
-		$statement = $pdo->prepare($query);
-
-		//grab the field from mySQL
-		try {
-				$field = null;
-				$statement->setFetchMode(\PDO::FETCH_ASSOC);
-				$row = $statement->fetch();
-				if($row !== false) {
-					$field = new Field($row["fieldId"], $row["fieldName"], $row["fieldType"]);
-				}
-
-		} catch(\Exception $exception) {
-			// if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->getMessage(),0,$exception));
-		}
-		return ($field);
-	}
 
 	/**
 	 * mutator method for field id
 	 *
-	 * @param int $newFieldId new value of field id
+	 * @param int|null $newFieldId new value of field id
 	 * @throws \RangeException if $newFieldId is not positive
 	 * @throws \TypeError if $newFieldId is not an integer
 	 **/
 	public function setFieldId(int $newFieldId = null) {
-		// verify the profile id is positive
+		// base case: if the field id is null, this is a new field without a mySQL assigned id (yet) and will also reference criteria field id
 		if($newFieldId === null) {
 			$this->fieldId = null;
 			return;
 		}
 
-		//verify the field id is positive
+		//verify the share id is positive
 		if($newFieldId <= 0) {
-			throw(new \RangeException("field is not positive"));
+			throw(new \RangeException("share is not positive"));
 		}
 
-		//convert and store the field id
+		//convert and store the share id
 		$this->fieldId = $newFieldId;
 	}
 
@@ -131,15 +98,6 @@ class Field implements \JsonSerializable {
 	 **/
 	public function getFieldType() {
 		return ($this->fieldType);
-	}
-
-	/**
-	 * accessor method for field name
-	 *
-	* @return string value of field name
-	 **/
-	public function getFieldName() {
-		return ($this->fieldName);
 	}
 
 
@@ -174,6 +132,15 @@ class Field implements \JsonSerializable {
 	}
 
 	/**
+	 * accessor method for field name
+	 *
+	 * @return string value of field name
+	 **/
+	public function getFieldName() {
+		return ($this->fieldName);
+	}
+
+	/**
 	 * mutator method for field name
 	 *
 	 * @param string $newFieldType new value of field name
@@ -197,8 +164,9 @@ class Field implements \JsonSerializable {
 		//store the field name
 		$this->fieldName = $newFieldName;
 	}
+
 	/**
-	 * inserts this share image into mySQL
+	 * inserts this field id into mySQL
 	 *
 	 * @param \PDO $pdo PDO Connection object
 	 * @throws \PDOException when mySQL related errors occur
@@ -221,8 +189,53 @@ class Field implements \JsonSerializable {
 		//update the null fieldId with what mySQL just gave us
 		$this->fieldId = intval($pdo->lastInsertId());
 	}
+
+	/**
+	/**
+	 * gets Field by fieldId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param int $fieldId field id to search by
+	 * @return Share|null Share found or null if not found
+	 * @throws \PDOException when my SQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getFieldByFieldId(\PDO $pdo, int $fieldId) {
+		//sanitize the field id before searching
+		if($fieldId <= 0) {
+			throw(new \RangeException("field id is not positive"));
+		}
+		//create query templet
+		$query = "SELECT fieldId, FieldName, fieldType FROM field WHERE fieldId = :fieldId";
+		$statement = $pdo->prepare($query);
+
+		//bind the field id to the place holder in the template
+		$perameters = ["fieldId" => $fieldId];
+		$statement = $pdo->prepare($query);
+
+		//grab the field from mySQL
+		try {
+			$field = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$field = new Field($row["fieldId"], $row["fieldName"], $row["fieldType"]);
+			}
+
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($field);
+	}
+
+	/**
+	 * formats the state variable for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
-		return($fields);
+		return ($fields);
 	}
 }

@@ -51,8 +51,6 @@ class FieldTest extends AbqVastTest {
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoField = Field::getFieldByFieldId($this->getPDO(), $field->getFieldId());
 
-		var_dump($field);
-
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("field"));
 		$this->assertEquals($pdoField->getFieldType(), $this->VALID_FIELDTYPE);
 		$this->assertEquals($pdoField->getFieldName(), $this->VALID_FIELDNAME);
