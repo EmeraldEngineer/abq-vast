@@ -96,8 +96,9 @@ class Field implements \JsonSerializable {
 
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
-			throw(new \PDOException($exception->get message(),0,$exception))
+			throw(new \PDOException($exception->get message(),0,$exception));
 		}
+		return ($field);
 	}
 
 	/**
