@@ -55,7 +55,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \TypeError if data types violate type
      * @throws \Exception if some other exception occurs
      */
-    public function __construct(int $newCheckbookId = null, float $newCheckbookInvoiceAmount, $newCheckbookInvoiceDate, string  $newCheckbookInvoiceNum,  $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
+    public function __construct(int $newCheckbookId = null, float $newCheckbookInvoiceAmount, $newCheckbookInvoiceDate, string  $newCheckbookInvoiceNum, $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
         try{
             $this->setCheckbookId($newCheckbookId);
             $this->setCheckbookInvoiceAmount($newCheckbookInvoiceAmount);
@@ -283,9 +283,9 @@ class Checkbook implements \JsonSerializable {
         $statement = $pdo->prepare($query);
 
         //bind the member variables to the place holders in the template
-        $formattedDate1 = $this->checkbookInvoiceDate->format("Y-m-d H:i:s");
-        $formattedDate2 = $this->checkbookPaymentDate->format("Y-m-d H:i:s");
-        $parameters = ["checkbookInvoiceAmount" => $this->checkbookInvoiceAmount, "checkbookInvoiceDate" => $formattedDate1, "checkbookInvoiceNum" => $this->checkbookInvoiceNum, "checkbookPaymentDate" => $formattedDate2, "checkbookReferenceNum" => $this->checkbookReferenceNum, "checkbookVendor" => $this->checkbookVendor];
+        $formattedInvoiceDate = $this->checkbookInvoiceDate->format("Y-m-d");
+        $formattedPaymentDate = $this->checkbookPaymentDate->format("Y-m-d");
+        $parameters = ["checkbookInvoiceAmount" => $this->checkbookInvoiceAmount, "checkbookInvoiceDate" => $formattedInvoiceDate, "checkbookInvoiceNum" => $this->checkbookInvoiceNum, "checkbookPaymentDate" => $formattedPaymentDate, "checkbookReferenceNum" => $this->checkbookReferenceNum, "checkbookVendor" => $this->checkbookVendor];
         $statement->execute($parameters);
 
         // update the null checkbookId with what mySQL just gave us
@@ -374,9 +374,9 @@ class Checkbook implements \JsonSerializable {
      * @throws \TypeError when variables are not the correct data type
      **/
     public static function getCheckbookByCheckbookInvoiceDate(\PDO $pdo, $checkbookInvoiceSunriseDate, $checkbookInvoiceSunsetDate) {
-        if ((empty($checkbookInvoiceSunriseDate) === true)  || (empty($checkbookInvoiceSunsetDate) === true)) {
-            throw(new \InvalidArgumentException("date is empty or null"));
-        }
+        //if ((empty($checkbookInvoiceSunriseDate) === true)  || (empty($checkbookInvoiceSunsetDate) === true)) {
+         //   throw(new \InvalidArgumentException("date is empty or null"));
+        //}
         // one doesn't simply use dates without using ValidateDate
 
         // I don't always write WHERE clauses, but when I do, reformat dates and use an AND operator
@@ -408,9 +408,9 @@ class Checkbook implements \JsonSerializable {
         while(($row = $statement->fetch()) !== false) {
             try {
                 $checkbookInvoiceSunriseDate = self::validateDate($checkbookInvoiceSunriseDate);
-                $checkbookInvoiceSunsetDate = self::validateDate($checkbookInvoiceSunsetDate);
-                $checkbooks = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
-                $checkbooks[$checkbooks->key()] = $checkbooks;
+               $checkbookInvoiceSunsetDate = self::validateDate($checkbookInvoiceSunsetDate);
+                $checkbookInvoiceDate = new Checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbooks[$checkbooks->key()] = $checkbookInvoiceDate;
                 $checkbooks->next();
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
@@ -443,7 +443,7 @@ class Checkbook implements \JsonSerializable {
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice number to the place holder in the template
-        $checkbookInvoiceNum = "%checkbookInvoiceNum%";
+        //$checkbookInvoiceNum = "%checkbookInvoiceNum%";
         $parameters = ["checkbookInvoiceNum" => $checkbookInvoiceNum];
         $statement->execute($parameters);
 
@@ -452,8 +452,8 @@ class Checkbook implements \JsonSerializable {
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch()) !==false) {
             try {
-                $checkbook = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
-                $checkbooks[$checkbooks->key()] = $checkbook;
+                $checkbookInvoiceNum = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbooks[$checkbooks->key()] = $checkbookInvoiceNum;
                 $checkbooks->next();
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
@@ -466,8 +466,8 @@ class Checkbook implements \JsonSerializable {
      * gets the checkbook by Payment Date
      *
      * @param \PDO connection object
-     * @param \DateTime $checkbookPaymentSunriseDate
-     * @param \DateTime $checkbookPaymentSunsetDate
+     * @param \DateTime|string $checkbookPaymentSunriseDate
+     * @param \DateTime|string $checkbookPaymentSunsetDate
      * @return \SplFixedArray SplFixedArray of checkbooks found
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
@@ -480,8 +480,6 @@ class Checkbook implements \JsonSerializable {
         try {
             $checkbookPaymentSunriseDate = self::validateDate($checkbookPaymentSunriseDate);
             $checkbookPaymentSunsetDate = self::validateDate($checkbookPaymentSunsetDate);
-        } catch(\InvalidArgumentException $invalidArgument) {
-            throw(new \InvalidArumentException($invalidArgument->getMessage(), 0, $invalidArgument));
         } catch(\RangeException $range) {
             throw(new \RangeException($range->getMessage(), 0, $range));
         }
@@ -503,7 +501,7 @@ class Checkbook implements \JsonSerializable {
             try {
                 $checkbookPaymentSunriseDate = self::validateDate($checkbookPaymentSunriseDate);
                 $checkbookPaymentSunsetDate = self::validateDate($checkbookPaymentSunsetDate);
-                $checkbooks = new \DateTime($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbooks = new Checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
                 $checkbooks[$checkbooks->key()] = $checkbooks;
                 $checkbooks->next();
             } catch(\Exception $exception) {
@@ -534,7 +532,7 @@ class Checkbook implements \JsonSerializable {
         $statement = $pdo->prepare($query);
 
         // bind the checkbook Reference Number to the place holder in the template
-        $checkbookReferenceNum = "%$checkbookReferenceNum%";
+        //$checkbookReferenceNum = "%$checkbookReferenceNum%";
         $parameters = ["checkbookReferenceNum" => $checkbookReferenceNum];
         $statement->execute($parameters);
 

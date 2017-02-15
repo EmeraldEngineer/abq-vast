@@ -139,6 +139,8 @@ class CheckbookTest extends AbqVastTest {
         // pass in both arguments into the method call (Low and High)
         $results = Checkbook::getCheckbookByCheckbookInvoiceAmount($this->getPDO(), $this ->VALID_CHECKBOOKINVOICELOWAMOUNT, $this->VALID_CHECKBOOKINVOICEHIGHAMOUNT);
 
+        //var_dump($results);
+
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->assertCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
@@ -146,12 +148,13 @@ class CheckbookTest extends AbqVastTest {
         // grab the result from the array and validate it
         $pdoCheckbook = $results[0];
         $this->assertEquals($pdoCheckbook->getCheckbookId(), $checkbook->getCheckbookId());
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICELOWAMOUNT, $this->VALID_CHECKBOOKINVOICEHIGHAMOUNT);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate()->format("Y-m-d"), $this->VALID_CHECKBOOKINVOICEDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoicePaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate()->format("Y-m-d"), $this->VALID_CHECKBOOKPAYMENTDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOKREFERENCENUM);
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
+
     }
 
     /**
@@ -171,21 +174,26 @@ class CheckbookTest extends AbqVastTest {
 
         // create a new Checkbook and insert it into mySQL
         $checkbook = new Checkbook(null, $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
-        $checkbook->insert($this->getPDO());
 
+        //var_dump($checkbook);
+
+        $checkbook->insert($this->getPDO());
         // grab the data from mySQL and enforce the fields match our expectations
         $results = Checkbook::getCheckbookByCheckbookInvoiceDate($this->getPDO(), $this->VALID_CHECKBOOKINVOICESUNRISEDATE, $this->VALID_CHECKBOOKINVOICESUNSETDATE);
+
+        //var_dump($results);
+
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->assertCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
 
         // grab the result from the array and validate it
         $pdoCheckbook = $results[0];
-        $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbookId->getCheckbookId());
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKPAYMENTSUNRISEDATE, $this->VALID_CHECKBOOKINVOICESUNSETDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate()->format("Y-m-d"), $this->VALID_CHECKBOOKINVOICEDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoicePaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate()->format("Y-m-d"), $this->VALID_CHECKBOOKPAYMENTDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOKREFERENCENUM);
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
     }
@@ -206,24 +214,25 @@ class CheckbookTest extends AbqVastTest {
         $numRows = $this->getConnection()->getRowCount("checkbook");
 
         // create a new Checkbook and insert it into mySQL
-        $checkbooks = new Checkbook(null, $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
-        $checkbooks->insert($this->getPDO());
+        $checkbook = new Checkbook(null, $this->VALID_CHECKBOOKINVOICEAMOUNT, $this->VALID_CHECKBOOKINVOICEDATE, $this->VALID_CHECKBOOKINVOICENUM, $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOKREFERENCENUM, $this->VALID_CHECKBOOKVENDOR);
+        $checkbook->insert($this->getPDO());
 
         // grab the data from mySQL and enforce the fields match our expectations
-        $results = Checkbook::getCheckbookByCheckbookInvoiceNum($this->getPDO(), $checkbooks->getCheckbookInvoiceNum());
+        $results = Checkbook::getCheckbookByCheckbookInvoiceNum($this->getPDO(), $checkbook->getCheckbookInvoiceNum());
         $this->assertEquals($numRows +1, $this->getConnection()->getRowCount("checkbook"));
         $this->assertCount(1, $results);
         $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\AbqVast\\Checkbook", $results);
 
         // grab the result from the array and validate it
         $pdoCheckbook = $results[0];
-        $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbookId->getCheckbookId());
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate()->format("Y-m-d"), $this->VALID_CHECKBOOKINVOICEDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoicePaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate()->format("Y-m-d"), $this->VALID_CHECKBOOKPAYMENTDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOKREFERENCENUM);
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
+
     }
 
     /**
@@ -255,9 +264,9 @@ class CheckbookTest extends AbqVastTest {
         $pdoCheckbook = $results[0];
         $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbookId->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate()->format("Y-m-d"), $this->VALID_CHECKBOOKINVOICEDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
-        $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE, $this->VALID_CHECKBOOKPAYMENTSUNRISEDATE, $this->VALID_CHECKBOOKPAYMENTSUNSETDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate()->format("Y-m-d"), $this->VALID_CHECKBOOKPAYMENTDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOKREFERENCENUM);
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
     }
@@ -289,11 +298,11 @@ class CheckbookTest extends AbqVastTest {
 
         // grab the result from the array and validate it
         $pdoCheckbook = $results[0];
-        $this->assertEquals($pdoCheckbook->getCheckbookId(), $this->checkbookId->getCheckbookId());
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate()->format("Y-m-d"), $this->VALID_CHECKBOOKINVOICEDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoicePaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate()->format("Y-m-d"), $this->VALID_CHECKBOOKPAYMENTDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOKREFERENCENUM);
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
     }
@@ -325,10 +334,11 @@ class CheckbookTest extends AbqVastTest {
 
         // grab the result from the array and validate it
         $pdoCheckbook = $results[0];
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate(), $this->VALID_CHECKBOOKINVOICEDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate()->format("Y-m-d"), $this->VALID_CHECKBOOKINVOICEDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
-        $this->assertEquals($pdoCheckbook->getCheckbookInvoicePaymentDate(), $this->VALID_CHECKBOOKPAYMENTDATE);
+        $this->assertEquals($pdoCheckbook->getCheckbookPaymentDate()->format("Y-m-d"), $this->VALID_CHECKBOOKPAYMENTDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookReferenceNum(), $this->VALID_CHECKBOOKREFERENCENUM);
         $this->assertEquals($pdoCheckbook->getCheckbookVendor(), $this->VALID_CHECKBOOKVENDOR);
     }
@@ -360,6 +370,7 @@ class CheckbookTest extends AbqVastTest {
 
         // grab the result from the array and validate it
         $pdoCheckbook = $results[0];
+        $this->assertEquals($pdoCheckbook->getCheckbookId(), $checkbook->getCheckbookId());
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceAmount(), $this->VALID_CHECKBOOKINVOICEAMOUNT);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceDate()->format("Y-m-d"), $this->VALID_CHECKBOOKINVOICEDATE);
         $this->assertEquals($pdoCheckbook->getCheckbookInvoiceNum(), $this->VALID_CHECKBOOKINVOICENUM);
