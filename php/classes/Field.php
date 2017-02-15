@@ -205,13 +205,13 @@ class Field implements \JsonSerializable {
 		if($fieldId <= 0) {
 			throw(new \RangeException("field id is not positive"));
 		}
-		//create query templet
-		$query = "SELECT fieldId, FieldName, fieldType FROM field WHERE fieldId = :fieldId";
+		//create query template
+		$query = "SELECT fieldId, fieldName, fieldType FROM field WHERE fieldId = :fieldId";
 		$statement = $pdo->prepare($query);
 
 		//bind the field id to the place holder in the template
-		$perameters = ["fieldId" => $fieldId];
-		$statement = $pdo->prepare($query);
+		$parameters = ["fieldId" => $fieldId];
+		$statement->execute($parameters);
 
 		//grab the field from mySQL
 		try {
