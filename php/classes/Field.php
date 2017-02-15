@@ -44,7 +44,7 @@ class Field implements \JsonSerializable {
 			$this->setFieldId($newFieldId);
 			$this->setFieldName($newFieldName);
 			$this->setFieldType($newFieldType);
-		} catch(\invalidArgumentException $invalidArgument) {
+		} catch(\InvalidArgumentException $invalidArgument) {
 			// rethrow the exception to the caller
 			throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
 		} catch(\RangeException $range) {
@@ -82,53 +82,13 @@ class Field implements \JsonSerializable {
 			return;
 		}
 
-		//verify the share id is positive
+		//verify the field id is positive
 		if($newFieldId <= 0) {
 			throw(new \RangeException("share is not positive"));
 		}
 
 		//convert and store the share id
 		$this->fieldId = $newFieldId;
-	}
-
-	/**
-	 * accessor method for field type
-	 *
-	 * @return string value of field type
-	 **/
-	public function getFieldType() {
-		return ($this->fieldType);
-	}
-
-
-	/**
-	 * mutator method for field type
-	 *
-	 * @param string $newFieldType new value of field type
-	 * @throws \InvalidArgumentException if $newFieldType is not a string
-	 * @throws \RangeException if $newFieldType is !== 1 character
-	 * @throws \TypeError if $newFieldType is not a string
-	 **/
-	public function setFieldType(string $newFieldType) {
-		//verify the field type is a string
-		$newFieldType = trim($newFieldType);
-		$newFieldType = filter_var($newFieldType, FILTER_SANITIZE_STRING);
-
-		if(empty($newFieldType) === true) {
-			throw(new \InvalidArgumentException("Field Type is empty or insecure"));
-		}
-
-		//verify field type will fit into the database
-		if(strlen($newFieldType) !== 1) {
-			throw(new \RangeException("Field Type is incorrect"));
-		}
-
-		if(($newFieldType !== "d")) {
-			throw(new \InvalidArgumentException("not a valid field type"));
-		}
-
-		//store the field type
-		$this->fieldType = $newFieldType;
 	}
 
 	/**
@@ -163,6 +123,46 @@ class Field implements \JsonSerializable {
 
 		//store the field name
 		$this->fieldName = $newFieldName;
+	}
+	/**
+	 * accessor method for field type
+	 *
+	 * @return string value of field type
+	 **/
+	public function getFieldType() {
+		return ($this->fieldType);
+	}
+
+
+	/**
+	 * mutator method for field type
+	 *
+	 * @param string $newFieldType new value of field type
+	 * @throws \InvalidArgumentException if $newFieldType is not a string
+	 * @throws \RangeException if $newFieldType is !== 1 character
+	 * @throws \TypeError if $newFieldType is not a string
+	 **/
+	public function setFieldType(string $newFieldType) {
+		//verify the field type is a string
+		$newFieldType = trim($newFieldType);
+		$newFieldType = filter_var($newFieldType, FILTER_SANITIZE_STRING);
+		if(empty($newFieldType) === true) {
+			throw(new \InvalidArgumentException("Field Type is empty or insecure"));
+		}
+
+		var_dump(strlen($newFieldType));
+
+		//verify field type will fit into the database
+		if(strlen($newFieldType) !== 1) {
+			throw(new \RangeException("Field Type is incorrect"));
+		}
+
+		if(($newFieldType !== "d")) {
+			throw(new \InvalidArgumentException("not a valid field type"));
+		}
+
+		//store the field type
+		$this->fieldType = $newFieldType;
 	}
 
 	/**
