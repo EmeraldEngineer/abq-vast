@@ -63,7 +63,7 @@ class FieldTest extends AbqVastTest {
 	 **/
 	public function testInsertInvalidField() {
 		// create a profile with a non null fieldId and watch it fail
-		$field = new Field(AbqVastTest::INVALID_KEY, $this->VALID_FIELDNAME, $this->VALID_FIELDTYPE,);
+		$field = new Field(AbqVastTest::INVALID_KEY, $this->VALID_FIELDNAME, $this->VALID_FIELDTYPE);
 		$field->insert($this->getPDO());
 	}
 
