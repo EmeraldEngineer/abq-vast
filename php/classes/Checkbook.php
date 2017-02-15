@@ -541,7 +541,7 @@ class Checkbook implements \JsonSerializable {
         $statement->setFetchMode(\PDO::FETCH_ASSOC);
         while(($row = $statement->fetch()) !== false) {
             try {
-                $checkbooks = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
+                $checkbookReferenceNum = new Checkbook($row["checkbookId"], $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
                 $checkbooks[$checkbooks->key()] = $checkbookReferenceNum;
                 $checkbooks->next();
             } catch(\Exception $exception) {
@@ -573,7 +573,7 @@ class Checkbook implements \JsonSerializable {
         $statement = $pdo->prepare($query);
 
         // bind the vendor content to the place holder int he template
-        $checkbookVendor = "%$checkbookVendor%";
+       // $checkbookVendor = "%$checkbookVendor%";
         $parameters = ["checkbookVendor" => $checkbookVendor];
         $statement->execute($parameters);
 
