@@ -150,8 +150,6 @@ class Field implements \JsonSerializable {
 			throw(new \InvalidArgumentException("Field Type is empty or insecure"));
 		}
 
-		var_dump(strlen($newFieldType));
-
 		//verify field type will fit into the database
 		if(strlen($newFieldType) !== 1) {
 			throw(new \RangeException("Field Type is incorrect"));
@@ -190,7 +188,6 @@ class Field implements \JsonSerializable {
 		$this->fieldId = intval($pdo->lastInsertId());
 	}
 
-	/**
 	/**
 	 * gets Field by fieldId
 	 *
