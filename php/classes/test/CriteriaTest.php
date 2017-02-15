@@ -59,7 +59,7 @@ class CriteriaTest extends AbqVastTest {
 		parent::setUp();
 
 		//create and insert foreign field
-		$this->field = new Field(null, "passN", "d");
+		$this->field = new Field(null, "passN", "s");
 		$this->field->insert($this->getPDO());
 		$this->share = new Share(null, "passShI", "passShU");
 		$this->share->insert($this->getPDO());
