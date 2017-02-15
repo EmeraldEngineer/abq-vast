@@ -583,8 +583,8 @@ class Checkbook implements \JsonSerializable {
         while(($row = $statement->fetch()) !== false) {
             try{
                 $checkbookVendor = new Checkbook($row["checkbookId"],  $row["checkbookInvoiceAmount"], $row["checkbookInvoiceDate"], $row["checkbookInvoiceNum"], $row["checkbookPaymentDate"], $row["checkbookReferenceNum"], $row["checkbookVendor"]);
-                $checkbookVendor[$checkbookVendor->key()] = $checkbookVendor;
-                $checkbookVendor->next();
+                $checkbooks[$checkbooks->key()] = $checkbookVendor;
+                $checkbooks->next();
             } catch(\Exception $exception) {
                 // if the row couldn't be converted, rethrow it
                 throw(new \PDOException($exception->getMessage(), 0, $exception));
