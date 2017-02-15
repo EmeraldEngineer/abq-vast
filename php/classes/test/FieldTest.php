@@ -58,7 +58,7 @@ class FieldTest extends AbqVastTest {
 
 	/**
 	 * test inserting a field that already exists
-	 *
+	 * test again
 	 * @expectedException \PDOException
 	 **/
 	public function testInsertInvalidField() {
