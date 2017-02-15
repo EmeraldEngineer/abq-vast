@@ -52,8 +52,8 @@ class FieldTest extends AbqVastTest {
 		$pdoField = Field::getFieldByFieldId($this->getPDO(), $field->getFieldId());
 
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("field"));
-		$this->assertEquals($pdoField->getFieldType(), $this->VALID_FIELDTYPE);
 		$this->assertEquals($pdoField->getFieldName(), $this->VALID_FIELDNAME);
+		$this->assertEquals($pdoField->getFieldType(), $this->VALID_FIELDTYPE);
 	}
 
 	/**

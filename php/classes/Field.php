@@ -1,7 +1,6 @@
 <?php
 namespace Edu\Cnm\AbqVast;
 require_once("autoload.php");
-// FIXME: add getFieldByFieldId(), add getFieldName() accessor...
 
 /**
  * ABQ Vast Field profile
