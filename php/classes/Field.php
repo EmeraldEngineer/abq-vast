@@ -154,9 +154,21 @@ class Field implements \JsonSerializable {
 			throw(new \RangeException("Field Type is incorrect"));
 		}
 
-		if(($newFieldType !== "d")) {
+//		if(($newFieldType !== "d") || ($newFieldType !== "s") || ($newFieldType !== "n")) {
+//			throw(new \InvalidArgumentException("not a valid field type"));
+//		}
+		if ($newFieldType == "d") {
+
+		} elseif ($newFieldType == "s") {
+
+		} elseif ($newFieldType == "n") {
+
+		} elseif ($newFieldType ) {
+
+		} else {
 			throw(new \InvalidArgumentException("not a valid field type"));
 		}
+
 
 		//store the field type
 		$this->fieldType = $newFieldType;
