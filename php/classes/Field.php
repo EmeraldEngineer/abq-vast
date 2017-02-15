@@ -18,12 +18,12 @@ class Field implements \JsonSerializable {
 	 * **/
 	private $fieldId;
 	/**
-	 * idetifies the Field using a Field Name;
+	 * identifies the Field using a Field Name;
 	 * @var string $fieldName
 	 * **/
 	private $fieldName;
 	/**
-	 * idetifies the Field Type;
+	 * identifies the Field Type;
 	 * @var string $fieldType
 	 * **/
 	private $fieldType;
