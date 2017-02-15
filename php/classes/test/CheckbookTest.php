@@ -75,21 +75,25 @@ class CheckbookTest extends AbqVastTest {
         // calculate the date (just use the time the unit test was setup...)
         $this->VALID_CHECKBOOKINVOICESUNRISEDATE  = new \DateTime();
         $this->VALID_CHECKBOOKINVOICESUNRISEDATE->sub(new \DateInterval("P10D"));
+        $this->VALID_CHECKBOOKINVOICESUNRISEDATE->format("Y-m-d");
 
         $this->VALID_CHECKBOOKINVOICEDATE = new \DateTime();
         $this->VALID_CHECKBOOKINVOICEDATE = $this->VALID_CHECKBOOKINVOICEDATE->format("Y-m-d");
 
         $this->VALID_CHECKBOOKINVOICESUNSETDATE = new \DateTime();
         $this->VALID_CHECKBOOKINVOICESUNSETDATE->add(new \DateInterval("P10D"));
+        $this->VALID_CHECKBOOKINVOICESUNSETDATE->format("Y-m-d");
 
         $this->VALID_CHECKBOOKPAYMENTSUNRISEDATE = new \DateTime();
         $this->VALID_CHECKBOOKPAYMENTSUNRISEDATE->sub(new \DateInterval("P10D"));
+        $this->VALID_CHECKBOOKPAYMENTSUNRISEDATE->format("Y-m-d");
 
         $this->VALID_CHECKBOOKPAYMENTDATE = new \DateTime();
         $this->VALID_CHECKBOOKPAYMENTDATE = $this->VALID_CHECKBOOKPAYMENTDATE->format('Y-m-d');
 
         $this->VALID_CHECKBOOKPAYMENTSUNSETDATE = new \DateTime();
         $this->VALID_CHECKBOOKPAYMENTSUNSETDATE->add(new \DateInterVal("P10D"));
+        $this->VALID_CHECKBOOKPAYMENTSUNSETDATE->format("Y-m-d");
     }
     /**
      * test inserting a valid Checkbook and verify that the actual mySQL data matches
