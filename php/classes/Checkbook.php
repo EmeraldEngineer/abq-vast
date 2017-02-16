@@ -477,14 +477,17 @@ class Checkbook implements \JsonSerializable {
         if((empty($checkbookPaymentSunriseDate) === true) || (empty($checkbookPaymentSunsetDate) === true)) {
             throw(new \InvalidArgumentException("date is empty or null"));
         }
+        // validate the dates
         try {
             $checkbookPaymentSunriseDate = self::validateDate($checkbookPaymentSunriseDate);
             $checkbookPaymentSunsetDate = self::validateDate($checkbookPaymentSunsetDate);
+        }    catch(\InvalidArgumentException $invalidArgument) {
+            throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
         } catch(\RangeException $range) {
             throw(new \RangeException($range->getMessage(), 0, $range));
         }
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookPaymentDate <= :checkbookPaymentSunriseDate AND checkbookPaymentDate >= :checkbookPaymentSunsetDate";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookPaymentDate >= :checkbookPaymentSunriseDate AND checkbookPaymentDate <= :checkbookPaymentSunsetDate";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice date to the placeholder in the template
@@ -512,7 +515,8 @@ class Checkbook implements \JsonSerializable {
         return($checkbooks);
     }
     /**
-     * FIXME: add description field
+     * gets the checkbook by Reference Number
+     *
      * @param \PDO $pdo PDO connection object
      * @param string $checkbookReferenceNum reference number to search for
      * @return \SplFixedArray SplFixedArray of checkbook found
