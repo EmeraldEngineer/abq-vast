@@ -56,22 +56,7 @@ if($method === "GET") {
 			if($checkbook !== null) {
 				$reply->data = $checkbook;
 			}
-		}
 		//if there is nothing in $id, and it is a GET request, then we simply return all checkbook. We store all checkbook in the $checkbook variable and then store them in the $reply->data state variable
-}	else {
-	throw (new InvalidArgumentException("Invalid HTTP Method Request"));
-	// if the method request is not GET, PUT, POST, DELETE an exception is thrown.
-
-//update reply with exception info
-}
-
-}	catch(Exception $exception) {
-		$reply->status = $exception->getCode();
-		$reply->message = $exception->getMessage();
-		$reply->trace = $exception->getTraceAsString();
-}	catch(TypeError $typeError) {
-		$reply->status = $typeError->getCode();
-		$reply->message = $typeError->getMessage();
 }
 
 // in these lines the Exceptions are caught and the $reply object is updated with the data from the caught exception. Note that $reply->status will be updated with the correct error code in the case of an Exception
