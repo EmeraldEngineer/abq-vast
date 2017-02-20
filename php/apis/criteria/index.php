@@ -63,55 +63,28 @@ try {
 		}
 		// If there is nothing in $id, and it is a GET request, then we simply return all criteria. We store all the criteria in the $criteria variable, and then store them in the $reply->data state variable.
 
-	} elseif($method === "PUT" || $method === "POST") ;
+	} elseif($method === "PUT") ;
 
 	verifyXsrf();
 	$requestContent = file_get_contents("php://input");
 	$requestObject = json_decode($requestContent);
 
-	//make sure criteria field id is available (required field)
-	if(empty($requestObject->criteriaFieldId) === true) {
-		throw(new \InvalidArgumentException ("No search criteria selected.", 405));
+	// retrieve the criteria to update
+	$criteria = Criteria::getCriteriaByCriteriaId($pdo, $id);
+	if($criteria === null) {
+		throw(new RuntimeException("Criteria does not exist", 404));
 	}
 
-	// make sure criteria share id is accurate (optional field)
-	if(empty($requestObject->criteriaShareId) === true) {
-		$requestObject->tweetDate = new \DateTime();
-	}
+	// update all attributes
+	$criteria->setCriteriaFieldId($requestObject->criteriaFieldId);
+	$criteria->setCriteriaShareId($requestObject->criteriaShareId);
+	$criteria->update($pdo);
 
-	//  make sure profileId is available
-	if(empty($requestObject->profileId) === true) {
-		throw(new \InvalidArgumentException ("No Profile ID.", 405));
-	}
+	// update reply
+	$reply->message = "Criteria updated OK";
 
-	//perform the actual put or post
-	if($method === "PUT") {
 
-		// retrieve the tweet to update
-		$tweet = Tweet::getTweetByTweetId($pdo, $id);
-		if($tweet === null) {
-			throw(new RuntimeException("Tweet does not exist", 404));
-		}
-
-		// update all attributes
-		$tweet->setTweetDate($requestObject->tweetDate);
-		$tweet->setTweetContent($requestObject->tweetContent);
-		$tweet->update($pdo);
-
-		// update reply
-		$reply->message = "Tweet updated OK";
-
-	} else if($method === "POST") {
-
-		// create new tweet and insert into the database
-		$tweet = new Tweet(null, $requestObject->profileId, $requestObject->tweetContent, null);
-		$tweet->insert($pdo);
-
-		// update reply
-		$reply->message = "Tweet created OK";
-	}
-
-// update reply with exception information
+	// update reply with exception information
 
 } catch(Exception $exception) {
 	$reply->status = $exception->getCode();
