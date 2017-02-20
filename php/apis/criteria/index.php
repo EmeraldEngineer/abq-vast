@@ -1,5 +1,18 @@
 <?php
 
+require_once "../../classes/autoloader.php";
+require_once "../lib/xsrf.php";
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+
+use Edu\Cnm\AbqVast\Criteria;
+
+/**
+ *
+ * api for the Criteria class
+ *
+ * @author Sarah Ruth Finkel <sfinkel@cnm.edu>
+ **/
+
 // we determine if we have a GET request. If so, we then process the request.
 if ($method === "GET") {
 
