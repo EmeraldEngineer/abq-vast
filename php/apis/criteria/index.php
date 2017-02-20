@@ -78,11 +78,12 @@ try {
 	// update all attributes
 	$criteria->setCriteriaFieldId($requestObject->criteriaFieldId);
 	$criteria->setCriteriaShareId($requestObject->criteriaShareId);
+	$criteria->setCriteriaOperator($requestObject->criteriaOperator);
+	$criteria->setCriteriaValue($requestObject->criteriaValue);
 	$criteria->update($pdo);
 
 	// update reply
 	$reply->message = "Criteria updated OK";
-
 
 	// update reply with exception information
 
