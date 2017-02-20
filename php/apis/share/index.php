@@ -18,9 +18,9 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 }
 
 //prepare am empty reply
-$share = new stdClass();
-$share ->status = 200;
-$share ->data = null;
+$shareId = new stdClass();
+$shareId ->status = 200;
+$shareId ->data = null;
 
 try {
 	//grab the mySQL connection
@@ -39,14 +39,55 @@ try {
 		throw(new InvalidArgumentException("NNN cannot be empty or negative", 405));
 	}
 
-	//handle GET request - if NNN is present, that share is returned, otherwise all shares are returned
+	//handle GET request - if NNN is present, that shareId is returned, otherwise all shareId are returned
 	if($method === "GET") {
-	//set XSRF cookie
+		//set XSRF cookie
 		setXsrfCookie();
 
+		//get a specific shareId or all shareIds and update NNN
+		if(emplty($NNN) === false) {
+			$shareId = shareId::getShareByShareId($pdo, $id);
+			if($shareId !== null) {
+				$NNN->data = $shareId;
+			}
+		} else if(empty($NNN) === false) {
+			$shareId = ShareId::getShareIdByFieldId($pdo, $fieldId);
+			if($shareId !== null) {
+				$reply->data = $shareId;
+			}
+		} else if(empty($NNN) === false) {
+			$shareId = ShareId::getShareIdByShareUrl($pdo, $NNN);
+			if($shareId !== null) {
+				$reply->data = $shareId;
+			}
+		} else {
+			$shareId = ShareId::getAllShareId($pdo);
+			if($shareId !== null) {
+				$reply->data = $shareId;
+			}
+		}
+	} else if($method === "PUT" || $method === "shareImage") {
 
-	}
-}
+			verifyXsrf();
+			$requestContent = file_get_contents("php://input");
+			$requestObject = json_decode($requestContent);
+
+			//make sure shareId is available (required field)
+			if(empty($requestObject->shareImage) === true) {
+				throw(new \InvalidArgumentException ("No content for ShareId.", 405));
+			}
+
+			//perform the actual put or post
+			if($method === "PUT") {
+				throw(new RuntimeException("shareId does not exist", 404));
+			}
+
+			// update all attributes
+			$shareId->setShareImage($requestObject->shareImage);
+			$shareId->setShareUrl($requestObject->shareUrl);
+			$shareId->update($pdo);
+
+
 
 
 
