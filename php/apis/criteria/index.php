@@ -40,29 +40,43 @@ try {
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
+
+// Here, we determine if the request received is a GET request
+	if($method === "GET") {
+		//set XSRF cookie
+		setXsrfCookie("/");
+		// handle GET request - if id is present, that criteria is present, that criteria is returned, otherwise all criteria are returned
+
+		// Here, we determine if a Key was sent in the URL by checking $id. If so, we pull the requested Criteria by Criteria ID from the DataBase and store it in $criteria.
+		if(empty($id) === false) {
+			$criteria = Criteria::getCriteriaByCriteriaId($pdo, $id);
+			if($criteria !== null) {
+				$reply->data = $criteria;
+				// Here, we store the retreived Criteria in the $reply->data state variable.
+			}
+
+		} else {
+			$criteria = Criteria::getAllCriteria($pdo);
+			if($criteria !== null) {
+				$reply->data = $criteria;
+			}
+		}
+		// If there is nothing in $id, and it is a GET request, then we simply return all criteria. We store all the criteria in the $criteria variable, and then store them in the $reply->data state variable.
+
+// update reply with exception information
+
+	} catch (Exception $exception) {
+		$reply->status = $exception->getCode();
+		$reply->message = $exception->getMessage();
+	} catch(TypeError $typeError) {
+		$reply->status = $typeError->getCode();
+		$reply->message = $typeError->getMessage();
+	}
+
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
 }
 
-// Here, we determine if the reques received is a GET request
-if($method === "GET") {
-	//set XSRF cookie
-	setXsrfCookie("/");
-	// handle GET request - if id is present, that tweet is present, that tweet is returned, otherwise all tweets are returned
-
-	// Here, we determine if a Key was sent in the URL by checking $id. If so, we pull the requested Tweet by Tweet ID from the DataBase and store it in $tweet.
-	if(empty($id) === false) {
-		$tweet = Criteria::getCriteriaByCriteriaId($pdo, $id);
-		if($tweet !== null) {
-			$reply->data = $tweet;
-			// Here, we store the retreived Tweet in the $reply->data state variable.
-		}
-
-
-
-
-	} else {
-		$tweets = Tweet::getAllTweets($pdo);
-		if($tweets !== null) {
-			$reply->data = $tweets;
-		}
-	}
-	// If there is nothing in $id, and it is a GET request, then we simply return all tweets. We store all the tweets in the $tweets varable, and then store them in the $reply->data state variable.
+// encode and return reply to front end caller
+echo json_encode($reply);
