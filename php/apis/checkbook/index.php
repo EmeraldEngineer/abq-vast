@@ -3,7 +3,7 @@ require_once "autoloader.php";
 require_once "/lib/xsrf.php";
 require_once "/etc/apache2/capstone-mysql/encrypted-config.php";
 
-use use Edu\Cnm\AbqVast\Checkbook;
+use Edu\Cnm\AbqVast\Checkbook;
 
 /**
  * api for checkbook class
@@ -26,4 +26,36 @@ try {
 	//grab the mySQL database connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
 
+	//determines which HTTP Method needs to be processed and stores the result in $method
+	$method = array_key_exists("HTTP_x_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+
+	//stores the Primary key for the GET methods in $id, This key will come in the URL sent by the front end. If no key is present $id will remain empty. Note that the input filtered.
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+
+	//here we check and make sure that we have the Primary key for the DELETE and PUT requests. If the request is a PUT or DELETE and no key is present in $id an exception is thrown
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+	}
+}
+
+//here we determine if the request received is a GET request
+if($method === "GET") {
+	//set XSRF cookie
+	setXsrfCookie("/");
+	//handle GET request - if id is present, that checkbook value is present, that checkbook value is returned, otherwise all values are returned.
+
+	//determine is a Key was sent in the URL by checking $id. if so we pull the requested checkbook value by checkbook ID from the database and store it in $checkbook
+	if(empty($id) === false) {
+		$checkbook = Checkbook::getCheckbookByCheckbookId($pdo, $id);
+		if($checkbook !== null) {
+			$reply->data = $checkbook;
+			//here we store the received checkbook value in the $reply-data state variable
+		}
+	}	else {
+			$checkbook = Checkbook::getAllCheckbooks($pdo);
+			if($checkbook !== null) {
+				$reply->data = $checkbook;
+			}
+		}
+		//if there is nothing in $id, and it is a GET request, then we simply return all checkbook. We store all checkbook in the $checkbook variable and then store them in the $reply->data state variable
 }
