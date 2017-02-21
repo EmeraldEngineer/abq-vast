@@ -30,8 +30,8 @@ CREATE TABLE share(
 );
 
 CREATE TABLE criteria(
-  criteriaId INT UNSIGNED AUTO_INCREMENT NOT NULL,
   criteriaFieldId INT UNSIGNED NOT NULL,
+  criteriaId INT UNSIGNED AUTO_INCREMENT NOT NULL,
   criteriaShareId INT UNSIGNED NOT NULL,
   criteriaOperator VARCHAR(4)NOT NULL,
   criteriaValue VARCHAR(82) NOT NULL,

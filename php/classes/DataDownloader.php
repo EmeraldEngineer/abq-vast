@@ -25,37 +25,24 @@ class DataDownloader {
         $options["http"] ["method"] = "HEAD";
         $context = stream_context_create($options);
 
-        //"@" suppresses warning and errors
+        // "@" suppresses warnings and errors, fopen opens the actual file
         $fd = fopen($url, "rb", false, $context);
         $metaData = stream_get_meta_data($fd);
         if($fd === false) {
-            throw(new \RuntimeException("unable to opent HTTP stream"));
+            throw(new \RuntimeException("unable to open HTTP stream"));
         }
         fclose($fd);
-        $wrapperData = $metaData["wrapper_data"];
-        $http = "";
-        foreach($wrapperData as $data) {
-            if(strpos($data, "HTTP") !== false) {
-                $http = $data;
-                break;
+        $header = $metaData["wrapper_data"];
+        foreach($header as $value) {
+            $explodeETag = explode(": ", $value);
+            $findETag = array_search("ETag", $explodeETag);
+            if($findETag !== false) {
+                $eTag = $explodeETag[1];
             }
         }
-
-        if(strpos($http, "400")) {
-            throw(new Exception("Bad request"));
-        }
-        if(strpos($http, "401")) {
-            throw(new Exception("Unauthorized"));
-        }
-        if(strpos($http, "403")) {
-            throw(new Exception("Forbidden"));
-        }
-        if(strpos($http, "404")) {
-            throw(new Exception("Not found"));
-        }
-        if(strpos($http, "418")) {
-            throw(new Exception("Set to water to boil"));
-        }
-        return $metaData;
+        var_dump ($eTag);
+        return ($eTag);
     }
 }
+
+$meta = DataDownloader::getMetadata("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");
