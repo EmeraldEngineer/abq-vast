@@ -9,7 +9,9 @@
  **/
 require __DIR__.'/vendor/autoload.php';
 
-use CpChart\Chart\Draw;
+/** Unneeded?
+ * use CpChart\Chart\Draw;
+**/
 use CpChart\Chart\Image;
 use CpChart\Chart\Data;
 
@@ -25,7 +27,7 @@ $myPicture->setGraphArea(30,30,300,250); // x,y,width,height
 
 // define chart scale (default) and type of chart (spline)
 $myPicture->drawScale();
-$myPicture->drawAreaChart();
+$myPicture->drawFilledSplineChart();
 
 $myPicture->Stroke();
 
