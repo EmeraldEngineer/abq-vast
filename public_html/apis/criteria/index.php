@@ -1,7 +1,7 @@
 <?php
 
-require_once "../../classes/autoloader.php";
-require_once "../lib/xsrf.php";
+require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
+require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\AbqVast\Criteria;
@@ -49,12 +49,6 @@ try {
 			if($criteria !== null) {
 				$reply->data = $criteria;
 				// Here, we store the retreived Criteria in the $reply->data state variable.
-			}
-
-		} else {
-			$criteria = Criteria::getAllCriteria($pdo);
-			if($criteria !== null) {
-				$reply->data = $criteria;
 			}
 		}
 		// If there is nothing in $id, and it is a GET request, then we simply return all criteria. We store all the criteria in the $criteria variable, and then store them in the $reply->data state variable.
