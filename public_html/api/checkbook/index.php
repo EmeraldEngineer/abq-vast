@@ -40,34 +40,40 @@ try {
 
 
 //here we determine if the request received is a GET request
-if($method === "GET") {
-	//set XSRF cookie
-	setXsrfCookie("/");
-	//handle GET request - if id is present, that checkbook value is present, that checkbook value is returned, otherwise all values are returned.
+	if($method === "GET") {
+		//set XSRF cookie
+		setXsrfCookie("/");
+		//handle GET request - if id is present, that checkbook value is present, that checkbook value is returned, otherwise all values are returned.
 
-	//determine is a Key was sent in the URL by checking $id. if so we pull the requested checkbook value by checkbook ID from the database and store it in $checkbook
-	if(empty($id) === false) {
-		$checkbook = Checkbook::getCheckbookByCheckbookId($pdo, $id);
-		if($checkbook !== null) {
-			$reply->data = $checkbook;
-			//here we store the received checkbook value in the $reply-data state variable
+		//determine is a Key was sent in the URL by checking $id. if so we pull the requested checkbook value by checkbook ID from the database and store it in $checkbook
+		if(empty($id) === false) {
+			$checkbook = Checkbook::getCheckbookByCheckbookId($pdo, $id);
+			if($checkbook !== null) {
+				$reply->data = $checkbook;
+				//here we store the received checkbook value in the $reply-data state variable
+			}
+		} else {
+			$checkbook = Checkbook::getAllCheckbooks($pdo);
+			if($checkbook !== null) {
+				$reply->data = $checkbook;
+			}
+			//if there is nothing in $id, and it is a GET request, then we simply return all checkbook. We store all checkbook in the $checkbook variable and then store them in the $reply->data state variable
 		}
-	} else {
-		$checkbook = Checkbook::getAllCheckbooks($pdo);
-		if($checkbook !== null) {
-			$reply->data = $checkbook;
-		}
-		//if there is nothing in $id, and it is a GET request, then we simply return all checkbook. We store all checkbook in the $checkbook variable and then store them in the $reply->data state variable
 	}
+} catch(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
 }
-// TODO add catch block
 // in these lines the Exceptions are caught and the $reply object is updated with the data from the caught exception. Note that $reply->status will be updated with the correct error code in the case of an Exception
 
-	header("Content-type: application/json");
+header("Content-type: application/json");
 //sets up the response header.
-	if($reply->data === null) {
-		unset($reply->data);
-	}
+if($reply->data === null) {
+	unset($reply->data);
+}
 
 
 echo json_encode($reply);
