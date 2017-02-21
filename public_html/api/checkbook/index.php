@@ -37,7 +37,7 @@ try {
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
-}
+
 
 //here we determine if the request received is a GET request
 if($method === "GET") {
@@ -52,21 +52,23 @@ if($method === "GET") {
 			$reply->data = $checkbook;
 			//here we store the received checkbook value in the $reply-data state variable
 		}
-	}	else {
-			$checkbook = Checkbook::getAllCheckbooks($pdo);
-			if($checkbook !== null) {
-				$reply->data = $checkbook;
-			}
+	} else {
+		$checkbook = Checkbook::getAllCheckbooks($pdo);
+		if($checkbook !== null) {
+			$reply->data = $checkbook;
+		}
 		//if there is nothing in $id, and it is a GET request, then we simply return all checkbook. We store all checkbook in the $checkbook variable and then store them in the $reply->data state variable
+	}
 }
-
+// TODO add catch block
 // in these lines the Exceptions are caught and the $reply object is updated with the data from the caught exception. Note that $reply->status will be updated with the correct error code in the case of an Exception
 
-header("Content-type: application/json");
+	header("Content-type: application/json");
 //sets up the response header.
-if($reply->data === null) {
-	unset($reply->data);
-}
+	if($reply->data === null) {
+		unset($reply->data);
+	}
+
 
 echo json_encode($reply);
 //finally - JSON encodes the $reply object and sends it back to the front end.
