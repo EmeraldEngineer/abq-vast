@@ -4,6 +4,11 @@
  *
  **/
 
+// include all the classes
+include("class/Draw.class.php");
+include("class/Image.class.php");
+include("class/Data.class.php");
+
 //create an array to hold the mock variables
 $myArray = array(
 	"name" => "testVendor",
@@ -12,4 +17,3 @@ $myArray = array(
 	"money3" => 2500,
 );
 
-print_r(array_values($myArray));
