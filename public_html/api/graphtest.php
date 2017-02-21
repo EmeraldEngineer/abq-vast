@@ -12,4 +12,4 @@ $myArray = array(
 	"money3" => 2500,
 );
 
-echo $myArray;
+print_r(array_values($myArray));
