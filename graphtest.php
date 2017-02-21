@@ -20,7 +20,7 @@ $myData->addPoints(array(VOID,3,4,3,5));
 
 $myPicture = new Image(700,230,$myData); // width, height, dataset
 $myPicture->setGraphArea(60,40,670,190); // x,y,width,height
-$myPicture->setFontProperties(array("FontName"=>"pChart/fonts/verdana.ttf","FontSize"=>11));
+//$myPicture->setFontProperties(array("FontName"=>"pChart/fonts/verdana.ttf","FontSize"=>11));
 
 
 // define chart scale (default) and type of chart (spline)
