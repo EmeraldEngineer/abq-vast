@@ -1,0 +1,5 @@
+{
+  "require": {
+    "szymach/c-pchart": "@stable"
+  }
+}
