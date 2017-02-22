@@ -60,15 +60,9 @@ try {
 		$requestContent = file_get_contents("php://input");
 		// Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
 
-
 		$requestObject = json_decode($requestContent);
 		// This line then decodes the JSON package and stores that result in $requestObject.
 
-
-		//Here we check to make sure that there is content for the Tweet. If $requestObject->criteriaId is empty, an exception is thrown. POST method will use the content to create a new Tweet.
-		if(empty($requestObject->criteriaId) === true) {
-			throw(new \InvalidArgumentException ("No content for criteria Id", 405));
-		}
 
 	} else if($method === "POST") {
 		// If it is a POST request we continue to the proceeding lines and make sure that a Profile ID was sent with the request. A new Criteria cannot be created without the crieteria Id. See the constructor in the Criteria class.
