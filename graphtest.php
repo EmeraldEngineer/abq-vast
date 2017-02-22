@@ -7,7 +7,7 @@
 /**
  * include all the classes
  **/
-require __DIR__.'/vendor/autoload.php';
+require 'vendor/autoload.php';
 
 /** Unneeded?
  * use CpChart\Chart\Draw;
@@ -18,6 +18,7 @@ use CpChart\Chart\Data;
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
+
 /* Create your dataset object */
 $myData = new Data();
 /* Add data in your dataset */
@@ -30,7 +31,7 @@ $myData->addPoints(array(10,3,4,3,5,20));
 //$testArray->addPoints(array(1,2,5,6));
 
 $myPicture = new Image(300,300,$myData); // width, height, dataset
-$myPicture->setGraphArea(50,30,300,250); // x,y,width,height
+$myPicture->setGraphArea(30,30,300,250); // x,y,width,height
 //$myPicture->setFontProperties(array("FontName"=>"pChart/fonts/verdana.ttf","FontSize"=>11));
 
 
