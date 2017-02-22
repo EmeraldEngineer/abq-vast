@@ -27,12 +27,10 @@ try {
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
 
 	//determine which HTTP method was used
-	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
+	$method = array_key_exists("HTTP_x_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
-	//sanitize input
-	$NNN = filter_input(INPUT_GET, "NNN", FILTER_VALIDATE_INT);
-	$NNN = filter_input(INPUT_GET, "NNN", FILTER_VALIDATE_INT);
-	$NNN = filter_input(INPUT_GET, "NNN", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	//stores the Primary Key for the GET, DELETE, and PUT methods in $id. This key will come in the URL sent by the front end. If no key is present, $id will remain empty. Note that the input is filtered.
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
 	//make sure the NNN is valid for methods that require it
 	if(($method === "DELETE" || $method ==='PUT') && (empty($NNN) === true || $NNN < 0)) {
