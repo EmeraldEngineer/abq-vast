@@ -78,7 +78,7 @@ try {
 		}
 
 		// creates a new Criteria object and stores it in $criteria
-		$criteria = new Criteria(null, $requestObject->CriteriaFieldId, $requestObject->CriteriaShareId, $requestObject->CriteriaOperator, $requestObject->CriteriaValue);
+		$criteria = new Criteria(null, $requestObject->criteriaFieldId, $requestObject->criteriaShareId, $requestObject->criteriaOperator, $requestObject->criteriaValue);
 		// calls the INSERT method in $criteria which inserts the object into the DataBase.
 		$criteria->insert($pdo);
 
