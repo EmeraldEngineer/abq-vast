@@ -60,20 +60,30 @@ class DataDownloader {
             return($previousETag);
         }
 
-    }
+   }
     public static function BasicSimpleXML($xmlstr) {
         $xmlstr = <<<XML
 <?xml version='1.0' standalone='yes' ?>
-<checkbook>
-<vendorname>
-<invoiceamount></invoiceamount>
-<invoicedate></invoicedate>
-<invoicenum></invoicenum>
-<paymentdate></paymentdate>
-<referencenum></referencenum>
-</vendorname>
-</checkbook>
+<data>
+        <row>
+            <value>1 ST HEALTH INC</value>
+            <value>2606945</value>
+            <value>NMSM110413VG</value>
+            <value>2013-11-04T00:00:00</value>
+            <value>2014-01-10T00:00:00</value>
+            <value>95.05</value>
+        </row>
+        <row>
+            <value>1 ST HEALTH INC</value>
+            <value>2621206</value>
+            <value>COA1361638</value>
+            <value>2014-01-25T00:00:00</value>
+            <value>2014-07-24T00:00:00</value>
+            <value>205.55</value>
+        </row>
+</data>
 XML;
+
     }
 }
 

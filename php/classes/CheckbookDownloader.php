@@ -28,10 +28,11 @@ class CheckbookDownloader extends DataDownloader {
 
     public static function BasicSimpleXML($xmlstr)
     {
-        parent::BasicSimpleXML($xmlstr);
-        include 'CheckbookDownloader.php';
-        $checkbook = new \SimpleXMLElement($xmlstr);
-        foreach ($checkbook->vendorname->invoiceamount->invoiceamount as $invoiceamount) {}
+        include 'DataDownloader.php';
+        $data = new \SimpleXMLElement($xmlstr);
+        foreach ($data->row->value->value as $vendor) {
+            echo $vendor->name, 'value', $$vendor->value, PHP_EOL;
+        }
     }
 }
 
