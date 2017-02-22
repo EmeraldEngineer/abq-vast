@@ -63,10 +63,6 @@ try {
 		$requestObject = json_decode($requestContent);
 		// This line then decodes the JSON package and stores that result in $requestObject.
 
-
-	} else if($method === "POST") {
-		// If it is a POST request we continue to the proceeding lines and make sure that a Profile ID was sent with the request. A new Criteria cannot be created without the crieteria Id. See the constructor in the Criteria class.
-		//make sure criteriaId is available
 		if(empty($requestObject->criteriaId) === true) {
 			throw(new \InvalidArgumentException ("No Criteria ID", 405));
 		}
