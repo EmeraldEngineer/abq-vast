@@ -32,8 +32,10 @@ try {
 	//stores the Primary Key for the GET, DELETE, and PUT methods in $id. This key will come in the URL sent by the front end. If no key is present, $id will remain empty. Note that the input is filtered.
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
-	// Here, we determine if the request received is a GET request
-	if($method === "GET") {
+	//make sure the is is valid for the methods that require it
+	if(($method === "GET" || $method === "POST") && (empty($id) === true || $id < 0)) {
+		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+	}
 		//set XSRF cookie
 		setXsrfCookie("/");
 		// handle GET request - if id is present, that share is present, that share is returned, otherwise all share are returned
