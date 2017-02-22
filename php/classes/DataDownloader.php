@@ -17,11 +17,15 @@ class DataDownloader {
      * Gets the metadata from a file url
      *
      * @param string %url to grab from
+     * @param string $eTag to be compared to previous etag to determine last download
      * @return string $eTag to be compared to previous etag to determine last download
      * @throws \RuntimeException if file doesn't exist
      **/
 
-    public static function getMetaData(string $url) {
+    public static function getMetaData(string $url, string $eTag) {
+        if($eTag !== "checkbook") {
+            throw(new \RuntimeException("not a valid etag, 400"));
+        }
         $options = [];
         $options["http"] = [];
         $options["http"] ["method"] = "HEAD";
@@ -51,11 +55,27 @@ class DataDownloader {
         $eTag = xmlstr($config["etag"]);
         $previousETag = $eTag->$metaData;
         if($previousETag < $eTag) {
-         return ($eTag);
-    } else {
-        return($previousETag);
+            return ($eTag);
+        } else {
+            return($previousETag);
+        }
+
+    }
+    public static function BasicSimpleXML($xmlstr) {
+        $xmlstr = <<<XML
+<?xml version='1.0' standalone='yes' ?>
+<checkbook>
+<vendorname>
+<invoiceamount></invoiceamount>
+<invoicedate></invoicedate>
+<invoicenum></invoicenum>
+<paymentdate></paymentdate>
+<referencenum></referencenum>
+</vendorname>
+</checkbook>
+XML;
+
+    }
 }
 
-}
-
-/*$meta = DataDownloader::getMetadata("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");*/
+$meta = DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");
