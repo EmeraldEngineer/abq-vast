@@ -35,9 +35,9 @@ try {
 	$shareUrl = filter_input(INPUT_POST, "shareUrl", FILTER_SANITIZE_STRING);
 
 	//make sure the is is valid for the methods that require it
-	if(($method === "POST") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-	}
+//	if(($method === "POST") && (empty($id) === true || $id < 0)) {
+//		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+//	}
 
 	// handle GET request - if id is present, that share is present, that share is returned, otherwise all share are returned
 	if($method === "GET") {
@@ -66,29 +66,36 @@ try {
 		// This line then decodes the JSON package and stores that result in $requestObject.
 
 
-		//Here we check to make sure that there is content for the Tweet. If $requestObject->criteriaId is empty, an exception is thrown. POST method will use the content to create a new Tweet.
+		//Here we check to make sure that there is content for the Share. If $requestObject->shareId is empty, an exception is thrown.
 		if(empty($requestObject->shareId) === true) {
 			throw(new \InvalidArgumentException ("No content for share Id", 405));
 		}
 
 	} else if($method === "POST") {
-		// If it is a POST request we continue to the proceeding lines and make sure that a Profile ID was sent with the request. A new Criteria cannot be created without the crieteria Id. See the constructor in the Criteria class.
-		//make sure criteriaId is available
+		// If it is a POST request we continue to the proceeding lines and make sure that a share Id was sent with the request. A new Share cannot be created without the share Id. See the constructor in the Share class.
+		//make sure shareId is available
 		if(empty($requestObject->shareId) === true) {
 			throw(new \InvalidArgumentException ("No Share ID", 405));
 		}
+		if(empty($requestObject->shareImage) === true) {
+			throw(new \InvalidArgumentException ("No Share Image", 405));
+		}
 
-		// creates a new Criteria object and stores it in $criteria
+		if(empty($requestObject->shareUrl) === true) {
+			throw(new \InvalidArgumentException ("No Share URL", 405));
+		}
+
+		// creates a new share object and stores it in $share
 		$share = new Share(null, $requestObject->shareImage, $requestObject->shareUrl);
-		// calls the INSERT method in $criteria which inserts the object into the DataBase.
+		// calls the INSERT method in $share which inserts the object into the DataBase.
 		$share->insert($pdo);
 
-		// stores the "Criteria created OK" message in the $reply->message state variable.
+		// stores the "Share created OK" message in the $reply->message state variable.
 		$reply->message = "Share OK";
 
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP Method Request"));
-		// If the method request is not GET, PUT, POST, or DELETE, an exception is thrown
+		// If the method request is not GET or POST an exception is thrown
 	}
 
 } catch(Exception $exception) {
