@@ -35,10 +35,9 @@ try {
 	$fieldType = filter_input(INPUT_POST, "fieldType", FILTER_SANITIZE_STRING);
 
 	//make sure the id is valid for the methods that require it
-	//SHOULD THIS REALLY BE COMMENTED OUT?
-//	if(($method === "POST" || $method === "GET") && (empty($id) === true || $id < 0)) {
-//		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-//	}
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+	}
 
 	// handle GET request - if id is present, that field is present, that field is returned, otherwise all fields are returned
 	if($method === "GET") {
@@ -50,6 +49,13 @@ try {
 			$field = Field::getFieldByFieldId($pdo, $id);
 			if($field !== null) {
 				$reply->data = $field;
+				//here we store the received field value in the $reply-data state varible
+
+			} else {
+				$field = Field::getAllFields($pdo);
+				if($field !== null) {
+					$reply->data = $field;
+				}
 			}
 		}
 

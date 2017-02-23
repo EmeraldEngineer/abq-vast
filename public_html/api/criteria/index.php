@@ -41,10 +41,9 @@ try {
 	$criteriaValue = filter_input(INPUT_POST, "criteriaValue", FILTER_SANITIZE_STRING);
 
 	//make sure the id is valid for the methods that require it
-	//THIS WAS MISSING
-//	if(($method === "POST") && (empty($id) === true || $id < 0)) {
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
 //		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-//	}
+	}
 
 // Here, we determine if the request received is a GET request
 	if($method === "GET") {

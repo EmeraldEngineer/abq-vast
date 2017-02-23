@@ -35,9 +35,9 @@ try {
 	$shareUrl = filter_input(INPUT_POST, "shareUrl", FILTER_SANITIZE_STRING);
 
 	//make sure the is is valid for the methods that require it
-//	if(($method === "POST") && (empty($id) === true || $id < 0)) {
-//		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-//	}
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+	}
 
 	// handle GET request - if id is present, that share is present, that share is returned, otherwise all share are returned
 	if($method === "GET") {
@@ -65,18 +65,7 @@ try {
 		$requestObject = json_decode($requestContent);
 		// This line then decodes the JSON package and stores that result in $requestObject.
 
-
-		//Here we check to make sure that there is content for the Share. If $requestObject->shareId is empty, an exception is thrown.
-		if(empty($requestObject->shareId) === true) {
-			throw(new \InvalidArgumentException ("No content for share Id", 405));
-		}
-
-	} else if($method === "POST") {
 		// If it is a POST request we continue to the proceeding lines and make sure that a share Id was sent with the request. A new Share cannot be created without the share Id. See the constructor in the Share class.
-		//make sure shareId is available
-		if(empty($requestObject->shareId) === true) {
-			throw(new \InvalidArgumentException ("No Share ID", 405));
-		}
 		if(empty($requestObject->shareImage) === true) {
 			throw(new \InvalidArgumentException ("No Share Image", 405));
 		}
