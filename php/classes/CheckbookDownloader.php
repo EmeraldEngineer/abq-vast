@@ -38,5 +38,4 @@ class CheckbookDownloader extends DataDownloader {
         }
     }
 }
-
-\DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");
+DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");

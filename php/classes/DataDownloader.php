@@ -88,10 +88,14 @@ XML;
         $dataset = new \SimpleXMLElement($xmlstr);
         foreach($dataset->data->row as $row) {
             $checkbookVendor = (string)$row->value[0];
-            $referencenumber = (string)$row->value[1];
-            $invoicenumber = (string)$row->value[2];
+            $referenceNumber = (string)$row->value[1];
+            $invoiceNumber = (string)$row->value[2];
+            $invoiceDate = (string)$row->value[3];
+            $paymentDate = (string)$row->value[4];
+            $invoiceAmount = (string)$row->value[5];
 
-            var_dump ($checkbookVendor, $referencenumber, $invoicenumber);
+
+            echo $checkbookVendor, $referenceNumber, $invoiceNumber, $invoiceDate, $paymentDate, $invoiceAmount;
         }
     }
 }
