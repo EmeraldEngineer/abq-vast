@@ -245,6 +245,28 @@ class Field implements \JsonSerializable {
 		return ($field);
 	}
 
+	public static function getAllFields(\PDO $pdo) {
+		// create query template
+		$query = "SELECT fieldId, fieldName, fieldType FROM field";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of fields
+		$fields = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while (($row = $statement->fetch()) !== false) {
+			try {
+				$field = new Field($row["fieldId"], $row["fieldName"], $row["fieldType"]);
+				$fields[$fields->key()] = $field;
+				$fields->next();
+			} catch (\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($fields);
+	}
+
 	/**
 	 * formats the state variable for JSON serialization
 	 *
