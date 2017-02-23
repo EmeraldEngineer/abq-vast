@@ -2,6 +2,7 @@
 namespace Edu\Cnm\AbqVast;
 
 require_once("autoload.php");
+require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 /**
  *
@@ -29,9 +30,11 @@ class CheckbookDownloader extends DataDownloader {
     public static function BasicSimpleXML($xmlstr)
     {
         include 'DataDownloader.php';
-        $data = new \SimpleXMLElement($xmlstr);
-        foreach ($data->row->value->value as $vendor) {
-            echo $vendor->name, 'value', $$vendor->value, PHP_EOL;
+        $dataset = new \SimpleXMLElement($xmlstr);
+        foreach($dataset->data->row as $row) {
+            $checkbookVendor = (string)$row->value[0];
+            var_dump($checkbookVendor);
+        };
         }
     }
 }

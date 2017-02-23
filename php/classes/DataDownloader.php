@@ -61,30 +61,40 @@ class DataDownloader {
         }
 
    }
-    public static function BasicSimpleXML($xmlstr) {
+    public static function BasicSimpleXML() {
         $xmlstr = <<<XML
 <?xml version='1.0' standalone='yes' ?>
-<data>
-        <row>
-            <value>1 ST HEALTH INC</value>
-            <value>2606945</value>
-            <value>NMSM110413VG</value>
-            <value>2013-11-04T00:00:00</value>
-            <value>2014-01-10T00:00:00</value>
-            <value>95.05</value>
-        </row>
-        <row>
-            <value>1 ST HEALTH INC</value>
-            <value>2621206</value>
-            <value>COA1361638</value>
-            <value>2014-01-25T00:00:00</value>
-            <value>2014-07-24T00:00:00</value>
-            <value>205.55</value>
-        </row>
-</data>
+<dataset>
+    <data>
+            <row>
+                <value>1 ST HEALTH INC</value>
+                <value>2606945</value>
+                <value>NMSM110413VG</value>
+                <value>2013-11-04T00:00:00</value>
+                <value>2014-01-10T00:00:00</value>
+                <value>95.05</value>
+            </row>
+            <row>
+                <value>1 ST HEALTH INC</value>
+                <value>2621206</value>
+                <value>COA1361638</value>
+                <value>2014-01-25T00:00:00</value>
+                <value>2014-07-24T00:00:00</value>
+                <value>205.55</value>
+            </row>
+    </data>
+</dataset>
 XML;
+        $dataset = new \SimpleXMLElement($xmlstr);
+        foreach($dataset->data->row as $row) {
+            $checkbookVendor = (string)$row->value[0];
+            $referencenumber = (string)$row->value[1];
+            $invoicenumber = (string)$row->value[2];
 
+            var_dump ($checkbookVendor, $referencenumber, $invoicenumber);
+        }
     }
 }
 
-$meta = DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");
+//$meta = DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");
+DataDownloader::BasicSimpleXML();
