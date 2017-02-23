@@ -35,6 +35,14 @@ try {
 
 	//stores the Primary Key for the GET, DELETE, and PUT methods in $id. This key will come in the URL sent by the front end. If no key is present, $id will remain empty. Note that the input is filtered.
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+	$criteriaShareId = filter_input(INPUT_POST, "criteriaShareId", FILTER_VALIDATE_INT);
+	$criteriaFieldId = filter_input(INPUT_POST, "criteriaFieldId", FILTER_SANITIZE_STRING);
+
+	//make sure the id is valid for the methods that require it
+	//THIS WAS MISSING
+	if(($method === "POST") && (empty($id) === true || $id < 0)) {
+		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+	}
 
 
 // Here, we determine if the request received is a GET request
@@ -64,7 +72,7 @@ try {
 		// This line then decodes the JSON package and stores that result in $requestObject.
 
 		if(empty($requestObject->criteriaId) === true) {
-			throw(new \InvalidArgumentException ("No Criteria ID", 405));
+		throw(new \InvalidArgumentException ("No Criteria ID", 405));
 		}
 
 		// creates a new Criteria object and stores it in $criteria
