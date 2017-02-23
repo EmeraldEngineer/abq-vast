@@ -31,11 +31,11 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$shareImage = filter_input(INPUT_POST, "shareImage", FILTER_VALIDATE_STRING);
+	$shareImage = filter_input(INPUT_POST, "shareImage", FILTER_SANITIZE_STRING);
 	$shareUrl = filter_input(INPUT_POST, "shareUrl", FILTER_SANITIZE_STRING);
 
 	//make sure the is is valid for the methods that require it
-	if(($method === "GET" || $method === "POST") && (empty($id) === true || $id < 0)) {
+	if(($method === "POST") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
