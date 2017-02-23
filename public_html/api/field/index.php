@@ -31,11 +31,11 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$shareImage = filter_input(INPUT_POST, "shareImage", FILTER_VALIDATE_STRING);
-	$shareUrl = filter_input(INPUT_POST, "shareUrl", FILTER_SANITIZE_STRING);
+	$fieldName = filter_input(INPUT_POST, "fieldName", FILTER_SANITIZE_STRING);
+	$fieldType = filter_input(INPUT_POST, "fieldType", FILTER_SANITIZE_STRING);
 
-	//make sure the is is valid for the methods that require it
-	if(($method === "GET" || $method === "POST") && (empty($id) === true || $id < 0)) {
+	//make sure the id is valid for the methods that require it
+	if(($method === "POST") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -71,9 +71,6 @@ try {
 			throw(new \InvalidArgumentException ("No content for field Id", 405));
 		}
 
-	} else if($method === "POST") {
-		// If it is a POST request we continue to the proceeding lines and make sure that a Profile ID was sent with the request. A new Criteria cannot be created without the crieteria Id. See the constructor in the Criteria class.
-		//make sure criteriaId is available
 		if(empty($requestObject->fieldId) === true) {
 			throw(new \InvalidArgumentException ("No Field ID", 405));
 		}
