@@ -35,16 +35,16 @@ try {
 	$fieldType = filter_input(INPUT_POST, "fieldType", FILTER_SANITIZE_STRING);
 
 	//make sure the id is valid for the methods that require it
-	if(($method === "POST") && (empty($id) === true || $id < 0)) {
+	if(($method === "POST" || $method === "GET") && (empty($id) === true || $id < 0)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
-	// handle GET request - if id is present, that share is present, that share is returned, otherwise all share are returned
+	// handle GET request - if id is present, that field is present, that field is returned, otherwise all fields are returned
 	if($method === "GET") {
 		//set XSRF cookie
 		setXsrfCookie("/");
 
-		// Here, we determine if a Key was sent in the URL by checking $id. If so, we pull the requested Share by Share ID from the DataBase and store it in $share.
+		// Here, we determine if a Key was sent in the URL by checking $id. If so, we pull the requested Field by Field ID from the DataBase and store it in $field.
 		if(empty($id) === false) {
 			$field = Field::getFieldByFieldId($pdo, $id);
 			if($field !== null) {
@@ -52,7 +52,7 @@ try {
 			}
 		}
 
-		// If there is nothing in $id, and it is a GET request, then we simply return all share. We store all the share in the $share variable, and then store them in the $reply->data state variable.
+		// If there is nothing in $id, and it is a GET request, then we simply return all field. We store all the field in the $field variable, and then store them in the $reply->data state variable.
 
 	} else if($method === "POST") {
 // this line determines if the request is a POST request
@@ -61,31 +61,33 @@ try {
 		$requestContent = file_get_contents("php://input");
 		// Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
 
-
 		$requestObject = json_decode($requestContent);
 		// This line then decodes the JSON package and stores that result in $requestObject.
 
-
-		//Here we check to make sure that there is content for the Tweet. If $requestObject->criteriaId is empty, an exception is thrown. POST method will use the content to create a new Tweet.
-		if(empty($requestObject->field) === true) {
-			throw(new \InvalidArgumentException ("No content for field Id", 405));
-		}
-
+		//Here we check to make sure that there is content for the Field. If $requestObject->fieldId is empty, an exception is thrown. POST method will use the content to create a new Tweet.
 		if(empty($requestObject->fieldId) === true) {
 			throw(new \InvalidArgumentException ("No Field ID", 405));
 		}
 
-		// creates a new Criteria object and stores it in $criteria
+		if(empty($requestObject->fieldName) === true) {
+			throw(new \InvalidArgumentException ("No Field Name", 405));
+		}
+
+		if(empty($requestObject->fieldType) === true) {
+			throw(new \InvalidArgumentException ("No Field Type", 405));
+		}
+
+		// creates a new Field object and stores it in $field
 		$field = new Field(null, $requestObject->fieldName, $requestObject->fieldType);
-		// calls the INSERT method in $criteria which inserts the object into the DataBase.
+		// calls the INSERT method in $field which inserts the object into the DataBase.
 		$field->insert($pdo);
 
-		// stores the "Criteria created OK" message in the $reply->message state variable.
+		// stores the "Field created OK" message in the $reply->message state variable.
 		$reply->message = "Field OK";
 
 	} else {
 		throw (new InvalidArgumentException("Invalid HTTP Method Request"));
-		// If the method request is not GET, PUT, POST, or DELETE, an exception is thrown
+		// If the method request is not GET, or POST, an exception is thrown
 	}
 
 } catch(Exception $exception) {
