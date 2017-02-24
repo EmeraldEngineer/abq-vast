@@ -31,8 +31,8 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$fieldName = filter_input(INPUT_POST, "fieldName", FILTER_SANITIZE_STRING);
-	$fieldType = filter_input(INPUT_POST, "fieldType", FILTER_SANITIZE_STRING);
+	$fieldName = filter_input(INPUT_POST, "foo", FILTER_SANITIZE_STRING);
+	$fieldType = filter_input(INPUT_POST, "d", FILTER_SANITIZE_STRING);
 
 	//make sure the id is valid for the methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -72,7 +72,7 @@ try {
 		// This line then decodes the JSON package and stores that result in $requestObject.
 
 		//Here we check to make sure that there is content for the Field. If $requestObject->fieldId is empty, an exception is thrown. POST method will use the content to create a new Tweet.
-		if(empty($requestObject->fieldId) === true) {
+/**		if(empty($requestObject->fieldId) === true) {
 			throw(new \InvalidArgumentException ("No Field ID", 405));
 		}
 
@@ -83,7 +83,7 @@ try {
 		if(empty($requestObject->fieldType) === true) {
 			throw(new \InvalidArgumentException ("No Field Type", 405));
 		}
-
+**/
 		// creates a new Field object and stores it in $field
 		$field = new Field(null, $requestObject->fieldName, $requestObject->fieldType);
 		// calls the INSERT method in $field which inserts the object into the DataBase.
