@@ -85,6 +85,8 @@ class DataDownloader {
     </data>
 </dataset>
 XML;
+
+
         $dataset = new \SimpleXMLElement($xmlstr);
         foreach($dataset->data->row as $row) {
             $checkbookVendor = (string)$row->value[0];
