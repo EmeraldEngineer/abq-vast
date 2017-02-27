@@ -32,7 +32,7 @@ class CheckbookDownloader extends DataDownloader {
         } catch(\OutOfBoundsException $outOfBoundsException) {
             echo("no new vendor data found");
         }
-        return($features);
+        return($features); 
     }
 
     public static function BasicSimpleXML($xmlstr) {
