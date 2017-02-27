@@ -151,7 +151,7 @@ class Field implements \JsonSerializable {
 
 		//verify field type will fit into the database
 		if(strlen($newFieldType) !== 1) {
-			throw(new \RangeException(var_dump($newFieldType)));
+			throw(new \RangeException("Is not the right type"));
 		}
 
 //		if(($newFieldType !== "d") || ($newFieldType !== "s") || ($newFieldType !== "n")) {
