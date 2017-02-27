@@ -10,6 +10,7 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
  * @author Valente Meza vmeza3@cnm.edu
  **/
 class DataDownloader {
+
     /**
      * Vendor checkbook: http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml
      */
@@ -30,7 +31,6 @@ class DataDownloader {
         $options["http"] = [];
         $options["http"] ["method"] = "HEAD";
         $context = stream_context_create($options);
-
         // "@" suppresses warnings and errors, fopen opens the actual file
         $fd = fopen($url, "rb", false, $context);
         $metaData = stream_get_meta_data($fd);
@@ -97,10 +97,9 @@ XML;
             $invoiceAmount = (string)$row->value[5];
 
 
-            echo $checkbookVendor, $referenceNumber, $invoiceNumber, $invoiceDate, $paymentDate, $invoiceAmount;
+            var_dump ($checkbookVendor, $referenceNumber, $invoiceNumber, $invoiceDate, $paymentDate, $invoiceAmount);
+
         }
     }
 }
-
-//$meta = DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");
-DataDownloader::BasicSimpleXML();
+DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
