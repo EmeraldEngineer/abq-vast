@@ -203,7 +203,7 @@ class Checkbook implements \JsonSerializable {
         }
         // store the Payment Date
         try{
-            $newCheckbookPaymentDate = self ::validateDate($newCheckbookPaymentDate);
+            $newCheckbookPaymentDate = self::validateDate($newCheckbookPaymentDate);
         } catch(\InvalidArgumentException $invalidArgument){
             throw(new \InvalidArgumentException($invalidArgument->getMessage(), 0, $invalidArgument));
         } catch(\RangeException $range) {

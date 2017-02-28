@@ -23,6 +23,9 @@ $reply->status = 200;
 $reply->data = null;
 
 try {
+
+
+
 	//grab the mySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
 
@@ -31,8 +34,8 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$fieldName = filter_input(INPUT_POST, "foo", FILTER_SANITIZE_STRING);
-	$fieldType = filter_input(INPUT_POST, "d", FILTER_SANITIZE_STRING);
+	$fieldName = filter_input(INPUT_POST, "fieldName", FILTER_SANITIZE_STRING);
+	$fieldType = filter_input(INPUT_POST, "fieldType", FILTER_SANITIZE_STRING);
 
 	//make sure the id is valid for the methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -69,6 +72,7 @@ try {
 		// Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
 
 		$requestObject = json_decode($requestContent);
+		
 		// This line then decodes the JSON package and stores that result in $requestObject.
 
 		//Here we check to make sure that there is content for the Field. If $requestObject->fieldId is empty, an exception is thrown. POST method will use the content to create a new Tweet.
