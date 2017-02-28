@@ -52,7 +52,7 @@ class DataDownloader {
         }
 
         $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
-        $eTag = xmlstr($config["etags"]);
+        $eTag = json_decode($config["etag"]);
         $previousETag = $eTag->$metaData;
         if($previousETag < $eTag) {
             return ($eTag);
@@ -90,16 +90,40 @@ XML;
         $dataset = new \SimpleXMLElement($xmlstr);
         foreach($dataset->data->row as $row) {
             $checkbookVendor = (string)$row->value[0];
-            $referenceNumber = (string)$row->value[1];
-            $invoiceNumber = (string)$row->value[2];
-            $invoiceDate = (string)$row->value[3];
-            $paymentDate = (string)$row->value[4];
-            $invoiceAmount = (string)$row->value[5];
+            $checkbookReferenceNum = (string)$row->value[1];
+            $checkbookInvoiceNum = (string)$row->value[2];
+            $checkbookInvoiceDate = (string)$row->value[3];
+            $checkbookPaymentDate = (string)$row->value[4];
+            $checkbookInvoiceAmount = (string)$row->value[5];
 
 
-            echo $checkbookVendor, $referenceNumber, $invoiceNumber, $invoiceDate, $paymentDate, $invoiceAmount;
+            $checkbookInvoiceDate = new \DateTime($checkbookInvoiceDate, new \DateTimeZone("UTC"));
+
+            $checkbookPaymentDate = new \DateTime($checkbookPaymentDate, new \DateTimeZone("UTC"));
+
+            new Checkbook(null, $checkbookInvoiceAmount, $checkbookInvoiceDate, $checkbookInvoiceNum, $checkbookPaymentDate, $checkbookReferenceNum, $checkbookVendor);
+
 
         }
+    }
+    public static function compareAndDownload() {
+
+        $checkbookUrl = "http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml";
+
+        $features = null;
+        try {
+            DataDownloader::getMetaData($checkbookUrl, "checkbook");
+            $features = DataDownloader::readBasicSimpleXML($checkbookUrl);
+            $checkbookETag = DataDownloader::getMetaData($checkbookUrl, "checkbook");
+            $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
+            $eTag = json_decode($config["etag"]);
+            $eTag->checkbook = $checkbookETag;
+            $config["etag"] = json_encode($eTag);
+            writeConfig($config, "/etc/apache2/capstone-mysql/abqvast.ini");
+        } catch(\OutOfBoundsException $outOfBoundsException) {
+            echo("no new vendor data found");
+        }
+        return($features);
     }
 }
 DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
