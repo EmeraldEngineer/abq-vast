@@ -32,14 +32,24 @@ try {
 
 	//stores the Primary key for the GET methods in $id, This key will come in the URL sent by the front end. If no key is present $id will remain empty. Note that the input filtered.
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-
+	$checkbookInvoiceAmount = filter_input(INPUT_GET, "checkbookInvoiceAmount", FILTER_SANITIZE_NUMBER_FLOAT);
+	$checkbookInvoiceLowAmount = filter_input(INPUT_GET, "checkbookInvoiceLowAmount", FILTER_SANITIZE_NUMBER_FLOAT);
+	$checkbookInvoiceHighAmount = filter_input(INPUT_GET, "checkbookInvoiceHighAmount", FILTER_SANITIZE_NUMBER_FLOAT);
+	$checkbookInvoiceDate = filter_input(INPUT_GET, "checkbookInvoiceDate");
+	$checkbookInvoiceSunriseDate = filter_input(INPUT_GET, "checkbookInvoiceSunriseDate");
+	$checkbookInvoiceSunsetDate = filter_input(INPUT_GET, "checkbookInvoiceSunsetDate");
+	$checkbookInvoiceNum = filter_input(INPUT_GET, "checkbookInvoiceNum", FILTER_SANITIZE_STRING);
+	$checkbookPaymentDate = filter_input(INPUT_GET, "checkbookPaymentDate");
+	$checkbookPaymentSunriseDate = filter_input(INPUT_GET, "checkbookPaymentSunriseDate");
+	$checkbookPaymentSunsetDate = filter_input(INPUT_GET, "checkbookPaymentSunsetDate");
+	$checkbookReferenceNum = filter_input(INPUT_GET, "checkbookReferenceNum", FILTER_SANITIZE_STRING);
+	$checkbookVendor = filter_input(INPUT_GET, "checkbookVendor", FILTER_SANITIZE_STRING);
 	/** Shouldn't be needed due to checkbook only requiring get and get all.
 	 * //here we check and make sure that we have the Primary key for the DELETE and PUT requests. If the request is a PUT or DELETE and no key is present in $id an exception is thrown
 	 * if(($method === "DELETE" || $method === "PUT" || $method === "POST") && (empty($id) === true || $id < 0)) {
 	 * throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	 * }
 	 **/
-
 
 //here we determine if the request received is a GET request
 	if($method === "GET") {
@@ -49,51 +59,29 @@ try {
 
 		//determine is a Key was sent in the URL by checking $id. if so we pull the requested checkbook value by checkbook ID from the database and store it in $checkbook
 		if(empty($id) === false) {
-			$checkbook = Checkbook::getCheckbookByCheckbookId($pdo, $id);
-			if($checkbook !== null) {
-				$reply->data = $checkbook;
-				//here we store the received checkbook value in the $reply-data state variable
-			}
-		} else {
-			$checkbook = Checkbook::getCheckbookByCheckbookInvoiceAmount($pdo);
-			if($checkbook !== null) {
-				$reply->data = $checkbook;
-			} else {
-				$checkbook = Checkbook::getCheckbookByCheckbookInvoiceDate($pdo);
-				if($checkbook !== null) {
-					$reply->data = $checkbook;
-				} else {
-					$checkbook = Checkbook::getCheckbookByCheckbookInvoiceNum($pdo);
-					if($checkbook !== null) {
-						$reply->data = $checkbook;
-					} else {
-						$checkbook = Checkbook::getCheckbookByCheckbookPaymentDate($pdo);
-						if($checkbook !== null) {
-							$reply->data = $checkbook;
-						} else {
-							$checkbook = Checkbook::getCheckbookByCheckbookReferenceNum($pdo);
-							if($checkbook !== null) {
-								$reply->data = $checkbook;
-							} else {
-								$checkbook = Checkbook::getCheckbookByCheckbookVendor($pdo);
-								if($checkbook !== null) {
-									$reply->data = $checkbook;
-								} else {
-									$checkbook = Checkbook::getAllCheckbooks($pdo);
-									if($checkbook !== null) {
-										$reply->data = $checkbook;
-									}
-									//if there is nothing in $id, and it is a GET request, then we check getCheckbookByCheckbookAmount, getCheckbookByCheckbookInvoiceDate, getCheckbookByCheckbookInvoiceNum, getCheckbookByCheckbookPaymentDate, getCheckbookByCheckbookReferenceNum, getCheckbookByCheckbookVendor, and getAllCheckbooks
-								}
-							}
-						}
-					}
-				}
-			}
+			$reply->data = Checkbook::getCheckbookByCheckbookId($pdo, $id);
+		} elseif(empty($checkbookInvoiceAmount) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceAmount($pdo, $checkbookInvoiceLowAmount, $checkbookInvoiceHighAmount)->toArray();
+		} elseif(empty($checkbookInvoiceDate) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceDate($pdo, $checkbookInvoiceSunriseDate, $checkbookInvoiceSunsetDate)->toArray();
+		} elseif(empty($checkbookInvoiceNum) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceNum($pdo, $checkbookInvoiceNum)->toArray();
+		} elseif(empty($checkbookPaymentDate) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookPaymentDate($pdo, $checkbookPaymentSunriseDate, $checkbookPaymentSunsetDate)->toArray();
+		} elseif(empty($checkbookReferenceNum) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookReferenceNum($pdo, $checkbookReferenceNum)->toArray();
+		} elseif(empty($checkbookVendor) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookVendor($pdo, $checkbookVendor)->toArray();
+		}
+
+	} else {
+		$checkbook = Checkbook::getAllCheckbooks($pdo);
+		if($checkbook !== null) {
+			$reply->data = $checkbook;
 		}
 	}
 
-} catch
+	} catch
 (Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
