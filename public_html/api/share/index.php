@@ -31,13 +31,7 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$shareImage = filter_input(INPUT_POST, "shareImage", FILTER_SANITIZE_STRING);
 	$shareUrl = filter_input(INPUT_POST, "shareUrl", FILTER_SANITIZE_STRING);
-
-	//make sure the is is valid for the methods that require it
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-	}
 
 	// handle GET request - if id is present, that share is present, that share is returned, otherwise all share are returned
 	if($method === "GET") {
