@@ -83,7 +83,7 @@ try {
 									if($checkbook !== null) {
 										$reply->data = $checkbook;
 									}
-									//if there is nothing in $id, and it is a GET request, then we simply return all checkbook. We store all checkbook in the $checkbook variable and then store them in the $reply->data state variable
+									//if there is nothing in $id, and it is a GET request, then we check getCheckbookByCheckbookAmount, getCheckbookByCheckbookInvoiceDate, getCheckbookByCheckbookInvoiceNum, getCheckbookByCheckbookPaymentDate, getCheckbookByCheckbookReferenceNum, getCheckbookByCheckbookVendor, and getAllCheckbooks
 								}
 							}
 						}
@@ -91,16 +91,16 @@ try {
 				}
 			}
 		}
+	}
 
-
-					catch
-						(Exception $exception) {
-							$reply->status = $exception->getCode();
-							$reply->message = $exception->getMessage();
-						} catch(TypeError $typeError) {
-							$reply->status = $typeError->getCode();
-							$reply->message = $typeError->getMessage();
-						}
+} catch
+(Exception $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
+} catch(TypeError $typeError) {
+	$reply->status = $typeError->getCode();
+	$reply->message = $typeError->getMessage();
+}
 // in these lines the Exceptions are caught and the $reply object is updated with the data from the caught exception. Note that $reply->status will be updated with the correct error code in the case of an Exception
 
 header("Content-type: application/json");
