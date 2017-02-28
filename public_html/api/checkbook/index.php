@@ -72,16 +72,15 @@ try {
 			$reply->data = Checkbook::getCheckbookByCheckbookReferenceNum($pdo, $checkbookReferenceNum)->toArray();
 		} elseif(empty($checkbookVendor) === false) {
 			$reply->data = Checkbook::getCheckbookByCheckbookVendor($pdo, $checkbookVendor)->toArray();
-		}
-
-	} else {
-		$checkbook = Checkbook::getAllCheckbooks($pdo);
-		if($checkbook !== null) {
-			$reply->data = $checkbook;
+		} else {
+			$checkbook = Checkbook::getAllCheckbooks($pdo);
+			if($checkbook !== null) {
+				$reply->data = $checkbook;
+			}
 		}
 	}
 
-	} catch
+} catch
 (Exception $exception) {
 	$reply->status = $exception->getCode();
 	$reply->message = $exception->getMessage();
