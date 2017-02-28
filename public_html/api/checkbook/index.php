@@ -9,7 +9,7 @@ use Edu\Cnm\AbqVast\Checkbook;
 /**
  * api for checkbook class
  *
- *@author Taylor McCarthy <oresshi@gmail.com>
+ * @author Taylor McCarthy <oresshi@gmail.com>
  **/
 
 // check the session status, if it is not active, start the session.
@@ -34,11 +34,11 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
 	/** Shouldn't be needed due to checkbook only requiring get and get all.
-	//here we check and make sure that we have the Primary key for the DELETE and PUT requests. If the request is a PUT or DELETE and no key is present in $id an exception is thrown
-	if(($method === "DELETE" || $method === "PUT" || $method === "POST") && (empty($id) === true || $id < 0)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-	}
-	**/
+	 * //here we check and make sure that we have the Primary key for the DELETE and PUT requests. If the request is a PUT or DELETE and no key is present in $id an exception is thrown
+	 * if(($method === "DELETE" || $method === "PUT" || $method === "POST") && (empty($id) === true || $id < 0)) {
+	 * throw(new InvalidArgumentException("id cannot be empty or negative", 405));
+	 * }
+	 **/
 
 
 //here we determine if the request received is a GET request
@@ -55,11 +55,16 @@ try {
 				//here we store the received checkbook value in the $reply-data state variable
 			}
 		} else {
+			$checkbook = Checkbook::getCheckbookByCheckbookAmount($pdo);
+			if($checkbook !== null) {
+				$reply->data = $checkbook;
+		} else {
 			$checkbook = Checkbook::getAllCheckbooks($pdo);
 			if($checkbook !== null) {
 				$reply->data = $checkbook;
 			}
-			//if there is nothing in $id, and it is a GET request, then we simply return all checkbook. We store all checkbook in the $checkbook variable and then store them in the $reply->data state variable
+				//if there is nothing in $id, and it is a GET request, then we simply return all checkbook. We store all checkbook in the $checkbook variable and then store them in the $reply->data state variable
+			}
 		}
 	}
 } catch(Exception $exception) {
