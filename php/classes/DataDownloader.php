@@ -92,8 +92,8 @@ XML;
             $checkbookVendor = (string)$row->value[0];
             $referenceNumber = (string)$row->value[1];
             $invoiceNumber = (string)$row->value[2];
-            $invoiceDate = (string)$row->value[3]->format("Y-m-d");
-            $paymentDate = (string)$row->value[4]->format("Y-m-d");
+            $invoiceDate = (string)$row->value[3];
+            $paymentDate = (string)$row->value[4];
             $invoiceAmount = (string)$row->value[5];
 
 
