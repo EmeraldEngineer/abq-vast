@@ -127,4 +127,10 @@ XML;
         return($features);
     }
 }
-DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
+/*DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");*/
+try {
+    $pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
+    DataDownloader::BasicSimpleXML($pdo);
+} catch (\Exception $exception) {
+
+}
