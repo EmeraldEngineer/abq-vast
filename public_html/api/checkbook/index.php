@@ -55,7 +55,7 @@ try {
 				//here we store the received checkbook value in the $reply-data state variable
 			}
 		} else {
-			$checkbook = Checkbook::getCheckbookByCheckbookAmount($pdo);
+			$checkbook = Checkbook::getCheckbookByCheckbookInvoiceAmount($pdo);
 			if($checkbook !== null) {
 				$reply->data = $checkbook;
 			} else {
