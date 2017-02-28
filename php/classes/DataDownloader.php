@@ -61,7 +61,7 @@ class DataDownloader {
         }
 
    }
-    public static function BasicSimpleXML() {
+    public static function BasicSimpleXML(\PDO $pdo) {
         $xmlstr = <<<XML
 <?xml version='1.0' standalone='yes' ?>
 <dataset>
@@ -101,7 +101,8 @@ XML;
 
             $checkbookPaymentDate = new \DateTime($checkbookPaymentDate, new \DateTimeZone("UTC"));
 
-            new Checkbook(null, $checkbookInvoiceAmount, $checkbookInvoiceDate, $checkbookInvoiceNum, $checkbookPaymentDate, $checkbookReferenceNum, $checkbookVendor);
+           $xmlCheckbook = new Checkbook(null, $checkbookInvoiceAmount, $checkbookInvoiceDate, $checkbookInvoiceNum, $checkbookPaymentDate, $checkbookReferenceNum, $checkbookVendor);
+            $xmlCheckbook->insert($pdo);
 
 
         }
