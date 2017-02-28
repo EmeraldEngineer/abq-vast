@@ -66,12 +66,18 @@ try {
 					$checkbook = Checkbook::getCheckbookByCheckbookInvoiceNum($pdo);
 					if($checkbook !== null) {
 						$reply->data = $checkbook;
-
-
 					} else {
 						$checkbook = Checkbook::getCheckbookByCheckbookPaymentDate($pdo);
 						if($checkbook !== null) {
 							$reply->data = $checkbook;
+						} else {
+							$checkbook = Checkbook::getCheckbookByCheckbookReferenceNum($pdo);
+							if($checkbook !== null) {
+								$reply->data = $checkbook;
+
+
+
+
 
 						} else {
 							$checkbook = Checkbook::getAllCheckbooks($pdo);
