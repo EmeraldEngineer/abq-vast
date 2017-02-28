@@ -25,11 +25,11 @@ class CheckbookDownloader extends DataDownloader {
             DataDownloader::getMetaData($checkbookUrl, "checkbook");
             $features = DataDownloader::readBasicSimpleXML($checkbookUrl);
             $checkbookETag = DataDownloader::getMetaData($checkbookUrl, "checkbook");
-            $config = readConfig("/etc/apache2/capstone-mysql/abq-vast.ini");
+            $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
             $eTag = XMLSimpleElement($config["etag"]);
             $eTag->checkbook = $checkbookETag;
             $config["etag"] = xmlstr($eTag);
-            writeConfig($config, "/etc/apache2/capstone-mysql/abq-vast.ini");
+            writeConfig($config, "/etc/apache2/capstone-mysql/abqvast.ini");
         } catch(\OutOfBoundsException $outOfBoundsException) {
             echo("no new vendor data found");
         }

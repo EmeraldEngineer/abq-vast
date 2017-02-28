@@ -51,7 +51,7 @@ class DataDownloader {
             throw(new \RuntimeException("etag cannot be found", 404));
         }
 
-        $config = readConfig("/etc/apache2/capstone-mysql/abq-vast.ini");
+        $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
         $eTag = xmlstr($config["etags"]);
         $previousETag = $eTag->$metaData;
         if($previousETag < $eTag) {
