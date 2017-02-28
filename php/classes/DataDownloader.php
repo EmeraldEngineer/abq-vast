@@ -97,7 +97,7 @@ XML;
             $invoiceAmount = (string)$row->value[5];
 
 
-            var_dump ($checkbookVendor, $referenceNumber, $invoiceNumber, $invoiceDate, $paymentDate, $invoiceAmount);
+            echo $checkbookVendor, $referenceNumber, $invoiceNumber, $invoiceDate, $paymentDate, $invoiceAmount;
 
         }
     }
