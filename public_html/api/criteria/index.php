@@ -37,8 +37,6 @@ try {
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 	$criteriaShareId = filter_input(INPUT_POST, "criteriaShareId", FILTER_VALIDATE_INT);
 	$criteriaFieldId = filter_input(INPUT_POST, "criteriaFieldId", FILTER_SANITIZE_STRING);
-	$criteriaOperator = filter_input(INPUT_POST, "criteriaOperator", FILTER_SANITIZE_STRING);
-	$criteriaValue = filter_input(INPUT_POST, "criteriaValue", FILTER_SANITIZE_STRING);
 
 	//make sure the id is valid for the methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
