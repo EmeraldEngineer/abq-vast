@@ -69,9 +69,9 @@ try {
 		$requestObject = json_decode($requestContent);
 		// This line then decodes the JSON package and stores that result in $requestObject.
 
-		if(empty($requestObject->criteriaId) === true) {
-			throw(new \InvalidArgumentException ("No Criteria ID", 405));
-		}
+//		if(empty($requestObject->criteriaId) === true) {
+//			throw(new \InvalidArgumentException ("No Criteria ID", 405));
+//		}
 		if(empty($requestObject->criteriaFieldId) === true) {
 			throw(new \InvalidArgumentException ("No Criteria Field IdL", 405));
 		}
