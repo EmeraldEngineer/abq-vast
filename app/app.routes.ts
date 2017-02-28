@@ -1,3 +1,8 @@
+/**
+ * TODO: remove/fix components/diceware-component and components/splash-component
+ */
+
+
 import {RouterModule, Routes} from "@angular/router";
 import {DicewareComponent} from "./components/diceware-component";
 import {SplashComponent} from "./components/splash-component";
