@@ -57,12 +57,12 @@ class DataDownloader {
         if($previousETag < $eTag) {
             return ($eTag);
         } else {
-            return($previousETag);
+            throw(new \OutOfBoundsException("Same Etag"));
         }
 
    }
-    public static function BasicSimpleXML(\PDO $pdo) {
-        $xmlstr = <<<XML
+    public static function readBasicSimpleXML($url) {
+/*        $xmlstr = <<<XML
 <?xml version='1.0' standalone='yes' ?>
 <dataset>
     <data>
@@ -84,10 +84,31 @@ class DataDownloader {
             </row>
     </data>
 </dataset>
-XML;
+XML;*/
+    $context = stream_context_create(["http" => true, "method" => "GET"]);
+    try {
+        if(($xmlCheckbook = file_get_contents($url, null, $context)) === false) {
+            throw(new \RuntimeException("cannot connect to city server"));
+        }
+
+        $xmlCheckbook = json_decode($xmlCheckbook);
+
+        $xmlDataset = $xmlCheckbook->dataset;
+
+        $dataset = simplexml_load_string($xmlDataset);
+
+    } catch(\Exception $exception) {
+        throw(new \PDOException($exception->getMessage(), 0, $exception));
+    }
+    return($dataset);
+    }
+
+        public static function getCheckbookData(\SimpleXMLElement $pdo) {
+                $pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
+                DataDownloader::readBasicSimpleXML($pdo);
 
 
-        $dataset = new \SimpleXMLElement($xmlstr);
+        $dataset = new \SimpleXMLElement($pdo);
         foreach($dataset->data->row as $row) {
             $checkbookVendor = (string)$row->value[0];
             $checkbookReferenceNum = (string)$row->value[1];
@@ -107,14 +128,14 @@ XML;
 
         }
     }
-    public static function compareAndDownload() {
+    public static function compareAndDownload($pdo) {
 
         $checkbookUrl = "http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml";
 
-        $features = null;
+        $dataset = null;
         try {
             DataDownloader::getMetaData($checkbookUrl, "checkbook");
-            $features = DataDownloader::BasicSimpleXML($checkbookUrl);
+            $dataset = DataDownloader::readBasicSimpleXML($pdo);
             $checkbookETag = DataDownloader::getMetaData($checkbookUrl, "checkbook");
             $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
             $eTag = json_decode($config["etag"]);
@@ -124,13 +145,13 @@ XML;
         } catch(\OutOfBoundsException $outOfBoundsException) {
             echo("no new vendor data found");
         }
-        return($features);
+        return($dataset);
     }
 }
-/*DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");*/
-try {
+DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
+/*try {
     $pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
     DataDownloader::BasicSimpleXML($pdo);
 } catch (\Exception $exception) {
 
-}
+}*/
