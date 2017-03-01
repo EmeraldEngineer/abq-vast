@@ -114,7 +114,7 @@ XML;
         $features = null;
         try {
             DataDownloader::getMetaData($checkbookUrl, "checkbook");
-            $features = DataDownloader::readBasicSimpleXML($checkbookUrl);
+            $features = DataDownloader::BasicSimpleXML($checkbookUrl);
             $checkbookETag = DataDownloader::getMetaData($checkbookUrl, "checkbook");
             $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
             $eTag = json_decode($config["etag"]);
