@@ -41,9 +41,9 @@ class DataDownloader {
         $header = $metaData["wrapper_data"];
         foreach($header as $value) {
             $explodeETag = explode(": ", $value);
-            $findETag = array_search("ETag", $explodeETag);
+            $findETag = array_search("Last-Modified", $explodeETag);
             if($findETag !== false) {
-                $eTag = $explodeETag[1];
+                $eTag = \DateTime::createFromFormat("D, d M Y H:i:s T", $explodeETag[1])->getTimestamp();
             }
         }
 
@@ -52,10 +52,11 @@ class DataDownloader {
         }
 
         $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
-        $eTag = json_decode($config["etag"]);
-        $previousETag = $eTag->$metaData;
+        $eTags = json_decode($config["etags"]);
+        var_dump($metaData);
+        $previousETag = $eTags->$metaData;
         if($previousETag < $eTag) {
-            return ($eTag);
+            return ($eTags);
         } else {
             throw(new \OutOfBoundsException("Same Etag"));
         }
@@ -91,9 +92,9 @@ XML;*/
             throw(new \RuntimeException("cannot connect to city server"));
         }
 
-        $xmlCheckbook = json_decode($xmlCheckbook);
+        $xmlDataset = json_decode($xmlCheckbook);
 
-        $xmlDataset = $xmlCheckbook->dataset;
+        $xmlDataset = $xmlDataset->dataset;
 
         $dataset = simplexml_load_string($xmlDataset);
 
