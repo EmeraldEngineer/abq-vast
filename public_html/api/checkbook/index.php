@@ -38,12 +38,12 @@ try {
 	$newCheckbookInvoiceDate = filter_input(INPUT_GET, "checkbookInvoiceDate");
 	$newCheckbookInvoiceSunriseDate = filter_input(INPUT_GET, "checkbookInvoiceSunriseDate");
 	$newCheckbookInvoiceSunsetDate = filter_input(INPUT_GET, "checkbookInvoiceSunsetDate");
-	$newCheckbookInvoiceNum = filter_input(INPUT_GET, "checkbookInvoiceNum", FILTER_SANITIZE_STRING);
+	$newCheckbookInvoiceNum = filter_input(INPUT_GET, "checkbookInvoiceNum", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$newCheckbookPaymentDate = filter_input(INPUT_GET, "checkbookPaymentDate");
 	$newCheckbookPaymentSunriseDate = filter_input(INPUT_GET, "checkbookPaymentSunriseDate");
 	$newCheckbookPaymentSunsetDate = filter_input(INPUT_GET, "checkbookPaymentSunsetDate");
-	$newCheckbookReferenceNum = filter_input(INPUT_GET, "checkbookReferenceNum", FILTER_SANITIZE_STRING);
-	$newCheckbookVendor = filter_input(INPUT_GET, "checkbookVendor", FILTER_SANITIZE_STRING);
+	$newCheckbookReferenceNum = filter_input(INPUT_GET, "checkbookReferenceNum", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$newCheckbookVendor = filter_input(INPUT_GET, "checkbookVendor", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	/** Shouldn't be needed due to checkbook only requiring get and get all.
 	 * //here we check and make sure that we have the Primary key for the DELETE and PUT requests. If the request is a PUT or DELETE and no key is present in $id an exception is thrown
 	 * if(($method === "DELETE" || $method === "PUT" || $method === "POST") && (empty($id) === true || $id < 0)) {
@@ -66,15 +66,15 @@ try {
 			$newCheckbookInvoiceSunriseDate = \DateTime::createFromFormat("U", floor($newCheckbookInvoiceSunriseDate / 1000));
 			$newCheckbookInvoiceSunsetDate = \DateTime::createFromFormat("U", ceil($newCheckbookInvoiceSunsetDate / 1000));
 			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceDate($pdo, $newCheckbookInvoiceSunriseDate, $newCheckbookInvoiceSunsetDate)->toArray();
-		} elseif(empty($checkbookInvoiceNum) === false) {
+		} elseif(empty($newCheckbookInvoiceNum) === false) {
 			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceNum($pdo, $newCheckbookInvoiceNum)->toArray();
 		} elseif(empty($newCheckbookPaymentSunriseDate) === false && empty($newCheckbookPaymentSunsetDate) === false) {
 			$newCheckbookPaymentSunriseDate = \DateTime::createFromFormat("U", floor($newCheckbookPaymentSunriseDate / 1000));
 			$newCheckbookPaymentSunsetDate = \DateTime::createFromFormat("U", ceil($newCheckbookPaymentSunsetDate / 1000));
 			$reply->data = Checkbook::getCheckbookByCheckbookPaymentDate($pdo, $newCheckbookPaymentSunriseDate, $newCheckbookPaymentSunsetDate)->toArray();
-		} elseif(empty($checkbookReferenceNum) === false) {
+		} elseif(empty($newCheckbookReferenceNum) === false) {
 			$reply->data = Checkbook::getCheckbookByCheckbookReferenceNum($pdo, $newCheckbookReferenceNum)->toArray();
-		} elseif(empty($checkbookVendor) === false) {
+		} elseif(empty($newCheckbookVendor) === false) {
 			$reply->data = Checkbook::getCheckbookByCheckbookVendor($pdo, $newCheckbookVendor)->toArray();
 		} else {
 			$checkbook = Checkbook::getAllCheckbooks($pdo);
