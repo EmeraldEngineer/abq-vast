@@ -54,7 +54,7 @@ class DataDownloader {
         $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
         $eTags = json_decode($config["etags"]);
         var_dump($metaData);
-        $previousETag = $eTags->$metaData;
+        $previousETag = $eTags->checkbook;
         if($previousETag < $eTag) {
             return ($eTags);
         } else {
