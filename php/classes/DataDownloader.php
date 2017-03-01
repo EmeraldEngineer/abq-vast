@@ -56,7 +56,7 @@ class DataDownloader {
         var_dump($metaData);
         $previousETag = $eTags->checkbook;
         if($previousETag < $eTag) {
-            return ($eTags);
+            return ($eTag);
         } else {
             throw(new \OutOfBoundsException("Same Etag"));
         }
