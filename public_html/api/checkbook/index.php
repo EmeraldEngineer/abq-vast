@@ -32,18 +32,18 @@ try {
 
 	//stores the Primary key for the GET methods in $id, This key will come in the URL sent by the front end. If no key is present $id will remain empty. Note that the input filtered.
 	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-	$newCheckbookInvoiceAmount = filter_input(INPUT_GET, "checkbookInvoiceAmount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-	$newCheckbookInvoiceLowAmount = filter_input(INPUT_GET, "checkbookInvoiceLowAmount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-	$newCheckbookInvoiceHighAmount = filter_input(INPUT_GET, "checkbookInvoiceHighAmount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-	$newCheckbookInvoiceDate = filter_input(INPUT_GET, "checkbookInvoiceDate");
-	$newCheckbookInvoiceSunriseDate = filter_input(INPUT_GET, "checkbookInvoiceSunriseDate");
-	$newCheckbookInvoiceSunsetDate = filter_input(INPUT_GET, "checkbookInvoiceSunsetDate");
-	$newCheckbookInvoiceNum = filter_input(INPUT_GET, "checkbookInvoiceNum", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$newCheckbookPaymentDate = filter_input(INPUT_GET, "checkbookPaymentDate");
-	$newCheckbookPaymentSunriseDate = filter_input(INPUT_GET, "checkbookPaymentSunriseDate");
-	$newCheckbookPaymentSunsetDate = filter_input(INPUT_GET, "checkbookPaymentSunsetDate");
-	$newCheckbookReferenceNum = filter_input(INPUT_GET, "checkbookReferenceNum", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$newCheckbookVendor = filter_input(INPUT_GET, "checkbookVendor", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$checkbookInvoiceAmount = filter_input(INPUT_GET, "checkbookInvoiceAmount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+	$checkbookInvoiceLowAmount = filter_input(INPUT_GET, "checkbookInvoiceLowAmount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+	$checkbookInvoiceHighAmount = filter_input(INPUT_GET, "checkbookInvoiceHighAmount", FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+	$checkbookInvoiceDate = filter_input(INPUT_GET, "checkbookInvoiceDate");
+	$checkbookInvoiceSunriseDate = filter_input(INPUT_GET, "checkbookInvoiceSunriseDate");
+	$checkbookInvoiceSunsetDate = filter_input(INPUT_GET, "checkbookInvoiceSunsetDate");
+	$checkbookInvoiceNum = filter_input(INPUT_GET, "checkbookInvoiceNum", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$checkbookPaymentDate = filter_input(INPUT_GET, "checkbookPaymentDate");
+	$checkbookPaymentSunriseDate = filter_input(INPUT_GET, "checkbookPaymentSunriseDate");
+	$checkbookPaymentSunsetDate = filter_input(INPUT_GET, "checkbookPaymentSunsetDate");
+	$checkbookReferenceNum = filter_input(INPUT_GET, "checkbookReferenceNum", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$checkbookVendor = filter_input(INPUT_GET, "checkbookVendor", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	/** Shouldn't be needed due to checkbook only requiring get and get all.
 	 * //here we check and make sure that we have the Primary key for the DELETE and PUT requests. If the request is a PUT or DELETE and no key is present in $id an exception is thrown
 	 * if(($method === "DELETE" || $method === "PUT" || $method === "POST") && (empty($id) === true || $id < 0)) {
@@ -60,22 +60,22 @@ try {
 		//determine is a Key was sent in the URL by checking $id. if so we pull the requested checkbook value by checkbook ID from the database and store it in $checkbook
 		if(empty($id) === false) {
 			$reply->data = Checkbook::getCheckbookByCheckbookId($pdo, $id);
-		} elseif(empty($newCheckbookInvoiceHighAmount) === false && empty($newCheckbookInvoiceLowAmount) === false) {
-			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceAmount($pdo, $newCheckbookInvoiceLowAmount, $newCheckbookInvoiceHighAmount)->toArray();
-		} elseif(empty($newCheckbookInvoiceSunriseDate) === false && empty($newCheckbookInvoiceSunsetDate) === false) {
-			$newCheckbookInvoiceSunriseDate = \DateTime::createFromFormat("U", floor($newCheckbookInvoiceSunriseDate / 1000));
-			$newCheckbookInvoiceSunsetDate = \DateTime::createFromFormat("U", ceil($newCheckbookInvoiceSunsetDate / 1000));
-			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceDate($pdo, $newCheckbookInvoiceSunriseDate, $newCheckbookInvoiceSunsetDate)->toArray();
-		} elseif(empty($newCheckbookInvoiceNum) === false) {
-			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceNum($pdo, $newCheckbookInvoiceNum)->toArray();
-		} elseif(empty($newCheckbookPaymentSunriseDate) === false && empty($newCheckbookPaymentSunsetDate) === false) {
-			$newCheckbookPaymentSunriseDate = \DateTime::createFromFormat("U", floor($newCheckbookPaymentSunriseDate / 1000));
-			$newCheckbookPaymentSunsetDate = \DateTime::createFromFormat("U", ceil($newCheckbookPaymentSunsetDate / 1000));
-			$reply->data = Checkbook::getCheckbookByCheckbookPaymentDate($pdo, $newCheckbookPaymentSunriseDate, $newCheckbookPaymentSunsetDate)->toArray();
-		} elseif(empty($newCheckbookReferenceNum) === false) {
-			$reply->data = Checkbook::getCheckbookByCheckbookReferenceNum($pdo, $newCheckbookReferenceNum)->toArray();
-		} elseif(empty($newCheckbookVendor) === false) {
-			$reply->data = Checkbook::getCheckbookByCheckbookVendor($pdo, $newCheckbookVendor)->toArray();
+		} elseif(empty($checkbookInvoiceHighAmount) === false && empty($checkbookInvoiceLowAmount) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceAmount($pdo, $checkbookInvoiceLowAmount, $checkbookInvoiceHighAmount)->toArray();
+		} elseif(empty($checkbookInvoiceSunriseDate) === false && empty($checkbookInvoiceSunsetDate) === false) {
+			$checkbookInvoiceSunriseDate = \DateTime::createFromFormat("U", floor($checkbookInvoiceSunriseDate / 1000));
+			$checkbookInvoiceSunsetDate = \DateTime::createFromFormat("U", ceil($checkbookInvoiceSunsetDate / 1000));
+			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceDate($pdo, $checkbookInvoiceSunriseDate, $checkbookInvoiceSunsetDate)->toArray();
+		} elseif(empty($checkbookInvoiceNum) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceNum($pdo, $checkbookInvoiceNum)->toArray();
+		} elseif(empty($checkbookPaymentSunriseDate) === false && empty($checkbookPaymentSunsetDate) === false) {
+			$checkbookPaymentSunriseDate = \DateTime::createFromFormat("U", floor($checkbookPaymentSunriseDate / 1000));
+			$checkbookPaymentSunsetDate = \DateTime::createFromFormat("U", ceil($checkbookPaymentSunsetDate / 1000));
+			$reply->data = Checkbook::getCheckbookByCheckbookPaymentDate($pdo, $checkbookPaymentSunriseDate, $checkbookPaymentSunsetDate)->toArray();
+		} elseif(empty($checkbookReferenceNum) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookReferenceNum($pdo, $checkbookReferenceNum)->toArray();
+		} elseif(empty($checkbookVendor) === false) {
+			$reply->data = Checkbook::getCheckbookByCheckbookVendor($pdo, $checkbookVendor)->toArray();
 		} else {
 			$checkbook = Checkbook::getAllCheckbooks($pdo);
 			if($checkbook !== null) {
