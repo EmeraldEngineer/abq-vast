@@ -116,8 +116,7 @@ class DataDownloader {
 }
 //DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
 try {
-    $pdo = DataDownloader::compareAndDownload("/etc/apache2/capstone-mysql/abqvast.ini");
-    DataDownloader::getCheckbookXML($pdo);
+    DataDownloader::compareAndDownload("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");
 } catch (\Exception $exception) {
     echo "Emerald Engineer Error (EEE): " . $exception->getMessage() . PHP_EOL;
 }
