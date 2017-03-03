@@ -62,7 +62,7 @@ class DataDownloader {
 
     }
     public static function getCheckbookXML($url) {
-        $context = stream_context_create(["http" => true, "method" => "GET"]);
+        $context = stream_context_create(["http" => ["method" => "GET"]]);
         try {
             if(($xmlCheckbook = file_get_contents($url, null, $context)) === false) {
                 throw(new \RuntimeException("cannot connect to city server"));
@@ -117,7 +117,7 @@ class DataDownloader {
 //DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
 try {
     $pdo = DataDownloader::compareAndDownload("/etc/apache2/capstone-mysql/abqvast.ini");
-    DataDownloader::BasicSimpleXML($pdo);
+    DataDownloader::getCheckbookXML($pdo);
 } catch (\Exception $exception) {
     echo "Emerald Engineer Error (EEE): " . $exception->getMessage() . PHP_EOL;
 }
