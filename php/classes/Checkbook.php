@@ -55,7 +55,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \TypeError if data types violate type
      * @throws \Exception if some other exception occurs
      */
-    public function __construct(int $newCheckbookId = null, float $newCheckbookInvoiceAmount, $newCheckbookInvoiceDate, string  $newCheckbookInvoiceNum, $newCheckbookPaymentDate, string $newCheckbookReferenceNum, string $newCheckbookVendor) {
+    public function __construct(int $newCheckbookId = null, float $newCheckbookInvoiceAmount = null, $newCheckbookInvoiceDate = null, string  $newCheckbookInvoiceNum = null, $newCheckbookPaymentDate = null, string $newCheckbookReferenceNum = null, string $newCheckbookVendor = null) {
         try{
             $this->setCheckbookId($newCheckbookId);
             $this->setCheckbookInvoiceAmount($newCheckbookInvoiceAmount);
@@ -117,7 +117,11 @@ class Checkbook implements \JsonSerializable {
      * @param float $newCheckbookInvoiceAmount
      * @throws \TypeError if $newCheckbook is to long
      */
-    public function setCheckbookInvoiceAmount(float $newCheckbookInvoiceAmount) {
+    public function setCheckbookInvoiceAmount(float $newCheckbookInvoiceAmount = null) {
+        if ($newCheckbookInvoiceAmount === null) {
+            $this->checkbookInvoiceAmount = null;
+            return;
+        }
         //** store invoice amount */
         $this->checkbookInvoiceAmount = $newCheckbookInvoiceAmount;
     }
@@ -136,7 +140,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \InvalidArgumentException if $newCheckbookInvoiceDate is not a valid object or string
      * @throws \RangeException if $newCheckbookInvoiceDate is a date that does not exist
      **/
-    public function setCheckbookInvoiceDate($newCheckbookInvoiceDate) {
+    public function setCheckbookInvoiceDate($newCheckbookInvoiceDate = null) {
         // base case: if the date is null, use the current date and time
         if($newCheckbookInvoiceDate === null) {
             $this->checkbookInvoiceDate = null;
@@ -167,7 +171,11 @@ class Checkbook implements \JsonSerializable {
      * @throws \RangeException if $newCheckbookInvoiceNum is to long > 62
      * @throws \TypeError if $newCheckbookInvoiceNum
      **/
-    public function setCheckbookInvoiceNum(string $newCheckbookInvoiceNum) {
+    public function setCheckbookInvoiceNum(string $newCheckbookInvoiceNum = null) {
+        if ($newCheckbookInvoiceNum === null) {
+            $this->checkbookInvoiceNum = null;
+            return;
+        }
         //** verify invoice number is secure */
         $newCheckbookInvoiceNum = filter_var($newCheckbookInvoiceNum, FILTER_SANITIZE_STRING);
         if (empty($newCheckbookInvoiceNum) === true) {
@@ -224,7 +232,11 @@ class Checkbook implements \JsonSerializable {
      * @throws \RangeException if $newCheckbookReferenceNum is > 42
      * @throws \TypeError if $newCheckbookReferenceNum is not a string
      */
-    public function setCheckbookReferenceNum (string $newCheckbookReferenceNum) {
+    public function setCheckbookReferenceNum (string $newCheckbookReferenceNum = null){
+        if ($newCheckbookReferenceNum === null) {
+            $this->checkbookReferenceNum = null;
+            return;
+        }
         //** verify the reference number is secure */
         $newCheckbookReferenceNum = filter_var($newCheckbookReferenceNum, FILTER_SANITIZE_STRING);
         if(empty($newCheckbookReferenceNum) === true){
@@ -251,7 +263,11 @@ class Checkbook implements \JsonSerializable {
      * @throws \RangeException if $newCheckbookVendor is not a to long
      * @throws \TypeError if $newCheckbookVendor is not a string
      **/
-    public function setCheckbookVendor(string $newCheckbookVendor) {
+    public function setCheckbookVendor(string $newCheckbookVendor = null) {
+        if ($newCheckbookVendor === null) {
+            $this->checkbookId = null;
+            return;
+        }
 
         /**verify vendor is secure */
         $newCheckbookVendor = trim($newCheckbookVendor);

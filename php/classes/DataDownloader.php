@@ -94,14 +94,15 @@ class DataDownloader {
 
         }
     }
-    public static function compareAndDownload($pdo) {
+    public static function compareAndDownload() {
 
         $checkbookUrl = "http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml";
 
         $dataset = null;
         try {
             DataDownloader::getMetaData($checkbookUrl, "checkbook");
-            $dataset = DataDownloader::getCheckbookXML($pdo);
+            $dataset = DataDownloader::getCheckbookXML($checkbookUrl);
+            $pdo =  connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
             DataDownloader::insertCheckbooksToMySql($pdo, $dataset);
             $checkbookETag = DataDownloader::getMetaData($checkbookUrl, "checkbook");
             $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
@@ -116,7 +117,7 @@ class DataDownloader {
 }
 //DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
 try {
-    DataDownloader::compareAndDownload("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml");
+    DataDownloader::compareAndDownload("https://bootcamp-coders.cnm.edu/~vmeza3/VendorCheckBookCABQ-en-us.xml");
 } catch (\Exception $exception) {
     echo "Emerald Engineer Error (EEE): " . $exception->getMessage() . PHP_EOL;
 }
