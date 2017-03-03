@@ -47,15 +47,16 @@
 
 	</head>
 	<body>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-6 col-md-12">
-					<h1>ABQ-VAST</h1>
-					<p>VAST Accounts Statistics Tracker</p>
+		<main>
+			<header>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<h1>ABQ-VAST</h1>
+							<p>VAST Accounts Statistical Tracker</p>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
-		</div>
-
-
+			</header>
+		</main>
 	</body>

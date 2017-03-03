@@ -9,7 +9,7 @@ use Edu\Cnm\AbqVast\Checkbook;
 /**
  * api for checkbook class
  *
- * @author Taylor McCarthy <oresshi@gmail.com>
+ * @authors Taylor McCarthy <oresshi@gmail.com>, Sarah Ruth Finkel <srfinkel@gmail.com>
  **/
 
 // check the session status, if it is not active, start the session.

@@ -9,7 +9,7 @@ use Edu\Cnm\AbqVast\Share;
 /**
  * api for the share class
  *
- * @author Adam Pedroza <apedroza6@cnm.edu>
+ * @authors Adam Pedroza <apedroza6@cnm.edu>, Sarah Ruth Finkel <srfinkel@gmail.com>
  **/
 
 //verify the session, start if not active
