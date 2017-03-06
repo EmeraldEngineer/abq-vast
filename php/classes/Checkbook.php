@@ -143,7 +143,7 @@ class Checkbook implements \JsonSerializable {
     public function setCheckbookInvoiceDate($newCheckbookInvoiceDate = null) {
         // base case: if the date is null, use the current date and time
         if($newCheckbookInvoiceDate === null) {
-            $this->checkbookInvoiceDate = null;
+            $this->checkbookInvoiceDate = new \DateTime;
             return;
         }
 
@@ -169,13 +169,15 @@ class Checkbook implements \JsonSerializable {
      * @param string $newCheckbookInvoiceNum
      * @throws \InvalidArgumentException if $newCheckbookInvoiceNum is not a string or insecure
      * @throws \RangeException if $newCheckbookInvoiceNum is to long > 62
-     * @throws \TypeError if $newCheckbookInvoiceNum
+     * @throws \TypeError if $newCheckbookInvoiceNum is not a string
      **/
     public function setCheckbookInvoiceNum(string $newCheckbookInvoiceNum = null) {
         if ($newCheckbookInvoiceNum === null) {
             $this->checkbookInvoiceNum = null;
             return;
         }
+        elseif(empty($newCheckbookInvoiceNum) === true)
+            return;
         //** verify invoice number is secure */
         $newCheckbookInvoiceNum = filter_var($newCheckbookInvoiceNum, FILTER_SANITIZE_STRING);
         if (empty($newCheckbookInvoiceNum) === true) {
