@@ -176,6 +176,7 @@ class Checkbook implements \JsonSerializable {
             $this->checkbookInvoiceNum = null;
             return;
         }
+        //** if the data is giving you trouble  */
         elseif(empty($newCheckbookInvoiceNum) === true)
             return;
         //** verify invoice number is secure */
