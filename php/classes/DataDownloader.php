@@ -117,7 +117,7 @@ class DataDownloader {
 }
 //DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
 try {
-    DataDownloader::compareAndDownload("https://bootcamp-coders.cnm.edu/~vmeza3/VendorCheckBookCABQ-en-us.xml");
+    DataDownloader::compareAndDownload("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
 } catch (\Exception $exception) {
     echo "Emerald Engineer Error (EEE): " . $exception->getMessage() . PHP_EOL;
 }

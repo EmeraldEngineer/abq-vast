@@ -265,7 +265,7 @@ class Checkbook implements \JsonSerializable {
      **/
     public function setCheckbookVendor(string $newCheckbookVendor = null) {
         if ($newCheckbookVendor === null) {
-            $this->checkbookId = null;
+            $this->checkbookVendor = null;
             return;
         }
 
