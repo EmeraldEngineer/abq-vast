@@ -2,7 +2,7 @@
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./components/home-component";
 
-export const allAppComponents = [HomeComponent];
+export const allAppComponents = [ShareComponent];
 
 export const routes: Routes = [
 	{path: "share/: shareUrl", component: ShareComponent}
