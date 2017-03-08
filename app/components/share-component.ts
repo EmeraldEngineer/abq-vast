@@ -6,11 +6,11 @@ import "rxjs/add/operator/switchMap";
 	templateUrl: "./templates/share.php"
 })
 
-export class RsvpComponent implements OnInit {
-	alreadyRsvped : boolean = false;
-	invitee : Invitee = null;
-	rsvp : Rsvp = new Rsvp(null, null, "", "", "", 0, new Date());
-	status : Status = null;
+export class ShareComponent implements OnInit {
+	// alreadyRsvped : boolean = false;
+	// invitee : Invitee = null;
+	// rsvp : Rsvp = new Rsvp(null, null, "", "", "", 0, new Date());
+	// status : Status = null;
 
 	constructor(private inviteeService: InviteeService, private rsvpService: RsvpService, private route: ActivatedRoute) {}
 
