@@ -3,7 +3,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 import "rxjs/add/operator/switchMap";
 
 @Component({
-	templateUrl: "./templates/rsvp.php"
+	templateUrl: "./templates/share.php"
 })
 
 export class RsvpComponent implements OnInit {
@@ -20,7 +20,7 @@ export class RsvpComponent implements OnInit {
 
 	getInviteeByToken() : void {
 		this.route.params
-			.switchMap((params : Params) => this.inviteeService.getInviteeByInviteeToken(params["inviteeToken"]))
+			.switchMap((params : Params) => this.inviteeService.get(params["shareUrl"]))
 			.subscribe(reply => {
 				this.invitee = reply.invitee;
 				if(reply.rsvp !== null) {
