@@ -31,4 +31,3 @@ export class ShareComponent implements OnInit {
 			// 	}
 			});
 	}
-}
