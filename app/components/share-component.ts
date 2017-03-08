@@ -3,7 +3,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 import "rxjs/add/operator/switchMap";
 
 @Component({
-	templateUrl: "./templates/rsvp.php"
+	templateUrl: "./templates/share.php"
 })
 
 export class ShareComponent implements OnInit {
@@ -20,9 +20,9 @@ export class ShareComponent implements OnInit {
 
 	getShareByShareUrl() : void {
 		this.route.params
-			.switchMap((params : Params) => this.inviteeService.getInviteeByInviteeToken(params["inviteeToken"]))
+			.switchMap((params : Params) => this.ShareService.getShareByShareUrl(params["shareUrl"]))
 			.subscribe(reply => {
-				this.invitee = reply.invitee;
+				this.shareUrl = reply.shareUrl;
 				if(reply.rsvp !== null) {
 					this.rsvp = reply.rsvp;
 					this.alreadyRsvped = true;

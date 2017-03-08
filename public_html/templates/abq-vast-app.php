@@ -1,4 +1,4 @@
-
 <main>
 	<router-outlet></router-outlet>
 </main>
+
