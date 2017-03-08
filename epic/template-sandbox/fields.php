@@ -57,18 +57,19 @@
                                                 <label for="filter">Filter by</label>
                                                 <select class="form-control">
                                                     <option value="0" selected>All Vendors</option>
-                                                    <option value="1">Featured</option>
-                                                    <option value="2">Most popular</option>
-                                                    <option value="3">Top rated</option>
-                                                    <option value="4">Most commented</option>
+                                                    <option value="1">Invoice Amount</option>
+                                                    <option value="2">Invoice Date</option>
+                                                    <option value="3">Invoice Number</option>
+                                                    <option value="4">Payment Date</option>
+                                                    <option value="5">Reference Number</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label for="contain">Author</label>
+                                                <label for="contain">Vendor</label>
                                                 <input class="form-control" type="text" />
                                             </div>
                                             <div class="form-group">
-                                                <label for="contain">Contains the words</label>
+                                                <label for="contain">Date</label>
                                                 <input class="form-control" type="text" />
                                             </div>
                                             <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
