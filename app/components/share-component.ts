@@ -21,14 +21,14 @@ export class ShareComponent implements OnInit {
 	getShareByShareUrl() : void {
 		this.route.params
 			.switchMap((params : Params) => this.inviteeService.get(params["shareUrl"]))
-			.subscribe(reply => {
-				this.invitee = reply.invitee;
-				if(reply.rsvp !== null) {
-					this.rsvp = reply.rsvp;
-					this.alreadyRsvped = true;
-				} else {
-					this.rsvp.rsvpInviteeId = this.invitee.inviteeId;
-				}
+			// .subscribe(reply => {
+			// 	this.invitee = reply.invitee;
+			// 	if(reply.rsvp !== null) {
+			// 		this.rsvp = reply.rsvp;
+			// 		this.alreadyRsvped = true;
+			// 	} else {
+			// 		this.rsvp.rsvpInviteeId = this.invitee.inviteeId;
+			// 	}
 			});
 	}
 }
