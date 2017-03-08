@@ -5,7 +5,7 @@ import {HomeComponent} from "./components/home-component";
 export const allAppComponents = [HomeComponent];
 
 export const routes: Routes = [
-	{path: "", component: HomeComponent}
+	{path: "share/: shareUrl", component: ShareComponent}
 ];
 
 export const appRoutingProviders: any[] = [];
