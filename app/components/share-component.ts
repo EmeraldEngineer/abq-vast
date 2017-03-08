@@ -12,7 +12,7 @@ export class ShareComponent implements OnInit {
 	// rsvp : Rsvp = new Rsvp(null, null, "", "", "", 0, new Date());
 	// status : Status = null;
 
-	constructor(private inviteeService: InviteeService, private rsvpService: RsvpService, private route: ActivatedRoute) {}
+	constructor(private shareUrl: ShareService, private route: ActivatedRoute) {}
 
 	ngOnInit() : void {
 		this.getShareByShareUrl();
