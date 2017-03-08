@@ -15,10 +15,10 @@ export class ShareComponent implements OnInit {
 	constructor(private inviteeService: InviteeService, private rsvpService: RsvpService, private route: ActivatedRoute) {}
 
 	ngOnInit() : void {
-		this.getInviteeByToken();
+		this.getShareByShareUrl();
 	}
 
-	getInviteeByToken() : void {
+	getShareByShareUrl() : void {
 		this.route.params
 			.switchMap((params : Params) => this.inviteeService.get(params["shareUrl"]))
 			.subscribe(reply => {
