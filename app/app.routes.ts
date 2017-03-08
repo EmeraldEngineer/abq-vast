@@ -1,6 +1,7 @@
 
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./components/home-component";
+import {ShareComponent} from "./components/share-component";
 
 export const allAppComponents = [ShareComponent];
 
