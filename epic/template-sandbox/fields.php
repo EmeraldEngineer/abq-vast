@@ -38,3 +38,24 @@
 		<title>Fields</title>
 
 	</head>
+<body class="sfooter">
+<div class="sfoooter-content">
+    <header>Fields</header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    Vendor<br>
+                    Invoice Low Amount - Invoice High Amount<br>
+                    Start Invoice Date - End Invoice Date<br>
+                    Invoice Number<br>
+                    Start Payment Date - End Payment Date<br>
+                    Reference Number<br>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+</div>
+</body>
