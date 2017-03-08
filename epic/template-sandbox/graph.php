@@ -43,21 +43,22 @@
 		<script src="lib/jquery-2.1.0.min.js"></script>
 		<script src="src/js/jquery.swipebox.js"></script>
 
-		<title>ABQ-VAST</title>
+		<title>Graphs</title>
 
 	</head>
 	<body>
 		<main>
-			<header>
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-md-12">
-							<h1>ABQ-VAST</h1>
-							<p>VAST Accounts Statistics Tracker</p><br>
-							<p>VAST-ABQ</p>
+			<div class="container-fluid">
+				<header>
+					<div class="container well">
+						<div class="row">
+							<div class="col-md-12">
+								<p> Chart.js graph will go here</p>
+							</div>
 						</div>
 					</div>
-				</div>
-			</header>
+				</header>
+			</div>
 		</main>
 	</body>
+</html>
