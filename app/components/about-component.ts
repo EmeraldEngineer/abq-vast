@@ -4,4 +4,4 @@ import {Component} from "@angular/core";
 	templateUrl: "./templates/about.php"
 })
 
-export class HomeComponent { }
+export class AboutComponent { }
