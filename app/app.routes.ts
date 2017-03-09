@@ -7,7 +7,7 @@ import {AboutComponent} from "./components/about-component";
 export const allAppComponents = [HomeComponent, AboutComponent];
 
 export const routes: Routes = [
-	{path: "home/: home", component: HomeComponent"},
+	{path: "home/: home", component: HomeComponent},
 	{path: "share/: shareUrl", component: ShareComponent},
 	{path: "about/: about", component: AboutComponent}
 ];
