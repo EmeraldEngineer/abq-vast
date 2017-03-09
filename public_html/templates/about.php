@@ -1,8 +1,4 @@
-<main-nav></main-nav>
-<?php require_once("../lib/head-utils.php");?>
 
-<body>
-	<main>
 		<div class="container-fluid">
 			<header>
 				<div class="container well">
@@ -18,5 +14,3 @@
 				</div>
 			</header>
 		</div>
-	</main>
-</body>
