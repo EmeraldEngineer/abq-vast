@@ -3,8 +3,9 @@ import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./components/home-component";
 import {ShareComponent} from "./components/share-component";
 import {AboutComponent} from "./components/about-component";
+import {MainNavComponent} from "./components/mainnav-component";
 
-export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent];
+export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent, MainNavComponent];
 
 export const routes: Routes = [
 	{path: "home", component: HomeComponent},
