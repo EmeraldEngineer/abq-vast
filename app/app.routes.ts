@@ -2,11 +2,13 @@
 import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./components/home-component";
 import {ShareComponent} from "./components/share-component";
+import {AboutComponent} from "./components/about-"
 
 export const allAppComponents = [ShareComponent];
 
 export const routes: Routes = [
 	{path: "share/: shareUrl", component: ShareComponent}
+	{path: "about/: about"}
 ];
 
 export const appRoutingProviders: any[] = [];
