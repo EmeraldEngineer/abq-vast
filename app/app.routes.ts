@@ -7,10 +7,10 @@ import {AboutComponent} from "./components/about-component";
 export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent];
 
 export const routes: Routes = [
-	{path: "home/: home", component: HomeComponent},
-	{path: "share/: shareUrl", component: ShareComponent},
-	{path: "about/: about", component: AboutComponent},
-	{path:"", component: HomeComponent}
+	{path: "home", component: HomeComponent},
+	{path: "share/:shareUrl", component: ShareComponent},
+	{path: "about", component: AboutComponent},
+	{path: "", component: HomeComponent}
 ];
 
 export const appRoutingProviders: any[] = [];
