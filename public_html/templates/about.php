@@ -1,4 +1,5 @@
 <main-nav></main-nav>
+<?php require_once("../lib/head-utils.php");?>
 
 <body>
 	<main>
