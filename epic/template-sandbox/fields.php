@@ -15,7 +15,7 @@
     <link type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
 
     <!-- Custom Stylesheet -->
-    <link rel="stylesheet" href="styles/styles.css" type="text/css"/>
+    <link rel="stylesheet" href="../../public_html/styles/styles.css" type="text/css"/>
 
     <!-- HTML5 shiv and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -104,8 +104,8 @@
                 <tr>
                     <th>Vendor</th>
                     <th>Invoice Amount</th>
-                    <th>Invoice Date</th>
                     <th>Invoice Number</th>
+                    <th>Invoice Date</th>
                     <th>Payment Date</th>
                     <th>Reference Number</th>
                 </tr>
@@ -114,8 +114,8 @@
                 <tr>
                     <th>Vendor</th>
                     <th>Invoice Amount</th>
-                    <th>Invoice Date</th>
                     <th>Invoice Number</th>
+                    <th>Invoice Date</th>
                     <th>Payment Date</th>
                     <th>Reference Number</th>
                 </tr>

@@ -41,3 +41,15 @@ body {
         min-width: 500px;
     }
 }
+
+/** css for the dataset */
+/* Ensure that the demo table scrolls */
+th, td { white-space: nowrap; }
+div.dataTables_wrapper {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+th input {
+    width: 100%;
+}
