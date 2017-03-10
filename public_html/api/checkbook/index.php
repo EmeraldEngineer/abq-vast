@@ -9,8 +9,17 @@ use Edu\Cnm\AbqVast\Checkbook;
 /**
  * api for checkbook class
  *
- * @authors Taylor McCarthy <oresshi@gmail.com>, Sarah Ruth Finkel <srfinkel@gmail.com>
+ * @authors Sarah Ruth Finkel <srfinkel@gmail.com>, Taylor McCarthy <oresshi@gmail.com>
  **/
+
+// Adding pagination using the panome anaylsis.
+
+function paginate($arr, int $pgNum = 0) {
+	$arr = array(\PDO $checkbooks);
+
+	$pgSize = array_slice($arr, 0, 100, true);
+	return $pgSize;
+}
 
 // check the session status, if it is not active, start the session.
 if(session_status() !== PHP_SESSION_ACTIVE) {
