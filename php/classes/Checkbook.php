@@ -11,6 +11,8 @@ require_once("autoload.php");
 
 class Checkbook implements \JsonSerializable {
     use ValidateDate;
+    /** created pagination for class dataset **/
+    private static $pageSize = 100;
     /**
      * id for checkbook; this is the primary key
      * @var int $checkbookId
@@ -621,11 +623,12 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getAllCheckbooks(\PDO $pdo) {
+    public static function getAllCheckbooks(\PDO $pdo, int $pageNum) {
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
-        $statement->execute();
+        $parameters = ["startRow" => $pageNum * self::$pageSize, "pageSize" => self::$pageSize];
+        $statement->execute($parameters);
 
         // build an array of checkbooks
         $checkbooks = new \SplFixedArray($statement->rowCount());
