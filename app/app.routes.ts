@@ -7,8 +7,10 @@ import {MainNavComponent} from "./components/mainnav-component";
 import {FieldsComponent} from "./components/fields-component";
 import {GraphComponent} from "./components/graph-component";
 import {NotFoundComponent} from "./components/notfound-component";
+import {LineComponent} from "./components/line-component";
 
-export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent, MainNavComponent, FieldsComponent, GraphComponent, NotFoundComponent];
+
+export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent, MainNavComponent, FieldsComponent, GraphComponent, NotFoundComponent, LineComponent];
 
 export const routes: Routes = [
 	{path: "home", component: HomeComponent},
@@ -17,7 +19,8 @@ export const routes: Routes = [
 	{path: "", component: HomeComponent},
 	{path: "fields", component: FieldsComponent},
 	{path: "graph", component: GraphComponent},
-	{path: "**", component: NotFoundComponent}
+	{path: "**", component: NotFoundComponent},
+	{path: "line", component: LineComponent},
 ];
 
 export const appRoutingProviders: any[] = [];

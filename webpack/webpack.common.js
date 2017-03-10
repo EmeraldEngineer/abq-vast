@@ -42,6 +42,7 @@ module.exports = {
 		}),
 
 		new webpack.ProvidePlugin({
+			Chart: "chart.js",
 			$: "jquery",
 			jQuery: "jquery",
 			"window.jQuery": "jquery"
