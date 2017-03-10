@@ -1,4 +1,5 @@
 import {NgModule} from "@angular/core";
+import {ChartsModule} from "ng2-charts";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
@@ -8,7 +9,7 @@ import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
 const moduleDeclarations = [AppComponent];
 
 @NgModule({
-	imports:      [BrowserModule, FormsModule, HttpModule, routing],
+	imports:      [BrowserModule, ChartsModule, FormsModule, HttpModule, routing],
 	declarations: [...moduleDeclarations, ...allAppComponents],
 	bootstrap:    [AppComponent],
 	providers:    [appRoutingProviders]

@@ -16,11 +16,12 @@ export const routes: Routes = [
 	{path: "home", component: HomeComponent},
 	{path: "share/:shareUrl", component: ShareComponent},
 	{path: "about", component: AboutComponent},
-	{path: "", component: HomeComponent},
+
 	{path: "fields", component: FieldsComponent},
 	{path: "graph", component: GraphComponent},
-	{path: "**", component: NotFoundComponent},
 	{path: "line", component: LineComponent},
+	{path: "", component: HomeComponent},
+	{path: "**", component: NotFoundComponent}
 ];
 
 export const appRoutingProviders: any[] = [];
