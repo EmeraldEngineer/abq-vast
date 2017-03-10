@@ -12,13 +12,10 @@ use Edu\Cnm\AbqVast\Checkbook;
  * @authors Sarah Ruth Finkel <srfinkel@gmail.com>, Taylor McCarthy <oresshi@gmail.com>
  **/
 
-// Adding pagination using the panome anaylsis.
-
-function paginate($arr, int $pgNum = 0) {
+function paginate($arr, $pageNum) {
 	$arr = array(\PDO $checkbooks);
-
-	$pgSize = array_slice($arr, 0, 100, true);
-	return $pgSize;
+	$pageNum->this = 0;
+	return $pageSize = array_slice($arr, 0, 100, true);
 }
 
 // check the session status, if it is not active, start the session.
