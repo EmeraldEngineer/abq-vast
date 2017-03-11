@@ -328,7 +328,7 @@ class Checkbook implements \JsonSerializable {
             throw(new \PDOException("checkbook id is not positive"));
         }
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookId = :checkbookId";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookId = :checkbookId LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
         // bind the checkbook id to the place holder in the template
         $parameters = ["checkbookId" => $checkbookId];
@@ -360,7 +360,7 @@ class Checkbook implements \JsonSerializable {
      **/
     public static function getCheckbookByCheckbookInvoiceAmount(\PDO $pdo, float $checkbookInvoiceLowAmount, float $checkbookInvoiceHighAmount) {
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount >= :checkbookInvoiceLowAmount AND checkbookInvoiceAmount <= :checkbookInvoiceHighAmount";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount >= :checkbookInvoiceLowAmount AND checkbookInvoiceAmount <= :checkbookInvoiceHighAmount LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice amount to the place holder in the template
@@ -413,7 +413,7 @@ class Checkbook implements \JsonSerializable {
         }
 
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceDate >= :checkbookInvoiceSunriseDate AND checkbookInvoiceDate <= :checkbookInvoiceSunsetDate";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceDate >= :checkbookInvoiceSunriseDate AND checkbookInvoiceDate <= :checkbookInvoiceSunsetDate LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice date to the place holder in the template
@@ -460,7 +460,7 @@ class Checkbook implements \JsonSerializable {
         }
 
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceNum = :checkbookInvoiceNum";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceNum = :checkbookInvoiceNum LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice number to the place holder in the template
@@ -508,7 +508,7 @@ class Checkbook implements \JsonSerializable {
             throw(new \RangeException($range->getMessage(), 0, $range));
         }
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookPaymentDate >= :checkbookPaymentSunriseDate AND checkbookPaymentDate <= :checkbookPaymentSunsetDate";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookPaymentDate >= :checkbookPaymentSunriseDate AND checkbookPaymentDate <= :checkbookPaymentSunsetDate LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice date to the placeholder in the template
@@ -551,7 +551,7 @@ class Checkbook implements \JsonSerializable {
         }
 
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookReferenceNum = :checkbookReferenceNum";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookReferenceNum = :checkbookReferenceNum LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
 
         // bind the checkbook Reference Number to the place holder in the template
@@ -592,7 +592,7 @@ class Checkbook implements \JsonSerializable {
         }
 
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookVendor = :checkbookVendor";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookVendor = :checkbookVendor LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
 
         // bind the vendor content to the place holder int he template
