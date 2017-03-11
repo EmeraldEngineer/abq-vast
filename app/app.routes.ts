@@ -8,9 +8,10 @@ import {FieldsComponent} from "./components/fields-component";
 import {GraphComponent} from "./components/graph-component";
 import {NotFoundComponent} from "./components/notfound-component";
 import {LineComponent} from "./components/line-component";
+import {BarComponent} from "./components/bar-component";
 
 
-export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent, MainNavComponent, FieldsComponent, GraphComponent, NotFoundComponent, LineComponent];
+export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent, MainNavComponent, FieldsComponent, GraphComponent, NotFoundComponent, LineComponent, BarComponent];
 
 export const routes: Routes = [
 	{path: "home", component: HomeComponent},
@@ -19,6 +20,7 @@ export const routes: Routes = [
 	{path: "fields", component: FieldsComponent},
 	{path: "graph", component: GraphComponent},
 	{path: "line", component: LineComponent},
+	{path: "bar", component: BarComponent},
 	{path: "", component: HomeComponent},
 	{path: "**", component: NotFoundComponent}
 ];

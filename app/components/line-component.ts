@@ -16,7 +16,7 @@ export class LineComponent {
 		{data: [150, 325, 470, 531, 505, 828, 962, 1001, 1111, 1212, 1313], label: "Big Data"},
 		{data: [15, 32, 47, 53, 50, 82, 96, 101, 111, 121, 131], label: "Small Data"}
 	];
-
+	/* Fake labels, replace with link to actual data */
 	public lineChartLabels:Array<any> = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 	public lineChartOptions:any = {
