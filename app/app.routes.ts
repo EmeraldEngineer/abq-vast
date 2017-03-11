@@ -16,7 +16,6 @@ export const routes: Routes = [
 	{path: "home", component: HomeComponent},
 	{path: "share/:shareUrl", component: ShareComponent},
 	{path: "about", component: AboutComponent},
-
 	{path: "fields", component: FieldsComponent},
 	{path: "graph", component: GraphComponent},
 	{path: "line", component: LineComponent},
