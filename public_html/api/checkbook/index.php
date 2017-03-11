@@ -12,12 +12,6 @@ use Edu\Cnm\AbqVast\Checkbook;
  * @authors Sarah Ruth Finkel <srfinkel@gmail.com>, Taylor McCarthy <oresshi@gmail.com>
  **/
 
-function paginate($arr, $pageNum) {
-	$arr = array(\PDO $checkbooks);
-	$pageNum->this = 0;
-	return $pageSize = array_slice($arr, 0, 100, true);
-}
-
 // check the session status, if it is not active, start the session.
 if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
