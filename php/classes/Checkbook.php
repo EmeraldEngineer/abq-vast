@@ -598,6 +598,7 @@ class Checkbook implements \JsonSerializable {
         // bind the vendor content to the place holder int he template
        // $checkbookVendor = "%$checkbookVendor%";
         $parameters = ["checkbookVendor" => $checkbookVendor];
+
         $statement->execute($parameters);
 
         // build an array of vendors
@@ -619,16 +620,21 @@ class Checkbook implements \JsonSerializable {
      * gets all of checkbooks
      *
      * @param \PDO $pdo PDO connection object
+	  * @param int $pageNum
      * @return \SplFixedArray SplFixedArray
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
     public static function getAllCheckbooks(\PDO $pdo, int $pageNum) {
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook LIMIT :startRow, :pageSize";
-        $statement = $pdo->prepare($query);
-        $parameters = ["startRow" => $pageNum * self::$pageSize, "pageSize" => self::$pageSize];
-        $statement->execute($parameters);
+
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook LIMIT :startRow , :pageSize";
+		 $statement = $pdo->prepare($query);
+//		 $parameters = ["startRow" => $pageNum * self::$pageSize, "pageSize" => self::$pageSize];
+		 $startRow = $pageNum * self::$pageSize;
+		 $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
+		 $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
+		 $statement->execute();
 
         // build an array of checkbooks
         $checkbooks = new \SplFixedArray($statement->rowCount());
