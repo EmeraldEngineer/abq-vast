@@ -17,8 +17,8 @@ export class CheckbookService extends BaseService {
             .catch(this.handleError));
     }
 
-    getCheckbook(reference: number) : Observable<Checkbook> {
-        return(this.http.get(this.checkbookUrl + reference)
+    getCheckbookByCheckbookId(checkbookId: number) : Observable<Checkbook> {
+        return(this.http.get(this.checkbookUrl + checkbookId)
             .map(this.extractData)
             .catch(this.handleError));
     }
