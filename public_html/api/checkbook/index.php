@@ -44,6 +44,12 @@ try {
 	$checkbookPaymentSunsetDate = filter_input(INPUT_GET, "checkbookPaymentSunsetDate");
 	$checkbookReferenceNum = filter_input(INPUT_GET, "checkbookReferenceNum", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$checkbookVendor = filter_input(INPUT_GET, "checkbookVendor", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$pageNum = filter_input(INPUT_GET, "pageNum", FILTER_SANITIZE_NUMBER_INT);
+
+	if(empty($pageNum) === true || $pageNum <0) {
+		$pageNum = 0;
+	}
+
 	/** Shouldn't be needed due to checkbook only requiring get and get all.
 	 * //here we check and make sure that we have the Primary key for the DELETE and PUT requests. If the request is a PUT or DELETE and no key is present in $id an exception is thrown
 	 * if(($method === "DELETE" || $method === "PUT" || $method === "POST") && (empty($id) === true || $id < 0)) {
@@ -77,7 +83,7 @@ try {
 		} elseif(empty($checkbookVendor) === false) {
 			$reply->data = Checkbook::getCheckbookByCheckbookVendor($pdo, $checkbookVendor)->toArray();
 		} else {
-			$checkbook = Checkbook::getAllCheckbooks($pdo);
+			$checkbook = Checkbook::getAllCheckbooks($pdo, $pageNum);
 			if($checkbook !== null) {
 				$reply->data = $checkbook;
 			}
