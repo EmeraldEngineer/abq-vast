@@ -241,7 +241,6 @@ class Share implements \JsonSerializable {
         if(empty($shareUrl) === true) {
             throw(new \PDOException("Share Content is Invalid"));
         }
-
         // create query template
         $query = "SELECT shareId, shareImage, shareUrl FROM share WHERE shareUrl = :shareUrl";
         $statement = $pdo->prepare($query);
