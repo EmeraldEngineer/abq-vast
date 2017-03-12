@@ -23,6 +23,7 @@ export const routes: Routes = [
 	{path: "graph", component: GraphComponent},
 	{path: "line", component: LineComponent},
 	{path: "bar", component: BarComponent},
+	{path: "checkbook", component: CheckbookComponent},
 	// {path: "pie", component: PieComponent},
 	{path: "", component: HomeComponent},
 	{path: "**", component: NotFoundComponent}
