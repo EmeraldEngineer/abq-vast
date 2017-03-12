@@ -7,7 +7,7 @@ import {Checkbook} from "../classes/checkbook";
     templateUrl: "./templates/checkbook.php"
 })
 
-export class DatasetComponent implements OnInit {
+export class CheckbookComponent implements OnInit {
     checkbook: Checkbook = new Checkbook("", "");
 
     constructor(private checkbookService: CheckbookService, private route: ActivatedRoute) {}

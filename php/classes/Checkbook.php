@@ -322,19 +322,16 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookId(\PDO $pdo, int $checkbookId, int $pageNum) {
+    public static function getCheckbookByCheckbookId(\PDO $pdo, int $checkbookId) {
         // sanitize the checkbookId before searching
         if($checkbookId <= 0) {
             throw(new \PDOException("checkbook id is not positive"));
         }
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookId = :checkbookId LIMIT :startRow, :pageSize";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookId = :checkbookId";
         $statement = $pdo->prepare($query);
         // bind the checkbook id to the place holder in the template
         $parameters = ["checkbookId" => $checkbookId];
-        $startRow = $pageNum * self::$pageSize;
-        $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
-        $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
         $statement->execute($parameters);
         // grab the checkbook from mySQL
         try{
