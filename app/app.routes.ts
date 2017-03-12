@@ -9,9 +9,10 @@ import {GraphComponent} from "./components/graph-component";
 import {NotFoundComponent} from "./components/notfound-component";
 import {LineComponent} from "./components/line-component";
 import {BarComponent} from "./components/bar-component";
+import {PieComponent} from "./components/pie-component";
 
 
-export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent, MainNavComponent, FieldsComponent, GraphComponent, NotFoundComponent, LineComponent, BarComponent];
+export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent, MainNavComponent, FieldsComponent, GraphComponent, NotFoundComponent, LineComponent, BarComponent, PieComponent];
 
 export const routes: Routes = [
 	{path: "home", component: HomeComponent},
@@ -21,6 +22,7 @@ export const routes: Routes = [
 	{path: "graph", component: GraphComponent},
 	{path: "line", component: LineComponent},
 	{path: "bar", component: BarComponent},
+	{path: "pie", component: PieComponent},
 	{path: "", component: HomeComponent},
 	{path: "**", component: NotFoundComponent}
 ];
