@@ -1,5 +1,5 @@
 <p>
-    <a href="http://world.std.com/~reinhold/diceware.html">Diceware</a> is a site that allows users to use five dice to create a password. The word list at the original site is buried deep within several pages of text. We have made the word list easily viewable and searchable.
+    <a href="http://world.std.com/~reinhold/diceware.html">Checkbook</a> is based offf a site created by Dylan McDonald and is based on site that allows users to use five dice to create a password. The word list at the original site is buried deep within several pages of text. We have made the word list easily viewable and searchable.
 </p>
 <p>Enjoy!</p>
 <hr />
