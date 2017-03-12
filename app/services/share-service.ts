@@ -15,9 +15,15 @@ export class ShareService extends BaseService {
 
 	getShareByShareId(shareId: number): Observable<Share> {
 		return (this.http.get(this.shareUrl + shareId)
-			.map(this.extractMessage)
-			.catch(this.handleError));
+            .map(this.extractMessage)
+            .catch(this.handleError));
 	}
+	getShareByShareUrl(shareUrl: string): Observable<Share> {
+		return (this.http.get(this.shareUrl)
+            .map(this.extractMessage)
+            .catch(this.handleError));
+	}
+
 
 	createShare(share: Share): Observable<Status> {
 		return (this.http.post(this.shareUrl, share)

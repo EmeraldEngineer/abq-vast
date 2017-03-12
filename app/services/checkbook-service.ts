@@ -1,10 +1,10 @@
 import {Injectable} from "@angular/core";
 import {Http} from "@angular/http";
 import {Observable} from "rxjs";
-import {Checkbook} from "../classes/checkbook"
-import {FieldService} from "./field-service";
+import {Checkbook} from "../classes/checkbook";
+import {BaseService} from "./base-service";
 @Injectable()
-export class CheckbookService extends FieldService {
+export class CheckbookService extends BaseService {
     constructor(protected http: Http) {
         super(http);
     }
