@@ -1,7 +1,6 @@
 /*
 Angular 2/Typescript Line Chart
  */
-
 import {Component} from "@angular/core";
 
 @Component({

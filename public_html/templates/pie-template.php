@@ -4,7 +4,7 @@
 
 <div>
 	<canvas baseChart
-		[data]="pieChartDatasets"
+		[data]="pieChartData"
 		[labels]="pieChartLabels"
 		[chartType]="pieChartType">
 	</canvas>

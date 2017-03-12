@@ -1,4 +1,4 @@
-<h1>Checkbook</h1>
+ <h1>Checkbook</h1>
 <p>
     <em>Reference Number:</em> {{ checkbook.checkbookReferenceNum }}<br />
     <em>Vendor:</em> {{ checkbook.checkbookVendor }}
