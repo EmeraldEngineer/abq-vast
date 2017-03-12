@@ -8,7 +8,7 @@ import {Checkbook} from "../classes/checkbook";
 })
 
 export class CheckbookComponent implements OnInit {
-    checkbook: Checkbook = new Checkbook("", "");
+    checkbook: Checkbook = new Checkbook(null, null, null, null, null, null, null);
 
     constructor(private checkbookService: CheckbookService, private route: ActivatedRoute) {}
 
