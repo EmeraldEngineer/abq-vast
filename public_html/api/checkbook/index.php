@@ -83,7 +83,7 @@ try {
 		} elseif(empty($checkbookVendor) === false) {
 			$reply->data = Checkbook::getCheckbookByCheckbookVendor($pdo, $checkbookVendor)->toArray();
 		} else {
-			$checkbook = Checkbook::getAllCheckbooks($pdo, $pageNum);
+			$checkbook = Checkbook::getAllCheckbooks($pdo, $pageNum)->toArray();
 			if($checkbook !== null) {
 				$reply->data = $checkbook;
 			}
