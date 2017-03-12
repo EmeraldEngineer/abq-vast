@@ -322,7 +322,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookId(\PDO $pdo, int $checkbookId) {
+    public static function getCheckbookByCheckbookId(\PDO $pdo, int $checkbookId, int $pageNum) {
         // sanitize the checkbookId before searching
         if($checkbookId <= 0) {
             throw(new \PDOException("checkbook id is not positive"));
@@ -332,6 +332,9 @@ class Checkbook implements \JsonSerializable {
         $statement = $pdo->prepare($query);
         // bind the checkbook id to the place holder in the template
         $parameters = ["checkbookId" => $checkbookId];
+        $startRow = $pageNum * self::$pageSize;
+        $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
+        $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
         $statement->execute($parameters);
         // grab the checkbook from mySQL
         try{
@@ -358,7 +361,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException whe mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookInvoiceAmount(\PDO $pdo, float $checkbookInvoiceLowAmount, float $checkbookInvoiceHighAmount) {
+    public static function getCheckbookByCheckbookInvoiceAmount(\PDO $pdo, float $checkbookInvoiceLowAmount, float $checkbookInvoiceHighAmount, int $pageNum) {
         // create query template
         $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookInvoiceAmount >= :checkbookInvoiceLowAmount AND checkbookInvoiceAmount <= :checkbookInvoiceHighAmount LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
@@ -366,6 +369,9 @@ class Checkbook implements \JsonSerializable {
         // bind the checkbook invoice amount to the place holder in the template
 
         $parameters = ["checkbookInvoiceLowAmount" => $checkbookInvoiceLowAmount, "checkbookInvoiceHighAmount" => $checkbookInvoiceHighAmount];
+        $startRow = $pageNum * self::$pageSize;
+        $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
+        $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
         $statement->execute($parameters);
 
         // build an array of Invoice amounts
@@ -394,7 +400,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookInvoiceDate(\PDO $pdo, $checkbookInvoiceSunriseDate, $checkbookInvoiceSunsetDate) {
+    public static function getCheckbookByCheckbookInvoiceDate(\PDO $pdo, $checkbookInvoiceSunriseDate, $checkbookInvoiceSunsetDate, int $pageNum) {
         if ((empty($checkbookInvoiceSunriseDate) === true) || (empty($checkbookInvoiceSunsetDate) === true)) {
             throw(new \InvalidArgumentException("dates are empty or null"));
         }
@@ -420,6 +426,9 @@ class Checkbook implements \JsonSerializable {
         $formattedSunriseDate = $checkbookInvoiceSunriseDate->format("Y-m-d");
         $formattedSunsetDate = $checkbookInvoiceSunsetDate->format("Y-m-d");
         $parameters = ["checkbookInvoiceSunriseDate" => $formattedSunriseDate, "checkbookInvoiceSunsetDate" => $formattedSunsetDate];
+        $startRow = $pageNum * self::$pageSize;
+        $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
+        $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
         $statement->execute($parameters);
 
         // build an array of invoice dates
@@ -451,7 +460,7 @@ class Checkbook implements \JsonSerializable {
      *@throws \PDOException when mySQL related errors occur
      *@throws \TypeError whe variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookInvoiceNum(\PDO $pdo, string $checkbookInvoiceNum) {
+    public static function getCheckbookByCheckbookInvoiceNum(\PDO $pdo, string $checkbookInvoiceNum, int $pageNum) {
         // sanitize the description before searching
         $checkbookInvoiceNum = trim($checkbookInvoiceNum);
         $checkbookInvoiceNum = filter_var($checkbookInvoiceNum, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -466,6 +475,9 @@ class Checkbook implements \JsonSerializable {
         // bind the checkbook invoice number to the place holder in the template
         //$checkbookInvoiceNum = "%checkbookInvoiceNum%";
         $parameters = ["checkbookInvoiceNum" => $checkbookInvoiceNum];
+        $startRow = $pageNum * self::$pageSize;
+        $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
+        $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
         $statement->execute($parameters);
 
         // build an array of checkbooks
@@ -493,7 +505,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookPaymentDate(\PDO $pdo, $checkbookPaymentSunriseDate, $checkbookPaymentSunsetDate) {
+    public static function getCheckbookByCheckbookPaymentDate(\PDO $pdo, $checkbookPaymentSunriseDate, $checkbookPaymentSunsetDate, int $pageNum) {
         // continuation of trying the sunrise and sunset
         if((empty($checkbookPaymentSunriseDate) === true) || (empty($checkbookPaymentSunsetDate) === true)) {
             throw(new \InvalidArgumentException("date is empty or null"));
@@ -515,6 +527,9 @@ class Checkbook implements \JsonSerializable {
         $formattedSunriseDate2 = $checkbookPaymentSunriseDate->format("Y-m-d");
         $formattedSunsetDate2 = $checkbookPaymentSunsetDate->format("Y-m-d");
         $parameters = ["checkbookPaymentSunriseDate" => $formattedSunriseDate2, "checkbookPaymentSunsetDate" => $formattedSunsetDate2];
+        $startRow = $pageNum * self::$pageSize;
+        $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
+        $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
         $statement->execute($parameters);
 
         // build an array of invoice dates
@@ -542,7 +557,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookReferenceNum(\PDO $pdo, string $checkbookReferenceNum) {
+    public static function getCheckbookByCheckbookReferenceNum(\PDO $pdo, string $checkbookReferenceNum, int $pageNum) {
         // sanitize the description before searching
         $checkbookReferenceNum = trim($checkbookReferenceNum);
         $checkbookReferenceNum = filter_var($checkbookReferenceNum, FILTER_SANITIZE_STRING);
@@ -557,6 +572,9 @@ class Checkbook implements \JsonSerializable {
         // bind the checkbook Reference Number to the place holder in the template
         //$checkbookReferenceNum = "%$checkbookReferenceNum%";
         $parameters = ["checkbookReferenceNum" => $checkbookReferenceNum];
+        $startRow = $pageNum * self::$pageSize;
+        $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
+        $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
         $statement->execute($parameters);
 
         // build an array of reference numbers
@@ -583,7 +601,7 @@ class Checkbook implements \JsonSerializable {
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError when variables are not the correct data type
      **/
-    public static function getCheckbookByCheckbookVendor(\PDO $pdo, string $checkbookVendor) {
+    public static function getCheckbookByCheckbookVendor(\PDO $pdo, string $checkbookVendor, int $pageNum) {
         // sanitize the description before searching
         $checkbookVendor = trim($checkbookVendor);
         $checkbookVendor = filter_var($checkbookVendor, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -598,7 +616,9 @@ class Checkbook implements \JsonSerializable {
         // bind the vendor content to the place holder int he template
        // $checkbookVendor = "%$checkbookVendor%";
         $parameters = ["checkbookVendor" => $checkbookVendor];
-
+        $startRow = $pageNum * self::$pageSize;
+        $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
+        $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
         $statement->execute($parameters);
 
         // build an array of vendors
