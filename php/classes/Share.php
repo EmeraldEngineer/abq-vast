@@ -223,6 +223,17 @@ class Share implements \JsonSerializable {
 		}
 		return ($share);
 	}
+
+
+    /**
+     * gets Share by shareUrl
+     *
+     * @param \PDO $pdo PDO connection object
+     * @param string $shareUrl
+     * @return Share|null Share found or null if not found
+     * @throws \PDOException when my SQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
     public static function getShareByShareUrl(\PDO $pdo, string $shareUrl) {
         // sanitize the share id before searching
         $shareUrl = trim($shareUrl);
@@ -232,7 +243,7 @@ class Share implements \JsonSerializable {
         }
 
         // create query template
-        $query = "SELECT shareId, shareImage, shareUrl FROM share WHERE shareId = :shareId";
+        $query = "SELECT shareId, shareImage, shareUrl FROM share WHERE shareUrl = :shareUrl";
         $statement = $pdo->prepare($query);
 
         //bind the share id to the place holder in the template
