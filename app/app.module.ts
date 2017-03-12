@@ -6,7 +6,7 @@ import {HttpModule} from "@angular/http";
 import {AppComponent} from "./app.component";
 import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
 import {CheckbookService} from "./services/checkbook-service";
-import {FieldService} from "./services/field-service";
+// import {FieldService} from "./services/field-service";
 import {ShareService} from "./services/share-service";
 
 
