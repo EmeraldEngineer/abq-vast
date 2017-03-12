@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {Criteria} from "../classes/criteria";
 import {BaseService} from "./base-service";
 @Injectable()
-export class CheckbookService extends BaseService {
+export class CriteriaService extends BaseService {
 	constructor(protected http: Http) {
 		super(http);
 	}
