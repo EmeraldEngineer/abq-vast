@@ -223,6 +223,36 @@ class Share implements \JsonSerializable {
 		}
 		return ($share);
 	}
+    public static function getShareByShareUrl(\PDO $pdo, string $shareUrl) {
+        // sanitize the share id before searching
+        $shareUrl = trim($shareUrl);
+        $shareUrl = filter_var($shareUrl, FILTER_SANITIZE_URL);
+        if(empty($shareUrl) === true) {
+            throw(new \PDOException("Share Content is Invalid"));
+        }
+
+        // create query template
+        $query = "SELECT shareId, shareImage, shareUrl FROM share WHERE shareId = :shareId";
+        $statement = $pdo->prepare($query);
+
+        //bind the share id to the place holder in the template
+        $parameters = ["shareUrl" => $shareUrl];
+        $statement->execute($parameters);
+
+        //grab the share from mySQL
+        try {
+            $share = null;
+            $statement->setFetchMode(\PDO::FETCH_ASSOC);
+            $row = $statement->fetch();
+            if($row !== false) {
+                $share = new Share($row["shareId"], $row["shareImage"], $row["shareUrl"]);
+            }
+        } catch(\Exception $exception) {
+            // if the row couldn't be converted, rethrow it
+            throw(new \PDOException($exception->getMessage(), 0, $exception));
+        }
+        return ($share);
+    }
 
 		/**
 		 * formats the state variable for JSON serialization
