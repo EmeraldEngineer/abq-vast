@@ -12,7 +12,7 @@ export class CheckbookService extends BaseService {
     private checkbookUrl = "api/checkbook/";
 
     getAllCheckbook(pageNum: number) : Observable<Checkbook[]> {
-        return(this.http.get(this.checkbookUrl)
+        return(this.http.get(this.checkbookUrl + "?pageNum=" + pageNum)
             .map(this.extractData)
             .catch(this.handleError));
     }
