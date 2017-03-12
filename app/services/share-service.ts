@@ -19,13 +19,13 @@ export class ShareService extends BaseService {
 			.catch(this.handleError));
 	}
 
-	createShareImage(share: Share): Observable<Status> {
-		return (this.http.get(this.shareUrl, share)
+	createShare(share: Share): Observable<Status> {
+		return (this.http.post(this.shareUrl, share)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
-	editShareUrl(share: Share): Observable<Status> {
+	editShare(share: Share): Observable<Status> {
 		return (this.http.post(this.shareUrl, share)
 			.map(this.extractMessage)
 			.catch(this.handleError));
