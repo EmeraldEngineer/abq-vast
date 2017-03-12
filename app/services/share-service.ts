@@ -4,7 +4,6 @@ import {Observable} from "rxjs/Observable";
 import {BaseService} from "./base-service";
 import {Share} from "../classes/share";
 import {Status} from "../classes/status";
-import {share} from "rxjs/operator/share";
 
 @Injectable()
 export class ShareService extends BaseService {
@@ -14,19 +13,19 @@ export class ShareService extends BaseService {
 
 	private shareUrl = "api/share/";
 
-	shareId(shareId: number): Observable<Status> {
-		return (this.http.delete(this.shareUrl + shareId)
+	getShareByShareId(shareId: number): Observable<Share> {
+		return (this.http.get(this.shareUrl + shareId)
 			.map(this.extractMessage)
 			.catch(this.handleError));
 	}
 
-	shareImage(shareImage: string): Observable<Share> {
-		return (this.http.get(this.shareUrl + shareId)
+	createShareImage(share: Share): Observable<Status> {
+		return (this.http.get(this.shareUrl, share)
 			.map(this.extractData)
 			.catch(this.handleError));
 	}
 
-	shareUrl(shareUrl: string): Observable<Status> {
+	editShareUrl(share: Share): Observable<Status> {
 		return (this.http.post(this.shareUrl, share)
 			.map(this.extractMessage)
 			.catch(this.handleError));
