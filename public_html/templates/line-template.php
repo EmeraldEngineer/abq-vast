@@ -14,15 +14,4 @@
 					  [chartType]="lineChartType"></canvas>
 		</div>
 	</div>
-	<!--<div class="col-md-6" style="margin-bottom: 10px">
-		<table class="table table-responsive table-condensed">
-			<tr>
-				<th *ngFor="let label of lineChartLabels">{{label}}</th>
-			</tr>
-			<tr *ngFor="let d of lineChartData">
-				<td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
-			</tr>
-		</table>
-	</div>-->
 </div>
-
