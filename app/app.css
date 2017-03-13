@@ -7,11 +7,14 @@ body {
 
 .navbar {
 	background-color: #007b79;
-	font-family: 'Roboto', sans-serif;
+}
+.nav {
 	color: white;
+	font-family: 'Roboto', sans-serif;
 }
 
-.home .about {
+.home .about .graph {
 	background-color: rgba(255, 255, 255, 0.7);
 	font-family: 'Roboto', sans-serif;
+	align-content: center;
 }
