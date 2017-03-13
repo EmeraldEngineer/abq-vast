@@ -369,6 +369,7 @@ class Checkbook implements \JsonSerializable {
         $startRow = $pageNum * self::$pageSize;
         $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
         $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
+        $statement->bindParam(":checkbookInvoiceAmount", $checkbookInvoiceAmount, \PDO::PARAM_STR);
         $statement->execute($parameters);
 
         // build an array of Invoice amounts
@@ -426,6 +427,7 @@ class Checkbook implements \JsonSerializable {
         $startRow = $pageNum * self::$pageSize;
         $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
         $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
+        $statement->bindParam(":checkbookInvoiceDate", $checkbookInvoiceDate, \PDO::PARAM_STR);
         $statement->execute($parameters);
 
         // build an array of invoice dates
@@ -470,12 +472,13 @@ class Checkbook implements \JsonSerializable {
         $statement = $pdo->prepare($query);
 
         // bind the checkbook invoice number to the place holder in the template
-        //$checkbookInvoiceNum = "%checkbookInvoiceNum%";
-        $parameters = ["checkbookInvoiceNum" => $checkbookInvoiceNum];
+        $checkbookInvoiceNum = "%checkbookInvoiceNum%";
+        /*$parameters = ["checkbookInvoiceNum" => $checkbookInvoiceNum];*/
         $startRow = $pageNum * self::$pageSize;
         $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
         $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
-        $statement->execute($parameters);
+        $statement->bindParam(":checkbookInvoiceNum", $checkbookInvoiceNum, \PDO::PARAM_STR);
+        $statement->execute();
 
         // build an array of checkbooks
         $checkbooks = new \SplFixedArray($statement->rowCount());
@@ -527,6 +530,7 @@ class Checkbook implements \JsonSerializable {
         $startRow = $pageNum * self::$pageSize;
         $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
         $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
+        $statement->bindParam(":checkbookPaymentDate", $checkbookPaymentDate, \PDO::PARAM_STR);
         $statement->execute($parameters);
 
         // build an array of invoice dates
@@ -567,12 +571,12 @@ class Checkbook implements \JsonSerializable {
         $statement = $pdo->prepare($query);
 
         // bind the checkbook Reference Number to the place holder in the template
-        //$checkbookReferenceNum = "%$checkbookReferenceNum%";
-        $parameters = ["checkbookReferenceNum" => $checkbookReferenceNum];
+        $checkbookReferenceNum = "%$checkbookReferenceNum%";
         $startRow = $pageNum * self::$pageSize;
         $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
         $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
-        $statement->execute($parameters);
+        $statement->bindParam(":checkbookReferenceNum", $checkbookReferenceNum, \PDO::PARAM_STR);
+        $statement->execute();
 
         // build an array of reference numbers
         $checkbooks = new \SplFixedArray($statement->rowCount());
