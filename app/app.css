@@ -1,7 +1,10 @@
 body {
 	/* Image Cred: http://www.wearepixel8.com */
 	background-image: url("../public_html/images/graphy.png");
-	background-color: #f0805a;
-	background-attachment: fixed;
-	background-size: cover;
+	background-color: rgba(0, 123, 121, 0.5);
+	background-repeat: repeat;
 }
+.navbar {
+	background-color: #007b79;
+}
+
