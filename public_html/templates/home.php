@@ -1,3 +1,5 @@
+<main-nav></main-nav>
+
 <section class="welcome">
 	<div class="container">
 		<div class="jumbotron text-center">

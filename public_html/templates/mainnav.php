@@ -17,7 +17,6 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li><a routerLink="/about">About</a></li>
 					<li><a routerLink="/graph">VAST Graph</a></li>
-					<li><a href="https://bootcamp-coders.cnm.edu/~sfinkel/abq-vast" target="_blank">ABQ-VAST</a></li>
 				</ul>
 
 			</div><!-- /.navbar-collapse -->

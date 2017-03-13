@@ -1,3 +1,4 @@
+<main-nav></main-nav>
 
 		<div class="container-fluid">
 			<header>
