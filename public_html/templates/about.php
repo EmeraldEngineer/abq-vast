@@ -1,8 +1,8 @@
 <main-nav></main-nav>
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
-<section class="about">
-	<div class="container-fluid">
+<section>
+	<div class="container-fluid about">
 		<div class="row">
 			<div class="col-md-6">
 				<h1>ABQ-VAST</h1>
