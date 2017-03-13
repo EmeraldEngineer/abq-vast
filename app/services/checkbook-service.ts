@@ -11,38 +11,50 @@ export class CheckbookService extends BaseService {
 
     private checkbookUrl = "api/checkbook/";
 
-    getAllCheckbook(pageNum: number) : Observable<Checkbook[]> {
-        return(this.http.get(this.checkbookUrl + "?pageNum=" + pageNum)
+    getAllCheckbook(pageNum: number): Observable<Checkbook[]> {
+        return (this.http.get(this.checkbookUrl + "?pageNum=" + pageNum)
             .map(this.extractData)
             .catch(this.handleError));
     }
 
-    getCheckbookByCheckbookId(checkbookId: number) : Observable<Checkbook> {
-        return(this.http.get(this.checkbookUrl + checkbookId)
-            .map(this.extractData)
-            .catch(this.handleError));
-    }
-    filterByVendor(checkbookVendor: string) :
-    Observable<Checkbook> {
-        return(this.http.get(this.checkbookUrl + checkbookVendor)
+    getCheckbookByCheckbookId(checkbookId: number): Observable<Checkbook> {
+        return (this.http.get(this.checkbookUrl + checkbookId)
             .map(this.extractData)
             .catch(this.handleError));
     }
 
-    getCheckbookByCheckbookVendor(checkbookVendor: string, pageNum: number) : Observable<Checkbook[]> {
-        return(this.http.get(this.checkbookUrl + "?checkbookVendor=" + checkbookVendor + "&pageNum" + pageNum)
+    filterByVendor(checkbookVendor: string): Observable<Checkbook> {
+        return (this.http.get(this.checkbookUrl + checkbookVendor)
             .map(this.extractData)
             .catch(this.handleError));
     }
 
-    getCheckbookByCheckbookInvoiceAmount(checkbookInvoiceAmount: string, pageNum: number) : Observable<Checkbook[]> {
-        return(this.http.get(this.checkbookUrl + "?checkbookInvoiceAmount=" + checkbookInvoiceAmount + "&pageNum" + pageNum)
+    getCheckbookByCheckbookVendor(checkbookVendor: string, pageNum: number): Observable<Checkbook[]> {
+        return (this.http.get(this.checkbookUrl + "?checkbookVendor=" + checkbookVendor + "&pageNum" + pageNum)
             .map(this.extractData)
             .catch(this.handleError));
     }
 
-    getCheckbookByCheckbookInvoiceDate(checkbookInvoiceDate: string, pageNum: number) : Observable<Checkbook[]> {
-        return(this.http.get(this.checkbookUrl + "?checkbookInvoiceDate=" + checkbookInvoiceDate + "&pageNum" + pageNum)
+    getCheckbookByCheckbookInvoiceAmount(checkbookInvoiceAmount: string, pageNum: number): Observable<Checkbook[]> {
+        return (this.http.get(this.checkbookUrl + "?checkbookInvoiceAmount=" + checkbookInvoiceAmount + "&pageNum" + pageNum)
+            .map(this.extractData)
+            .catch(this.handleError));
+    }
+
+    getCheckbookByCheckbookInvoiceDate(checkbookInvoiceDate: string, pageNum: number): Observable<Checkbook[]> {
+        return (this.http.get(this.checkbookUrl + "?checkbookInvoiceDate=" + checkbookInvoiceDate + "&pageNum" + pageNum)
+            .map(this.extractData)
+            .catch(this.handleError));
+    }
+
+    getCheckbookByCheckbookPaymentDate(checkbookPaymentDate: string, pageNum: number): Observable<Checkbook[]> {
+        return (this.http.get(this.checkbookUrl + "?checkbookPaymentDate=" + checkbookPaymentDate + "&pageNum" + pageNum)
+            .map(this.extractData)
+            .catch(this.handleError));
+    }
+
+    getCheckbookByCheckbookReferenceNum(checkbookReferenceNum: string, pageNum: number): Observable<Checkbook[]> {
+        return (this.http.get(this.checkbookUrl + "?checkbookReferenceNum=" + checkbookReferenceNum + "&pageNum" + pageNum)
             .map(this.extractData)
             .catch(this.handleError));
     }
