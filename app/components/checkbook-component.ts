@@ -24,7 +24,4 @@ export class CheckbookComponent implements OnInit {
 			.subscribe(checkbook => this.checkbook = checkbook);
 	}
 
-
-
-
 }
