@@ -22,10 +22,16 @@ export class CheckbookService extends BaseService {
             .map(this.extractData)
             .catch(this.handleError));
     }
-    filterByVendor(checkbookvendor: string) :
+    filterByVendor(checkbookVendor: string) :
     Observable<Checkbook> {
-        return(this.http.get(this.checkbookUrl + checkbookvendor)
+        return(this.http.get(this.checkbookUrl + checkbookVendor)
             .map(this.extractData)
             .catch(this.handleError));
     }
+
+    getCheckbookByCheckbookVendor(checkbookVendor: string, pageNum: number) : Observable<Checkbook[]> {
+        return(this.http.get(this.checkbookUrl + "?checkbookVendor=" + checkbookVendor + "&pageNum" + pageNum)
+            .map(this.extractData)
+            .catch(this.handleError));
+}
 }

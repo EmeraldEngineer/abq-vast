@@ -607,16 +607,16 @@ class Checkbook implements \JsonSerializable {
         }
 
         // create query template
-        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookVendor = :checkbookVendor LIMIT :startRow, :pageSize";
+        $query = "SELECT checkbookId, checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor FROM checkbook WHERE checkbookVendor LIKE :checkbookVendor LIMIT :startRow, :pageSize";
         $statement = $pdo->prepare($query);
 
         // bind the vendor content to the place holder int he template
-       // $checkbookVendor = "%$checkbookVendor%";
-        $parameters = ["checkbookVendor" => $checkbookVendor];
+        $checkbookVendor = "%$checkbookVendor%";
         $startRow = $pageNum * self::$pageSize;
         $statement->bindParam(":startRow", $startRow, \PDO::PARAM_INT);
         $statement->bindParam(":pageSize", self::$pageSize, \PDO::PARAM_INT);
-        $statement->execute($parameters);
+        $statement->bindParam(":checkbookVendor", $checkbookVendor, \PDO::PARAM_STR);
+        $statement->execute();
 
         // build an array of vendors
         $checkbooks = new \SplFixedArray($statement->rowCount());

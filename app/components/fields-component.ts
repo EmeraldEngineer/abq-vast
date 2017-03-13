@@ -5,7 +5,7 @@ import {Field} from "../classes/field";
 import "rxjs/add/operator/switchMap";
 
 @Component({
-	templateUrl: "./templates/field.php"
+	templateUrl: "./templates/fields.php"
 })
 
 export class FieldsComponent implements OnInit {
