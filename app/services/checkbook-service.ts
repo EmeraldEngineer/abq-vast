@@ -33,5 +33,17 @@ export class CheckbookService extends BaseService {
         return(this.http.get(this.checkbookUrl + "?checkbookVendor=" + checkbookVendor + "&pageNum" + pageNum)
             .map(this.extractData)
             .catch(this.handleError));
-}
+    }
+
+    getCheckbookByCheckbookInvoiceAmount(checkbookInvoiceAmount: string, pageNum: number) : Observable<Checkbook[]> {
+        return(this.http.get(this.checkbookUrl + "?checkbookInvoiceAmount=" + checkbookInvoiceAmount + "&pageNum" + pageNum)
+            .map(this.extractData)
+            .catch(this.handleError));
+    }
+
+    getCheckbookByCheckbookInvoiceDate(checkbookInvoiceDate: string, pageNum: number) : Observable<Checkbook[]> {
+        return(this.http.get(this.checkbookUrl + "?checkbookInvoiceDate=" + checkbookInvoiceDate + "&pageNum" + pageNum)
+            .map(this.extractData)
+            .catch(this.handleError));
+    }
 }
