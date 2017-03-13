@@ -19,7 +19,8 @@ export class LineComponent {
 	public lineChartLabels:Array<any> = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 	public lineChartOptions:any = {
-		responsive: true
+		responsive: true,
+		spanGaps: true
 	};
 
 	public lineChartColors:Array<any> = [
