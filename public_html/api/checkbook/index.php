@@ -67,21 +67,21 @@ try {
 		if(empty($id) === false) {
 			$reply->data = Checkbook::getCheckbookByCheckbookId($pdo, $id);
 		} elseif(empty($checkbookInvoiceHighAmount) === false && empty($checkbookInvoiceLowAmount) === false) {
-			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceAmount($pdo, $checkbookInvoiceLowAmount, $checkbookInvoiceHighAmount)->toArray();
+			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceAmount($pdo, $checkbookInvoiceLowAmount, $checkbookInvoiceHighAmount, $pageNum)->toArray();
 		} elseif(empty($checkbookInvoiceSunriseDate) === false && empty($checkbookInvoiceSunsetDate) === false) {
 			$checkbookInvoiceSunriseDate = \DateTime::createFromFormat("U", floor($checkbookInvoiceSunriseDate / 1000));
 			$checkbookInvoiceSunsetDate = \DateTime::createFromFormat("U", ceil($checkbookInvoiceSunsetDate / 1000));
-			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceDate($pdo, $checkbookInvoiceSunriseDate, $checkbookInvoiceSunsetDate)->toArray();
+			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceDate($pdo, $checkbookInvoiceSunriseDate, $checkbookInvoiceSunsetDate, $pageNum)->toArray();
 		} elseif(empty($checkbookInvoiceNum) === false) {
-			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceNum($pdo, $checkbookInvoiceNum)->toArray();
+			$reply->data = Checkbook::getCheckbookByCheckbookInvoiceNum($pdo, $checkbookInvoiceNum, $pageNum)->toArray();
 		} elseif(empty($checkbookPaymentSunriseDate) === false && empty($checkbookPaymentSunsetDate) === false) {
 			$checkbookPaymentSunriseDate = \DateTime::createFromFormat("U", floor($checkbookPaymentSunriseDate / 1000));
 			$checkbookPaymentSunsetDate = \DateTime::createFromFormat("U", ceil($checkbookPaymentSunsetDate / 1000));
-			$reply->data = Checkbook::getCheckbookByCheckbookPaymentDate($pdo, $checkbookPaymentSunriseDate, $checkbookPaymentSunsetDate)->toArray();
+			$reply->data = Checkbook::getCheckbookByCheckbookPaymentDate($pdo, $checkbookPaymentSunriseDate, $checkbookPaymentSunsetDate, $pageNum)->toArray();
 		} elseif(empty($checkbookReferenceNum) === false) {
-			$reply->data = Checkbook::getCheckbookByCheckbookReferenceNum($pdo, $checkbookReferenceNum)->toArray();
+			$reply->data = Checkbook::getCheckbookByCheckbookReferenceNum($pdo, $checkbookReferenceNum, $pageNum)->toArray();
 		} elseif(empty($checkbookVendor) === false) {
-			$reply->data = Checkbook::getCheckbookByCheckbookVendor($pdo, $checkbookVendor)->toArray();
+			$reply->data = Checkbook::getCheckbookByCheckbookVendor($pdo, $checkbookVendor, $pageNum)->toArray();
 		} else {
 			$checkbook = Checkbook::getAllCheckbooks($pdo, $pageNum)->toArray();
 			if($checkbook !== null) {

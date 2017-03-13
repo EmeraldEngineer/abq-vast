@@ -23,4 +23,6 @@ export class CheckbookComponent implements OnInit {
 			.switchMap((params: Params) => this.checkbookService.getCheckbookByCheckbookId(params["checkbookId"]))
 			.subscribe(checkbook => this.checkbook = checkbook);
 	}
+
+
 }
