@@ -21,59 +21,28 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-md-8 col-md-offset-2">
-		<form #fieldForm="ngForm" class="form-horizontal well" name="fieldForm" id="fieldForm" (ngSubmit)="getAllFields();">
-			<h1>Fields for {{ field.fieldName }}</h1>
-			<div class="form-group" [ngClass]="{ 'has-error': fieldName.touched && fieldName.invalid }">
-				<label for="fieldName">Vendor Name, Invoice Reference Number, Invoice Amount</label>
-				<div class="input-group">
-					<div class="input-group-addon">
-						<i class="fa fa-users" aria-hidden="true"></i>
+			<form #criteriaForm="ngForm" class="form-horizontal" name="criteriaForm" id="criteriaForm" (ngSubmit)="getAllFields();">
+				<h1>Fields for {{ checkbook.checkbookVendor }}</h1>
+				<div class="form-group" [ngClass]="{ 'has-error': criteria.push }">
+					<label for="checkbookVendor">Vendor Database</label>
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-users" aria-hidden="true"></i>
+						</div>
+						<input type="text" id="checkbookVendor" name="checkbookVendor" class="form-control" required min="0"
+								 step="1" [(ngModel)]="criteria.push" #criteriaForm="ngModel"/>
 					</div>
-					<input type="text" id="fieldName" name="fieldName" class="form-control" required min="0" step="1" [(ngModel)]="field.fieldName" #fieldName="ngModel"/>
-				</div>
-				<div [hidden]="fieldName.valid || fieldName.pristine" class="alert alert-danger" role="alert">
-					<p *ngIf="fieldName.errors?.min">Please add some information.</p>
-					<p *ngIf="fieldName.errors?.required">Please add some information.</p>
-				</div>
-				<div *ngIf="field.fieldName === 0" class="alert alert-warning" role="alert">
-					<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
-				</div>
-			</div>
-			<div class="form-group" [ngClass]="{ 'has-error': fieldType.touched && fieldType.invalid }">
-				<label for="fieldType">Field Type</label>
-				<div class="input-group">
-					<div class="input-group-addon">
-						<i class="fa fa-bomb" aria-hidden="true"></i>
+					<div [hidden]="checkbookVendor.valid || checkbookVendor.pristine" class="alert alert-danger"
+						  role="alert">
+						<p *ngIf="checkbookVendor.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookVendor.errors?.required">Please add some information.</p>
 					</div>
-					<input type="text" id="fieldType" name="fieldType" class="form-control" maxlength="1" [(ngModel)]="field.fieldType" #fieldType="ngModel"/>
-				</div>
-				<div [hidden]="fieldType.valid || fieldType.pristine" class="alert alert-danger" role="alert">
-					<p *ngIf="fieldType.errors?.maxlength">Can only be one letter. </p>
-				</div>
-			</div>
-		</form>
-
-
-		<form #criteriaForm="ngForm" class="form-horizontal well" name="criteriaForm" id="criteriaForm" (ngSubmit)="postCriteria();">
-			<h1>Criteria for {{ criteria.criteriaId }}</h1>
-			<div class="form-group" [ngClass]="{ 'has-error': criteriaOperator.touched && criteriaOperator.invalid }">
-				<label for="criteriaOperator">Operator (=, <, >)</label>
-				<div class="input-group">
-					<div class="input-group-addon">
-						<i class="fa fa-bug" aria-hidden="true"></i>
+					<div *ngIf="checkbook.checkbookVendor === 0" class="alert alert-warning" role="alert">
+						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o"
+																															aria-hidden="true"></i>
 					</div>
-					<input type="text" id="criteriaOperator" name="criteriaOperator" class="form-control" [(ngModel)]="criteria.criteriaOperator" #criteriaOperator="ngModel"/>
 				</div>
-				<div [hidden]="criteriaOperator.valid || criteriaOperator.pristine" class="alert alert-danger" role="alert">
-					<p *ngIf="criteriaOperator.errors?.min">Please select an operation.</p>
-					<p *ngIf="criteriaOperator.errors?.required">Please select an operation.</p>
-				</div>
-				<div *ngIf="criteria.criteriaForm === 0" class="alert alert-warning" role="alert">
-					<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria. <i
-						class="fa fa-frown-o" aria-hidden="true"></i>
-				</div>
-			</div>
-		</form>
+			</form>
 		</div>
 	</div>
 </div>
