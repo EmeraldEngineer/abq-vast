@@ -73,3 +73,7 @@ a {
 	font-family: 'Roboto', sans-serif;
 	color: white;
 }
+
+.button {
+	padding: 10px;
+}

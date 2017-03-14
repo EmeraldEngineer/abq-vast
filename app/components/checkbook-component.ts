@@ -9,7 +9,7 @@ import "rxjs/add/operator/switchMap";
 })
 
 export class CheckbookComponent implements OnInit {
-	checkbook: Checkbook = new Checkbook(null, null, null, null, null, null, null);
+	checkbook: Checkbook = new Checkbook(null, null, null, null, null, null, null, null, null, null, null);
 
 	constructor(private checkbookService: CheckbookService, private route: ActivatedRoute) {
 	}
