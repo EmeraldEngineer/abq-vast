@@ -1,20 +1,56 @@
+/**************************
+* background
+**************************/
+
 body {
 	/* Image Cred: http://www.wearepixel8.com */
 	background-image: url("../public_html/images/graphy.png");
-	background-color: rgba(0, 123, 121, 0.5);
+	background-color: rgba(0, 123, 121, 0.8);
 	background-repeat: repeat;
 }
 
-.navbar {
-	background-color: #007b79;
-}
-.nav {
-	color: white;
+/**************************
+* navigation
+**************************/
+
+.navbar-brand {
 	font-family: 'Roboto', sans-serif;
 }
 
-.home .about .graph {
-	background-color: rgba(255, 255, 255, 0.7);
+.navbar-default {
+	background-color: #007b79;
+}
+
+.navbar-default>li {
 	font-family: 'Roboto', sans-serif;
-	align-content: center;
+	color: white;
+}
+
+.navbar-default .navbar-brand:focus,
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+	color: #910004;
+}
+
+.navbar-fixed-bottom {
+	font-family: 'Roboto', sans-serif;
+	padding: 50px;
+	background-color: rgba(255, 255, 255, 0.7);
+}
+
+
+
+/**************************
+* body main
+**************************/
+
+main.bg {
+	background-color: rgba(255, 255, 255, 0.5);
+	display: inline-block;
+
+}
+
+h1 p {
+	font-family: 'Roboto', sans-serif;
 }
