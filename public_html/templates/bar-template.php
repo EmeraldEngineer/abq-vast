@@ -2,7 +2,7 @@
 <!-- Bar chart stuff goes here -->
 
 
-<div>
+<div *ngIf="barChartData.length > 0">
 	<div>
 		<canvas baseChart
 				  [datasets]="barChartData"
