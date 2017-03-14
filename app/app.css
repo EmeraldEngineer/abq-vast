@@ -13,44 +13,58 @@ body {
 * navigation
 **************************/
 
-.navbar-brand {
+.navbar-inverse .navbar-brand {
 	font-family: 'Roboto', sans-serif;
+	color: #F0805A;
 }
 
-.navbar-default {
+.navbar-inverse .navbar-nav>li>a{
+	font-family: 'Roboto', sans-serif;
+	color: #F0805A;
+}
+
+.navbar .navbar-brand:focus,
+.navbar .navbar-brand:hover,
+.navbar .navbar-nav>li>a:focus,
+.navbar .navbar-nav>li>a:hover {
+	color: #FBD5A6;
+}
+
+/*a, ul.nav, nav.li, a:visited{*/
+	/*color: #910004;*/
+/*}*/
+
+/*a, ul.nav, nav.li, a:active {*/
+	/*color: #910004;*/
+/*}*/
+
+/*ul.nav, li.active, a {*/
+	/*color: white;*/
+/*}*/
+
+.navbar-inverse {
 	background-color: #007b79;
-}
-
-.navbar-default>li {
-	font-family: 'Roboto', sans-serif;
-	color: white;
-}
-
-.navbar-default .navbar-brand:focus,
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-nav>li>a:focus,
-.navbar-default .navbar-nav>li>a:hover {
-	color: #910004;
 }
 
 .navbar-fixed-bottom {
 	font-family: 'Roboto', sans-serif;
-	padding: 50px;
-	background-color: rgba(255, 255, 255, 0.7);
+	color: #F0805A;
+	min-height: 40px;
+	background-color: rgba(120, 80, 106, 0.5);
 }
-
-
 
 /**************************
 * body main
 **************************/
 
 main.bg {
-	background-color: rgba(255, 255, 255, 0.5);
-	display: inline-block;
-
+	background-color: rgba(255, 255, 255, 0.4);
 }
 
-h1 p {
+h1, p {
 	font-family: 'Roboto', sans-serif;
+}
+
+a {
+	color: #910004;
 }
