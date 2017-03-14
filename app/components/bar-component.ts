@@ -12,6 +12,8 @@ export class BarComponent implements OnInit {
 	public barChartData: Array<any> = [];
 
 	public barChartLabels: Array<any> = [];
+	public barChartLabelsTemp: Array<any> = [];
+	public flattenedLabelsArray: Array<any> = [];
 
 	public barChartOptions:any = {
 		scaleShowVerticalLines: false,
@@ -30,15 +32,25 @@ export class BarComponent implements OnInit {
 				let checkbooks : Checkbook[] = cityData;
 				this.barChartData = [];
 				this.barChartLabels = [];
+				this.barChartLabelsTemp = [];
+				this.flattenedLabelsArray = [];
+
 
 				let vendors = checkbooks.map(checkbookEntry => checkbookEntry.checkbookVendor).filter((checkbookEntry, index, self) => self.indexOf(checkbookEntry) === index);
 
 				for(let vendor of vendors) {
-					let xAxis = checkbooks.filter(checkbookEntry => checkbookEntry.checkbookVendor === vendor).map(checkbookEntry => checkbookEntry.checkbookInvoiceDate);
+					let xAxis = checkbooks.filter(checkbookEntry => checkbookEntry.checkbookVendor === vendor).map(checkbookEntry => checkbookEntry.checkbookVendor);
 					let yAxis = checkbooks.filter(checkbookEntry => checkbookEntry.checkbookVendor === vendor).map(checkbookEntry => checkbookEntry.checkbookInvoiceAmount);
 					this.barChartData.push({data: yAxis, label: vendor});
-					this.barChartLabels.push(xAxis);
+					this.barChartLabelsTemp.push(xAxis);
 				}
+				console.log(this.barChartLabels);
+				for(let labelgroup of this.barChartLabelsTemp) {
+					for(let label of labelgroup){
+						this.flattenedLabelsArray.sort().push(label);
+					}
+				}
+				this.barChartLabels = Array.from(new Set(this.flattenedLabelsArray));
 			});
 	}
 
