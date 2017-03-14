@@ -20,6 +20,7 @@
 					<li><a routerLink="/about">About</a></li>
 					<li><a routerLink="/graph">VAST Graph</a></li>
 					<li><a routerLink="/checkbook/1">Checkbook</a></li>
+					<li><a routerLink="/criteria">Criteria</a></li>
 				</ul>
 
 			</div><!-- /.navbar-collapse -->

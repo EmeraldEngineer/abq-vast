@@ -8,6 +8,7 @@ import {allAppComponents, appRoutingProviders, routing} from "./app.routes";
 import {CheckbookService} from "./services/checkbook-service";
 import {FieldService} from "./services/field-service";
 import {ShareService} from "./services/share-service";
+import {CriteriaService} from "./services/criteria-service";
 
 const moduleDeclarations = [AppComponent];
 
@@ -15,7 +16,7 @@ const moduleDeclarations = [AppComponent];
 	imports:      [BrowserModule, ChartsModule, FormsModule, HttpModule, routing],
 	declarations: [...moduleDeclarations, ...allAppComponents],
 	bootstrap:    [AppComponent],
-	providers:    [appRoutingProviders, CheckbookService, ShareService, FieldService]
+	providers:    [appRoutingProviders, CheckbookService, ShareService, FieldService, CriteriaService]
 })
 
 export class AppModule {}
