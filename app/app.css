@@ -68,3 +68,8 @@ h1, p {
 a {
 	color: #910004;
 }
+
+.label {
+	font-family: 'Roboto', sans-serif;
+	color: white;
+}
