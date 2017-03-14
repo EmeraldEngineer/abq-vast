@@ -17,6 +17,7 @@ export class ShareComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getShareByShareUrl();
+		this.getAllFields();
 	}
 
 	getShareByShareUrl(): void {

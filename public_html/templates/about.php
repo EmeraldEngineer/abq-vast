@@ -17,7 +17,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-md-12">
-				<img src="../images/abqvast-erd.svg" class="img-responsive" alt="ERD"/>
+				<img src="images/abqvast-erd.svg" class="img-responsive" alt="ERD"/>
 			</div>
 		</div>
 	</div>

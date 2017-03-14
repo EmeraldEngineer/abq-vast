@@ -1,26 +1,39 @@
 import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Params} from "@angular/router";
+import {Field} from "../classes/field";
+import {FieldService} from "../services/field-service";
 import {CriteriaService} from "../services/criteria-service";
 import {Criteria} from "../classes/criteria";
-import "rxjs/add/operator/switchMap";
+import {Status} from "../classes/status";
 
 @Component({
 	templateUrl: "./templates/criteria.php"
 })
 
 export class CriteriaComponent implements OnInit {
-	criteria: Criteria = new Criteria(null, null, null, null, null);
+	fields: Field[] = [];
+	criteria: Criteria[] = [];
+	status: Status = new Status(null, null, null);
 
-	constructor(private criteriaService: CriteriaService, private route: ActivatedRoute) {
+	constructor(private fieldService: FieldService, private criteriaService: CriteriaService) {
 	}
 
 	ngOnInit(): void {
-		this.getCriteriaByCriteriaId();
+		this.getAllFields();
 	}
 
-	getCriteriaByCriteriaId(): void {
-		this.route.params
-			.switchMap((params: Params) => this.criteriaService.getCriteriaByCriteriaId(params["criteriaId"]))
-			.subscribe(criteria => this.criteria = criteria);
+	getAllFields(): void {
+		this.fieldService.getAllFields()
+			.subscribe(fields => this.fields = fields);
 	}
+
+	postCriterion(criteria: Criteria) : void {
+		this.criteriaService.postCriterion(criteria)
+			.subscribe(status => this.status = status);
+	}
+
+	postCriteria() : void {
+		this.criteria.filter(criterion => criterion.criteriaId === null).map(criterion => this.postCriterion(criterion));
+	}
+
+
 }
