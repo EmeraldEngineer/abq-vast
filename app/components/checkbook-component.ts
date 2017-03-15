@@ -22,6 +22,7 @@ export class CheckbookComponent implements OnInit {
 	checkbookPaymentSunriseDate: DateTimeFormat;
 	checkbookPaymentSunsetDate: DateTimeFormat;
 	checkbookReferenceNum: string = "";
+	pageNum : number = 0;
 
 	constructor(private checkbookService: CheckbookService, private route: ActivatedRoute) {
 	}
@@ -37,10 +38,15 @@ export class CheckbookComponent implements OnInit {
 	}
 
 	getAllCheckbooks(): void {
-		this.checkbookService.getAllCheckbooks(0)
+		this.checkbookService.getAllCheckbooks(this.pageNum)
 			.subscribe(checkbooks => this.checkbooks = checkbooks);
+	}
+
+	turnThePage() {
+		this.pageNum++;
+		this.getAllCheckbooks();
 	}
 
 }
 
-/*this is a change*/
+/*this was a change*/
