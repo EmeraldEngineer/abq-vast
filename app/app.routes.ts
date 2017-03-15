@@ -19,7 +19,7 @@ export const routes: Routes = [
 	{path: "about", component: AboutComponent},
 	{path: "criteria", component: CriteriaComponent},
 	{path: "line", component: LineComponent},
-	{path: "bar", component: BarComponent},
+	{path: "bar/:checkbookVendor", component: BarComponent},
 	{path: "checkbook/:checkbookId", component: CheckbookComponent},
 	{path: "", component: HomeComponent},
 	{path: "**", component: NotFoundComponent}

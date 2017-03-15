@@ -1,6 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {CheckbookService} from "../services/checkbook-service";
 import {Checkbook} from "../classes/checkbook";
+import {Params, ActivatedRoute, Router} from "@angular/router";
+import {subscribeOn} from "rxjs/operator/subscribeOn";
 
 @Component({
 	/*selector: 'bar-chart-demo',*/
@@ -21,14 +23,19 @@ export class BarComponent implements OnInit {
 
 	};
 
-	constructor(private checkbookService: CheckbookService) {}
+	public checkbookVendor: string = "";
+
+	constructor(private checkbookService: CheckbookService, private route: ActivatedRoute, private router: Router) {}
 
 	ngOnInit(): void {
-		this.getCheckbookByCheckbookVendor();
+		this.route.params
+			.switchMap((params: Params) => this.checkbookVendor = params["checkbookVendor"])
+			.subscribe(() => this.getCheckbookByCheckbookVendor());
 	}
 
 	getCheckbookByCheckbookVendor(): void {
-		this.checkbookService.getCheckbookByCheckbookVendor("building", 0)
+
+		this.checkbookService.getCheckbookByCheckbookVendor(this.checkbookVendor, 0)
 			.subscribe(cityData => {
 				let checkbooks : Checkbook[] = cityData;
 				this.barChartData = [];
@@ -44,7 +51,6 @@ export class BarComponent implements OnInit {
 					let yAxis = [checkbooks.filter(checkbookEntry => checkbookEntry.checkbookVendor === vendor).reduce((prevValue, checkbookEntry) => prevValue + checkbookEntry.checkbookInvoiceAmount, 0)];
 					this.barChartData.push({data: yAxis, label: vendor});
 					this.barChartLabelsTemp.push(xAxis);
-					console.log(this.barChartData);
 				}
 				// console.log(this.barChartLabels);
 				for(let labelgroup of this.barChartLabelsTemp) {
@@ -56,6 +62,10 @@ export class BarComponent implements OnInit {
 				this.barChartLabels = ["                                            "];
 
 			});
+	}
+
+	redirectToTomWu() : void {
+		window.location.href = "./bar/" + this.checkbookVendor;
 	}
 
 	public barChartLegend:boolean = true;
