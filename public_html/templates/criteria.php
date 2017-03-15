@@ -30,11 +30,10 @@
 						<div class="input-group-addon">
 							<i class="fa fa-users" aria-hidden="true"></i>
 						</div>
-						<input type="text" id="checkbookVendor" name="checkbookVendor" class="form-control" required min="0" step="1" [(ngModel)]="checkbookVendor" #checkbookVendorReference="ngModel"/>
+						<input type="text" id="checkbookVendor" name="checkbookVendor" class="form-control" [(ngModel)]="checkbookVendor" #checkbookVendorReference="ngModel"/>
 					</div>
 					<div [hidden]="checkbookVendorReference.valid || checkbookVendorReference.pristine" class="alert alert-danger" role="alert">
 						<p *ngIf="checkbookVendorReference.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookVendorReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 
@@ -92,11 +91,10 @@
 						<div class="input-group-addon">
 							<i class="fa fa-file-text-o" aria-hidden="true"></i>
 						</div>
-						<input type="text" id="checkbookInvoiceNum" name="checkbookInvoiceNum" class="form-control" required min="0" step="1" [(ngModel)]="checkbookInvoiceDate" #checkbookInvoiceDateReference="ngModel"/>
+						<input type="text" id="checkbookInvoiceNum" name="checkbookInvoiceNum" class="form-control" [(ngModel)]="checkbookInvoiceDate" #checkbookInvoiceDateReference="ngModel"/>
 					</div>
 					<div [hidden]="checkbookInvoiceDateReference.valid || checkbookInvoiceDateReference.pristine" class="alert alert-danger" role="alert">
 						<p *ngIf="checkbookInvoiceDateReference.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookInvoiceDateReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 
@@ -139,11 +137,10 @@
 						<div class="input-group-addon">
 							<i class="fa fa-file-text-o" aria-hidden="true"></i>
 						</div>
-						<input type="text" id="checkbookReferenceNum" name="checkbookReferenceNum" class="form-control" required min="0" step="1" [(ngModel)]="checkbookReferenceNum" #checkbookReferenceNumReference="ngModel"/>
+						<input type="text" id="checkbookReferenceNum" name="checkbookReferenceNum" class="form-control" [(ngModel)]="checkbookReferenceNum" #checkbookReferenceNumReference="ngModel"/>
 					</div>
 					<div [hidden]="checkbookReferenceNumReference.valid || checkbookReferenceNumReference.pristine" class="alert alert-danger" role="alert">
 						<p *ngIf="checkbookReferenceNumReference.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookReferenceNumReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 				<button class="btn btn-warning" type="reset"><i class="fa fa-ban"></i>&nbsp;Reset</button><button class="btn btn-info" type="submit" (ngSubmit)="postCriteria().push"><i class="fa fa-pencil"></i>&nbsp;Graph Me</button>
