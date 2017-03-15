@@ -13,16 +13,24 @@
 					</div>
 					<!-- Table -->
 					<table class="table table-responsive table-condensed" *ngFor="let checkbook of checkbooks">
-				<th>Checkbook</th>
-                    <tr>
-					<td><em>Invoice Amount:</em> {{ checkbook.checkbookInvoiceAmount }}</td>
-                    <td><em>Invoice Date:</em> {{ checkbook.checkbookInvoiceDate }}</td>
-                    <td><em>Invoice Number:</em> {{ checkbook.checkbookInvoiceNum }}</td>
-                    <td><em>Payment Date:</em> {{ checkbook.checkbookPaymentDate }}</td>
-                    <td><em>Reference Number:</em> {{ checkbook.checkbookReferenceNum }} </td>
-                    <td><em>Vendor:</em> {{ checkbook.checkbookVendor }} </td>
-                    </tr>
+						<tr>
+							<th><em>Vendor</em></th>
+							<th><em>Invoice Amount</em></th>
+							<th><em>Invoice Date</em></th>
+							<th><em>Invoice Number</em></th>
+							<th><em>Payment Date</em></th>
+							<th><em>Reference Number</em></th>
+						</tr>
+						<tr>
+							<td>{{ checkbook.checkbookVendor }}</td>
+							<td>{{ checkbook.checkbookInvoiceAmount }}</td>
+							<td>{{ checkbook.checkbookInvoiceDate | date }}</td>
+							<td>{{ checkbook.checkbookInvoiceNum }}</td>
+							<td>{{ checkbook.checkbookPaymentDate | date }}</td>
+							<td>{{ checkbook.checkbookReferenceNum }}</td>
+						</tr>
 					</table>
+					<button><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 			</div>
 		</div>
 	</div>
