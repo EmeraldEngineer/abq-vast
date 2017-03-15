@@ -18,6 +18,7 @@ export class BarComponent implements OnInit {
 	public barChartOptions:any = {
 		scaleShowVerticalLines: false,
 		responsive: true
+
 	};
 
 	constructor(private checkbookService: CheckbookService) {}
@@ -40,7 +41,7 @@ export class BarComponent implements OnInit {
 
 				for(let vendor of vendors) {
 					let xAxis = checkbooks.filter(checkbookEntry => checkbookEntry.checkbookVendor === vendor).map(checkbookEntry => checkbookEntry.checkbookVendor);
-					let yAxis = checkbooks.filter(checkbookEntry => checkbookEntry.checkbookVendor === vendor).map(checkbookEntry => checkbookEntry.checkbookInvoiceAmount);
+					let yAxis = [checkbooks.filter(checkbookEntry => checkbookEntry.checkbookVendor === vendor).reduce((prevValue, checkbookEntry) => prevValue + checkbookEntry.checkbookInvoiceAmount, 0)];
 					this.barChartData.push({data: yAxis, label: vendor});
 					this.barChartLabelsTemp.push(xAxis);
 					console.log(this.barChartData);
@@ -52,7 +53,7 @@ export class BarComponent implements OnInit {
 					}
 				}
 				this.barChartLabels = Array.from(new Set(this.flattenedLabelsArray));
-
+				this.barChartLabels = ["                                            "];
 
 			});
 	}
