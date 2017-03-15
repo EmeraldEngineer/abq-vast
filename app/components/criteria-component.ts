@@ -4,7 +4,6 @@ import {FieldService} from "../services/field-service";
 import {CriteriaService} from "../services/criteria-service";
 import {Criteria} from "../classes/criteria";
 import {Status} from "../classes/status";
-import DateTimeFormat = Intl.DateTimeFormat;
 
 @Component({
 	templateUrl: "./templates/criteria.php"
@@ -16,11 +15,11 @@ export class CriteriaComponent implements OnInit {
 	status: Status = new Status(null, null, null);
 	checkbookVendor: string = "";
 	checkbookInvoiceAmount: number = 0;
-	checkbookSunriseDate: DateTimeFormat;
-	checkbookSunsetDate: DateTimeFormat;
+	checkbookSunriseDate: Date;
+	checkbookSunsetDate: Date;
 	checkbookInvoiceNum: string = "";
-	checkbookPaymentSunriseDate: DateTimeFormat;
-	checkbookPaymentSunsetDate: DateTimeFormat;
+	checkbookPaymentSunriseDate: Date;
+	checkbookPaymentSunsetDate: Date;
 	checkbookReferenceNum: string = "";
 
 	constructor(private fieldService: FieldService, private criteriaService: CriteriaService) {

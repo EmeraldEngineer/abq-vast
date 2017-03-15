@@ -1,14 +1,7 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <main-nav></main-nav>
 
-<input #checkbookVendor placeholder="checkbookVendor">
-<input #checkbookInvoiceAmount placeholder="checkbookInvoiceAmount">
-<input #checkbookSunriseDate placeholder="checkbookSunriseDate">
-<input #checkbookSunsetDate placeholder="checkbookSunsetDate">
-<input #checkbookInvoiceNum placeholder="checkbookInvoiceNum">
-<input #checkbookPaymentSunriseDate placeholder="checkbookPaymentSunriseDate">
-<input #checkbookPaymentSunsetDate placeholder="checkbookPaymentSunsetDate">
-<input #checkbookReferenceNum placeholder="checkbookReferenceNum">
+
 
 <div *ngIf="fields === undefined">
 	<h1>Information Not Found</h1>
@@ -37,14 +30,11 @@
 						<div class="input-group-addon">
 							<i class="fa fa-users" aria-hidden="true"></i>
 						</div>
-						<input type="text" id="checkbookVendor" name="checkbookVendor" class="form-control" required min="0" step="1" [(ngModel)]="checkbook.checkbookVendor" #checkbookVendor="ngModel"/>
+						<input type="text" id="checkbookVendor" name="checkbookVendor" class="form-control" required min="0" step="1" [(ngModel)]="checkbookVendor" #checkbookVendorReference="ngModel"/>
 					</div>
-					<div [hidden]="checkbookVendor.valid || checkbookVendor.pristine" class="alert alert-danger" role="alert">
-						<p *ngIf="checkbookVendor.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookVendor.errors?.required">Please add some information.</p>
-					</div>
-					<div *ngIf="checkbook.checkbookVendor === 0" class="alert alert-warning" role="alert">
-						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					<div [hidden]="checkbookVendorReference.valid || checkbookVendorReference.pristine" class="alert alert-danger" role="alert">
+						<p *ngIf="checkbookVendorReference.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookVendorReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 
@@ -54,14 +44,11 @@
 						<div class="input-group-addon">
 							<i class="fa fa-money" aria-hidden="true"></i>
 						</div>
-						<input type="range" id="checkbookInvoiceAmount" name="checkbookInvoiceAmount" class="form-control" required min="0" max="1000" step="10" [(ngModel)]="checkbook.checkbookInvoiceAmount" #checkbookInvoiceAmount="ngModel"/>
+						<input type="range" id="checkbookInvoiceAmount" name="checkbookInvoiceAmount" class="form-control" required min="0" max="1000" step="10" [(ngModel)]="checkbookInvoiceAmount" #checkbookInvoiceAmountReference="ngModel"/>
 					</div>
-					<div [hidden]="checkbookInvoiceAmount.valid || checkbookInvoiceAmount.pristine" class="alert alert-danger" role="alert">
-						<p *ngIf="checkbookInvoiceAmount.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookInvoiceAmount.errors?.required">Please add some information.</p>
-					</div>
-					<div *ngIf="checkbook.checkbookInvoiceAmount === 0" class="alert alert-warning" role="alert">
-						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					<div [hidden]="checkbookInvoiceAmountReference.valid || checkbookInvoiceAmountReference.pristine" class="alert alert-danger" role="alert">
+						<p *ngIf="checkbookInvoiceAmountReference.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookInvoiceAmountReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 
@@ -73,14 +60,11 @@
 						<div class="input-group-addon">
 							<i class="fa fa-file-text-o" aria-hidden="true"></i>
 						</div>
-						<input type="date" id="checkbookInvoiceSunriseDate" name="checkbookInvoiceSunriseDate" class="form-control" value="1970-01-01" [(ngModel)]="checkbook.checkbookInvoiceSunriseDate" #checkbookInvoiceSunriseDate="ngModel"/>
+						<input type="date" id="checkbookInvoiceSunriseDate" name="checkbookInvoiceSunriseDate" class="form-control" value="1970-01-01" [(ngModel)]="checkbookInvoiceSunriseDate" #checkbookInvoiceSunriseDateReference="ngModel"/>
 					</div>
-					<div [hidden]="checkbookInvoiceSunriseDate.valid || checkbookInvoiceSunriseDate.pristine" class="alert alert-danger" role="alert">
-						<p *ngIf="checkbookInvoiceSunriseDate.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookInvoiceSunriseDate.errors?.required">Please add some information.</p>
-					</div>
-					<div *ngIf="checkbook.checkbookInvoiceSunriseDate === 0" class="alert alert-warning" role="alert">
-						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					<div [hidden]="checkbookInvoiceSunriseDateReference.valid || checkbookInvoiceSunriseDateReference.pristine" class="alert alert-danger" role="alert">
+						<p *ngIf="checkbookInvoiceSunriseDateReference.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookInvoiceSunriseDateReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 					</div>
@@ -91,14 +75,11 @@
 						<div class="input-group-addon">
 							<i class="fa fa-file-text-o" aria-hidden="true"></i>
 						</div>
-						<input type="date" id="checkbookInvoiceSunsetDate" name="checkbookInvoiceSunsetDate" class="form-control" value="1970-01-01" [(ngModel)]="checkbook.checkbookInvoiceSunsetDate" #checkbookInvoiceSunsetDate="ngModel"/>
+						<input type="date" id="checkbookInvoiceSunsetDate" name="checkbookInvoiceSunsetDate" class="form-control" value="1970-01-01" [(ngModel)]="checkbookInvoiceSunsetDate" #checkbookInvoiceSunsetDateReference="ngModel"/>
 					</div>
-					<div [hidden]="checkbookInvoiceSunsetDate.valid || checkbookInvoiceSunsetDate.pristine" class="alert alert-danger" role="alert">
-						<p *ngIf="checkbookInvoiceSunsetDate.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookInvoiceSunsetDate.errors?.required">Please add some information.</p>
-					</div>
-					<div *ngIf="checkbook.checkbookInvoiceSunsetDate === 0" class="alert alert-warning" role="alert">
-						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					<div [hidden]="checkbookInvoiceSunsetDateReference.valid || checkbookInvoiceSunsetDateReference.pristine" class="alert alert-danger" role="alert">
+						<p *ngIf="checkbookInvoiceSunsetDateReference.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookInvoiceSunsetDateReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 					</div>
@@ -110,51 +91,42 @@
 						<div class="input-group-addon">
 							<i class="fa fa-file-text-o" aria-hidden="true"></i>
 						</div>
-						<input type="text" id="checkbookInvoiceNum" name="checkbookInvoiceNum" class="form-control" required min="0" step="1" [(ngModel)]="checkbook.checkbookInvoiceDate" #checkbookInvoiceDate="ngModel"/>
+						<input type="text" id="checkbookInvoiceNum" name="checkbookInvoiceNum" class="form-control" required min="0" step="1" [(ngModel)]="checkbookInvoiceDate" #checkbookInvoiceDateReference="ngModel"/>
 					</div>
-					<div [hidden]="checkbookInvoiceNum.valid || checkbookInvoiceNum.pristine" class="alert alert-danger" role="alert">
-						<p *ngIf="checkbookInvoiceNum.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookInvoiceNum.errors?.required">Please add some information.</p>
-					</div>
-					<div *ngIf="checkbook.checkbookInvoiceNum === 0" class="alert alert-warning" role="alert">
-						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					<div [hidden]="checkbookInvoiceDateReference.valid || checkbookInvoiceDateReference.pristine" class="alert alert-danger" role="alert">
+						<p *ngIf="checkbookInvoiceDateReference.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookInvoiceDateReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-xs-6 col-md-4">
-					<div class="form-group" [ngClass]="{ 'has-error': checkbookPaymentSunriseDate.touched && checkbookPaymentSunriseDate.invalid }">
+					<div class="form-group">
 					<label for="checkbookPaymentSunriseDate">Payment Start Date</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-calendar" aria-hidden="true"></i>
 						</div>
-						<input type="date" id="checkbookPaymentSunriseDate" name="checkbookPaymentSunriseDate" class="form-control" value="1970-01-01" [(ngModel)]="checkbook.checkbookPaymentSunriseDate" #checkbookPaymentSunriseDate="ngModel"/>
+						<input type="date" id="checkbookPaymentSunriseDate" name="checkbookPaymentSunriseDate" class="form-control" value="1970-01-01" [(ngModel)]="checkbookPaymentSunriseDate" #checkbookPaymentSunriseDateReference="ngModel"/>
 					</div>
-					<div [hidden]="checkbookPaymentSunriseDate.valid || checkbookPaymentSunriseDate.pristine" class="alert alert-danger" role="alert">
-						<p *ngIf="checkbookPaymentSunriseDate.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookPaymentSunriseDate.errors?.required">Please add some information.</p>
-					</div>
-					<div *ngIf="checkbook.checkbookPaymentSunriseDate === 0" class="alert alert-warning" role="alert">
-						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					<div [hidden]="checkbookPaymentSunriseDateReference.valid || checkbookPaymentSunriseDateReference.pristine" class="alert alert-danger" role="alert">
+						<p *ngIf="checkbookPaymentSunriseDateReference.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookPaymentSunriseDateReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 					</div>
 					<div class="col-xs-6 col-md-4">
-							<div class="form-group" [ngClass]="{ 'has-error': checkbookPaymentSunsetDate.touched && checkbookPaymentSunsetDate.invalid }">
+							<div class="form-group">
 					<label for="checkbookPaymentSunsetDate">Payment End Date</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-calendar" aria-hidden="true"></i>
 						</div>
-						<input type="date" id="checkbookPaymentSunsetDate" name="checkbookPaymentSunsetDate" class="form-control" value="1970-01-01" [(ngModel)]="checkbook.checkbookPaymentSunsetDate" #checkbookPaymentSunsetDate="ngModel"/>
+						<input type="date" id="checkbookPaymentSunsetDate" name="checkbookPaymentSunsetDate" class="form-control" value="1970-01-01" [(ngModel)]="checkbookPaymentSunsetDate" #checkbookPaymentSunsetDateReference="ngModel"/>
 					</div>
-					<div [hidden]="checkbookPaymentSunsetDate.valid || checkbookPaymentSunsetDate.pristine" class="alert alert-danger" role="alert">
-						<p *ngIf="checkbookPaymentSunsetDate.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookPaymentSunsetDate.errors?.required">Please add some information.</p>
-					</div>
-					<div *ngIf="checkbook.checkbookPaymentSunsetDate === 0" class="alert alert-warning" role="alert">
-						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					<div [hidden]="checkbookPaymentSunsetDateReference.valid || checkbookPaymentSunsetDateReference.pristine" class="alert alert-danger" role="alert">
+						<p *ngIf="checkbookPaymentSunsetDateReference.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookPaymentSunsetDateReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 					</div>
@@ -166,14 +138,11 @@
 						<div class="input-group-addon">
 							<i class="fa fa-file-text-o" aria-hidden="true"></i>
 						</div>
-						<input type="text" id="checkbookReferenceNum" name="checkbookReferenceNum" class="form-control" required min="0" step="1" [(ngModel)]="checkbook.checkbookReferenceNum" #checkbookReferenceNum="ngModel"/>
+						<input type="text" id="checkbookReferenceNum" name="checkbookReferenceNum" class="form-control" required min="0" step="1" [(ngModel)]="checkbookReferenceNum" #checkbookReferenceNumReference="ngModel"/>
 					</div>
-					<div [hidden]="checkbookReferenceNum.valid || checkbookReferenceNum.pristine" class="alert alert-danger" role="alert">
-						<p *ngIf="checkbookReferenceNum.errors?.min">Please add some information.</p>
-						<p *ngIf="checkbookReferenceNum.errors?.required">Please add some information.</p>
-					</div>
-					<div *ngIf="checkbook.checkbookReferenceNum === 0" class="alert alert-warning" role="alert">
-						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					<div [hidden]="checkbookReferenceNumReference.valid || checkbookReferenceNumReference.pristine" class="alert alert-danger" role="alert">
+						<p *ngIf="checkbookReferenceNumReference.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookReferenceNumReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
 
