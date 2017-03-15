@@ -27,7 +27,7 @@ export class CheckbookComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.getCheckbookByCheckbookId();
+		this.getAllCheckbooks();
 	}
 
 	getCheckbookByCheckbookId(): void {
@@ -37,7 +37,7 @@ export class CheckbookComponent implements OnInit {
 	}
 
 	getAllCheckbooks(): void {
-		this.checkbookService.getAllCheckbook(0)
+		this.checkbookService.getAllCheckbooks(0)
 			.subscribe(checkbooks => this.checkbooks = checkbooks);
 	}
 
