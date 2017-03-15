@@ -3,6 +3,8 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {CheckbookService} from "../services/checkbook-service";
 import {Checkbook} from "../classes/checkbook";
 import "rxjs/add/operator/switchMap";
+import {Status} from "../classes/status";
+import DateTimeFormat = Intl.DateTimeFormat;
 
 @Component({
 	templateUrl: "./templates/checkbook.php"
@@ -10,6 +12,16 @@ import "rxjs/add/operator/switchMap";
 
 export class CheckbookComponent implements OnInit {
 	checkbook: Checkbook = new Checkbook(null, null, null, null, null, null, null, null, null, null, null);
+	checkbooks: Checkbook[] = [];
+	status: Status = new Status(null, null, null);
+	checkbookVendor: string = "";
+	checkbookInvoiceAmount: number = 0;
+	checkbookSunriseDate: DateTimeFormat;
+	checkbookSunsetDate: DateTimeFormat;
+	checkbookInvoiceNum: string = "";
+	checkbookPaymentSunriseDate: DateTimeFormat;
+	checkbookPaymentSunsetDate: DateTimeFormat;
+	checkbookReferenceNum: string = "";
 
 	constructor(private checkbookService: CheckbookService, private route: ActivatedRoute) {
 	}
@@ -22,6 +34,11 @@ export class CheckbookComponent implements OnInit {
 		this.route.params
 			.switchMap((params: Params) => this.checkbookService.getCheckbookByCheckbookId(params["checkbookId"]))
 			.subscribe(checkbook => this.checkbook = checkbook);
+	}
+
+	getAllCheckbooks(): void {
+		this.route.params
+			.subscribe(checkbooks => this.checkbooks[this.checkbookVendor] = checkbooks);
 	}
 
 }
