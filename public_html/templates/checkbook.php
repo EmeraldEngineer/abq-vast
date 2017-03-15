@@ -12,14 +12,16 @@
 						<p>The city's data is updated on a daily basis with the previous day's transactions. This application processes the city's data two days previous to this date. To contact ABQ Data directly, visit <a href="https://www.cabq.gov/abq-data/contact-abq-data" target="_blank">www.cabq.gov</a></p>
 					</div>
 					<!-- Table -->
-				<table class="table table-responsive table-condensed" *ngFor="let d of checkbook">
+				<table class="table table-responsive table-condensed">
 				<th>Checkbook</th>
+                    <tr>
 					<td><em>Invoice Amount:</em> {{ checkbook.checkbookInvoiceAmount }}</td>
-					<em>Invoice Date:</em> {{ checkbook.checkbookInvoiceDate }}<br/>
-					<em>Invoice Number:</em> {{ checkbook.checkbookInvoiceNum }}<br/>
-					<em>Payment Date::</em> {{ checkbook.checkbookPaymentDate }}<br/>
-					<em>Reference Number:</em> {{ checkbook.checkbookReferenceNum }} <br/>
-					<em>Vendor:</em> {{ checkbook.checkbookVendor }} <br/>
+                    <td><em>Invoice Date:</em> {{ checkbook.checkbookInvoiceDate }}</td>
+                    <td><em>Invoice Number:</em> {{ checkbook.checkbookInvoiceNum }}</td>
+                    <td><em>Payment Date::</em> {{ checkbook.checkbookPaymentDate }}</td>
+                    <td><em>Reference Number:</em> {{ checkbook.checkbookReferenceNum }} </td>
+                    <td><em>Vendor:</em> {{ checkbook.checkbookVendor }} </td>
+                    </tr>
 				</table>
 			</div>
 		</div>
