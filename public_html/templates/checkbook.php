@@ -30,6 +30,7 @@
 							<td>{{ checkbook.checkbookReferenceNum }}</td>
 						</tr>
 					</table>
+					<button class="btn btn-info" type="button" (click)="turnThePageBack();"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
 					<button class="btn btn-info" type="button" (click)="turnThePage();"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 			</div>
 		</div>

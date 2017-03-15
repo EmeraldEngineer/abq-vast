@@ -146,15 +146,8 @@
 						<p *ngIf="checkbookReferenceNumReference.errors?.required">Please add some information.</p>
 					</div>
 				</div>
-
+				<button class="btn btn-warning" type="reset"><i class="fa fa-ban"></i>&nbsp;Reset</button><button class="btn btn-info" type="submit" (ngSubmit)="postCriteria().push"><i class="fa fa-pencil"></i>&nbsp;Graph Me</button>
 			</form>
-		</div>
-	</div>
-</div>
-<div class="container">
-	<div class="row">
-		<div class="col-xs-3 col-md-10 col-md-offset-2">
-<button class="btn btn-warning" type="reset"><i class="fa fa-ban"></i>&nbsp;Reset</button><button class="btn btn-info" type="submit" 	(ngSubmit)="postCriteria().push"><i class="fa fa-pencil"></i>&nbsp;Graph Me</button>
 		</div>
 	</div>
 </div>

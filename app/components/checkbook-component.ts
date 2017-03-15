@@ -47,6 +47,10 @@ export class CheckbookComponent implements OnInit {
 		this.getAllCheckbooks();
 	}
 
+	turnThePageBack() {
+		this.pageNum--;
+		this.getAllCheckbooks();
+	}
 }
 
 /*this was a change*/
