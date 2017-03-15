@@ -37,8 +37,8 @@ export class CheckbookComponent implements OnInit {
 	}
 
 	getAllCheckbooks(): void {
-		this.route.params
-			.subscribe(checkbooks => this.checkbooks[this.checkbookVendor] = checkbooks);
+		this.checkbookService.getAllCheckbook(0)
+			.subscribe(checkbooks => this.checkbooks = checkbooks);
 	}
 
 }
