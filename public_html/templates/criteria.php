@@ -21,7 +21,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-md-8 col-md-offset-2">
-			<form #criteriaForm="ngForm" class="form-horizontal" name="criteriaForm" id="criteriaForm" (ngSubmit)="postCriteria().push">
+			<form #criteriaForm="ngForm" class="form-horizontal well" name="criteriaForm" id="criteriaForm" (ngSubmit)="postCriteria().push">
 				<h1>Fields for {{ checkbook.checkbookVendor }}</h1>
 				<div class="form-group" [ngClass]="{ 'has-error': checkbookVendor.touched && checkbookVendor.invalid }">
 					<label for="checkbookVendor" class="label">Vendor Name</label>
@@ -144,6 +144,24 @@
 						<p *ngIf="checkbookPaymentSunsetDate.errors?.required">Please add some information.</p>
 					</div>
 					<div *ngIf="checkbook.checkbookPaymentSunsetDate === 0" class="alert alert-warning" role="alert">
+						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					</div>
+				</div>
+
+				<h1>Fields for {{ checkbook.checkbookReferenceNum }}</h1>
+				<div class="form-group" [ngClass]="{ 'has-error': checkbookReferenceNum.touched && checkbookReferenceNum.invalid }">
+					<label for="checkbookReferenceNum" class="label">Checkbook Reference Number</label>
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-file-text-o" aria-hidden="true"></i>
+						</div>
+						<input type="text" id="checkbookReferenceNum" name="checkbookReferenceNum" class="form-control" required min="0" step="1" [(ngModel)]="checkbook.checkbookReferenceNum" #checkbookReferenceNum="ngModel"/>
+					</div>
+					<div [hidden]="checkbookReferenceNum.valid || checkbookReferenceNum.pristine" class="alert alert-danger" role="alert">
+						<p *ngIf="checkbookReferenceNum.errors?.min">Please add some information.</p>
+						<p *ngIf="checkbookReferenceNum.errors?.required">Please add some information.</p>
+					</div>
+					<div *ngIf="checkbook.checkbookReferenceNum === 0" class="alert alert-warning" role="alert">
 						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
 					</div>
 				</div>
