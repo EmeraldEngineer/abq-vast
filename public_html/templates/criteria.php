@@ -44,7 +44,8 @@
 						<div class="input-group-addon">
 							<i class="fa fa-money" aria-hidden="true"></i>
 						</div>
-						<input type="range" id="checkbookInvoiceAmount" name="checkbookInvoiceAmount" class="form-control" required min="0" max="1000" step="10" [(ngModel)]="checkbookInvoiceAmount" #checkbookInvoiceAmountReference="ngModel"/>
+						<input type="range" id="checkbookInvoiceAmount" name="checkbookInvoiceAmount" class="form-control" required min="0" max="10000" step="1000" [(ngModel)]="checkbookInvoiceAmount" #checkbookInvoiceAmountReference="ngModel"/>
+						<div>{{ "$" + checkbookInvoiceAmount }}</div>
 					</div>
 					<div [hidden]="checkbookInvoiceAmountReference.valid || checkbookInvoiceAmountReference.pristine" class="alert alert-danger" role="alert">
 						<p *ngIf="checkbookInvoiceAmountReference.errors?.min">Please add some information.</p>
