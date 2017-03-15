@@ -12,6 +12,8 @@
 						<p>The city's data is updated on a daily basis with the previous day's transactions. This application processes the city's data two days previous to this date. To contact ABQ Data directly, visit <a href="https://www.cabq.gov/abq-data/contact-abq-data" target="_blank">www.cabq.gov</a></p>
 					</div>
 					<!-- Table -->
+                    <button class="btn btn-info" type="button" (click)="turnThePageBack();"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                    <button class="btn btn-info" type="button" (click)="turnThePage();"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 					<table class="table table-responsive table-condensed" *ngFor="let checkbook of checkbooks">
 						<tr>
 							<th><em>Vendor</em></th>
