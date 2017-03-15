@@ -4,6 +4,7 @@ import {FieldService} from "../services/field-service";
 import {CriteriaService} from "../services/criteria-service";
 import {Criteria} from "../classes/criteria";
 import {Status} from "../classes/status";
+import {FormsModule} from "@angular/forms";
 
 @Component({
 	templateUrl: "./templates/criteria.php"

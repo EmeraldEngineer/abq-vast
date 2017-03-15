@@ -1,27 +1,27 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <main-nav></main-nav>
 
-<!--<div *ngIf="fields === undefined">-->
-<!--	<h1>Information Not Found</h1>-->
-<!--	<div class="alert alert-danger" role="alert">-->
-<!--		Information not found. Please verify the link and try again.-->
-<!--	</div>-->
-<!--</div>-->
-<!--<div *ngIf="fields !== undefined && fields !== null"></div>-->
-<!---->
-<!--<div *ngIf="criteria === undefined">-->
-<!--	<h1>Information Not Found</h1>-->
-<!--	<div class="alert alert-danger" role="alert">-->
-<!--		Information not found. Please verify the link and try again.-->
-<!--	</div>-->
-<!--</div>-->
-<!--<div *ngIf="criteria !== undefined && criteria !== null"></div>-->
-<!---->
+<div *ngIf="fields === undefined">
+	<h1>Information Not Found</h1>
+	<div class="alert alert-danger" role="alert">
+		Information not found. Please verify the link and try again.
+	</div>
+</div>
+<div *ngIf="fields !== undefined && fields !== null"></div>
+
+<div *ngIf="criteria === undefined">
+	<h1>Information Not Found</h1>
+	<div class="alert alert-danger" role="alert">
+		Information not found. Please verify the link and try again.
+	</div>
+</div>
+<div *ngIf="criteria !== undefined && criteria !== null"></div>
+
 
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-md-8 col-md-offset-2">
-			<form #criteriaForm="ngForm" class="form-horizontal well" name="criteriaForm" id="criteriaForm" (ngSubmit)="postCriteria().push">
+			<form #criteriaForm="ngForm" class="form-horizontal well" name="criteriaForm" id="criteriaForm" (ngSubmit)="postCriterion();">
 				<h1>Fields for {{ checkbook.checkbookVendor }}</h1>
 				<div class="form-group" [ngClass]="{ 'has-error': checkbookVendor.touched && checkbookVendor.invalid }">
 					<label for="checkbookVendor">Vendor Name</label>
@@ -58,8 +58,10 @@
 					</div>
 				</div>
 
-				<h1>Fields for {{ checkbook.checkbookInvoiceSunriseDate }}</h1>
-				<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceSunriseDate.touched && checkbookInvoiceSunriseDate.invalid }">
+				<div class="row">
+					<div class="col-xs-6 col-md-4">
+						<h1>Fields for {{ checkbook.checkbookInvoiceSunriseDate }}</h1>
+							<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceSunriseDate.touched && checkbookInvoiceSunriseDate.invalid }">
 					<label for="checkbookInvoiceSunriseDate">Invoice Start Date</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -75,9 +77,10 @@
 						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
 					</div>
 				</div>
-
-				<h1>Fields for {{ checkbook.checkbookInvoiceSunsetDate }}</h1>
-				<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceSunsetDate.touched && checkbookInvoiceSunsetDate.invalid }">
+					</div>
+					<div class="col-xs-6 col-md-4">
+						<h1>Fields for {{ checkbook.checkbookInvoiceSunsetDate }}</h1>
+							<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceSunsetDate.touched && checkbookInvoiceSunsetDate.invalid }">
 					<label for="checkbookInvoiceSunsetDate">Invoice End Date</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -91,6 +94,8 @@
 					</div>
 					<div *ngIf="checkbook.checkbookInvoiceSunsetDate === 0" class="alert alert-warning" role="alert">
 						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					</div>
+				</div>
 					</div>
 				</div>
 
@@ -112,8 +117,10 @@
 					</div>
 				</div>
 
-				<h1>Fields for {{ checkbook.checkbookPaymentSunriseDate }}</h1>
-				<div class="form-group" [ngClass]="{ 'has-error': checkbookPaymentSunriseDate.touched && checkbookPaymentSunriseDate.invalid }">
+				<div class="row">
+					<div class="col-xs-6 col-md-4">
+						<h1>Fields for {{ checkbook.checkbookPaymentSunriseDate }}</h1>
+					<div class="form-group" [ngClass]="{ 'has-error': checkbookPaymentSunriseDate.touched && checkbookPaymentSunriseDate.invalid }">
 					<label for="checkbookPaymentSunriseDate">Payment Start Date</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -129,9 +136,10 @@
 						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
 					</div>
 				</div>
-
-				<h1>Fields for {{ checkbook.checkbookPaymentSunsetDate }}</h1>
-				<div class="form-group" [ngClass]="{ 'has-error': checkbookPaymentSunsetDate.touched && checkbookPaymentSunsetDate.invalid }">
+					</div>
+					<div class="col-xs-6 col-md-4">
+						<h1>Fields for {{ checkbook.checkbookPaymentSunsetDate }}</h1>
+							<div class="form-group" [ngClass]="{ 'has-error': checkbookPaymentSunsetDate.touched && checkbookPaymentSunsetDate.invalid }">
 					<label for="checkbookPaymentSunsetDate">Payment End Date</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -145,6 +153,8 @@
 					</div>
 					<div *ngIf="checkbook.checkbookPaymentSunsetDate === 0" class="alert alert-warning" role="alert">
 						<i class="fa fa-frown-o" aria-hidden="true"></i> Please select criteria.<i class="fa fa-frown-o" aria-hidden="true"></i>
+					</div>
+				</div>
 					</div>
 				</div>
 
@@ -172,13 +182,8 @@
 </div>
 <div class="container">
 	<div class="row">
-		<div class="col-xs-3 col-md-3 col-md-offset-2">
+		<div class="col-xs-3 col-md-10 col-md-offset-2">
 <button class="btn btn-warning" type="reset"><i class="fa fa-ban"></i>&nbsp;Reset</button><button class="btn btn-info" type="submit" [disabled]="criteriaForm.invalid"><i class="fa fa-pencil"></i>&nbsp;Graph Me</button>
 		</div>
 	</div>
 </div>
-<!--		<div *ngIf="status !== null" class="alert alert-dismissible" [ngClass]="status.type" role="alert">-->
-<!--			<button type="button" class="close" aria-label="Close" (click)="status = null;"><span-->
-<!--					aria-hidden="true">&times;</span></button>-->
-<!--			{{ status.message }}-->
-<!--		</div>-->
