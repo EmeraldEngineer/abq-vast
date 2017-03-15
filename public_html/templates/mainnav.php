@@ -18,9 +18,9 @@
 
 				<ul class="nav navbar-nav navbar-right">
 					<li><a routerLink="/about">About</a></li>
-					<li><a routerLink="/share">VAST Graph</a></li>
 					<li><a routerLink="/checkbook/1">Checkbook</a></li>
 					<li><a routerLink="/criteria">Criteria</a></li>
+					<li><a routerLink="/share">VAST Graph</a></li>
 				</ul>
 
 			</div><!-- /.navbar-collapse -->

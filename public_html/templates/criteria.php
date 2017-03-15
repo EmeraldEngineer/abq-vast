@@ -31,7 +31,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-md-8 col-md-offset-2">
 			<form #criteriaForm="ngForm" class="form-horizontal well" name="criteriaForm" id="criteriaForm" (ngSubmit)="postCriteria().push">
-				<div class="form-group" [ngClass]="{ 'has-error': checkbookVendor.touched && checkbookVendor.invalid }">
+				<div class="form-group">
 					<label for="checkbookVendor">Vendor Name</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -48,7 +48,7 @@
 					</div>
 				</div>
 
-				<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceAmount.touched && checkbookInvoiceAmount.invalid }">
+				<div class="form-group">
 					<label for="checkbookInvoiceAmount">Invoice Amount</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -67,7 +67,7 @@
 
 				<div class="row">
 					<div class="col-xs-6 col-md-4">
-							<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceSunriseDate.touched && checkbookInvoiceSunriseDate.invalid }">
+							<div class="form-group">
 					<label for="checkbookInvoiceSunriseDate">Invoice Start Date</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -85,7 +85,7 @@
 				</div>
 					</div>
 					<div class="col-xs-6 col-md-4">
-							<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceSunsetDate.touched && checkbookInvoiceSunsetDate.invalid }">
+							<div class="form-group">
 					<label for="checkbookInvoiceSunsetDate">Invoice End Date</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -104,7 +104,7 @@
 					</div>
 				</div>
 
-				<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceNum.touched && checkbookInvoiceNum.invalid }">
+				<div class="form-group">
 					<label for="checkbookInvoiceNum">Invoice Number</label>
 					<div class="input-group">
 						<div class="input-group-addon">
@@ -160,7 +160,7 @@
 					</div>
 				</div>
 
-				<div class="form-group" [ngClass]="{ 'has-error': checkbookReferenceNum.touched && checkbookReferenceNum.invalid }">
+				<div class="form-group">
 					<label for="checkbookReferenceNum">Checkbook Reference Number</label>
 					<div class="input-group">
 						<div class="input-group-addon">
