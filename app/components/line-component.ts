@@ -18,7 +18,7 @@ export class LineComponent implements OnInit {
 
 	public lineChartOptions:any = {
 		responsive: true,
-		spanGaps: true
+		spanGaps: true,
 	};
 
 	constructor(private checkbookService: CheckbookService) {}
