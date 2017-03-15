@@ -3,6 +3,7 @@ import {Http} from "@angular/http";
 import {Observable} from "rxjs";
 import {Field} from "../classes/field";
 import {BaseService} from "./base-service";
+
 @Injectable()
 export class FieldService extends BaseService {
     constructor(protected http: Http) {

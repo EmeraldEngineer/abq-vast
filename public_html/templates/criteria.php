@@ -1,6 +1,15 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <main-nav></main-nav>
 
+<input #checkbookVendor placeholder="checkbookVendor">
+<input #checkbookInvoiceAmount placeholder="checkbookInvoiceAmount">
+<input #checkbookSunriseDate placeholder="checkbookSunriseDate">
+<input #checkbookSunsetDate placeholder="checkbookSunsetDate">
+<input #checkbookInvoiceNum placeholder="checkbookInvoiceNum">
+<input #checkbookPaymentSunriseDate placeholder="checkbookPaymentSunriseDate">
+<input #checkbookPaymentSunsetDate placeholder="checkbookPaymentSunsetDate">
+<input #checkbookReferenceNum placeholder="checkbookReferenceNum">
+
 <div *ngIf="fields === undefined">
 	<h1>Information Not Found</h1>
 	<div class="alert alert-danger" role="alert">
@@ -21,8 +30,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12 col-md-8 col-md-offset-2">
-			<form #criteriaForm="ngForm" class="form-horizontal well" name="criteriaForm" id="criteriaForm" (ngSubmit)="postCriterion();">
-				<h1>Fields for {{ checkbook.checkbookVendor }}</h1>
+			<form #criteriaForm="ngForm" class="form-horizontal well" name="criteriaForm" id="criteriaForm" (ngSubmit)="postCriteria().push">
 				<div class="form-group" [ngClass]="{ 'has-error': checkbookVendor.touched && checkbookVendor.invalid }">
 					<label for="checkbookVendor">Vendor Name</label>
 					<div class="input-group">
@@ -40,9 +48,8 @@
 					</div>
 				</div>
 
-				<h1>Fields for {{ checkbook.checkbookInvoiceAmount }}</h1>
 				<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceAmount.touched && checkbookInvoiceAmount.invalid }">
-					<label for="checkbookInvoiceAmount">Payment Amount</label>
+					<label for="checkbookInvoiceAmount">Invoice Amount</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-money" aria-hidden="true"></i>
@@ -60,7 +67,6 @@
 
 				<div class="row">
 					<div class="col-xs-6 col-md-4">
-						<h1>Fields for {{ checkbook.checkbookInvoiceSunriseDate }}</h1>
 							<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceSunriseDate.touched && checkbookInvoiceSunriseDate.invalid }">
 					<label for="checkbookInvoiceSunriseDate">Invoice Start Date</label>
 					<div class="input-group">
@@ -79,7 +85,6 @@
 				</div>
 					</div>
 					<div class="col-xs-6 col-md-4">
-						<h1>Fields for {{ checkbook.checkbookInvoiceSunsetDate }}</h1>
 							<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceSunsetDate.touched && checkbookInvoiceSunsetDate.invalid }">
 					<label for="checkbookInvoiceSunsetDate">Invoice End Date</label>
 					<div class="input-group">
@@ -99,9 +104,8 @@
 					</div>
 				</div>
 
-				<h1>Fields for {{ checkbook.checkbookInvoiceNum }}</h1>
 				<div class="form-group" [ngClass]="{ 'has-error': checkbookInvoiceNum.touched && checkbookInvoiceNum.invalid }">
-					<label for="checkbookInvoiceNum">checkbookInvoiceNum</label>
+					<label for="checkbookInvoiceNum">Invoice Number</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -119,7 +123,6 @@
 
 				<div class="row">
 					<div class="col-xs-6 col-md-4">
-						<h1>Fields for {{ checkbook.checkbookPaymentSunriseDate }}</h1>
 					<div class="form-group" [ngClass]="{ 'has-error': checkbookPaymentSunriseDate.touched && checkbookPaymentSunriseDate.invalid }">
 					<label for="checkbookPaymentSunriseDate">Payment Start Date</label>
 					<div class="input-group">
@@ -138,7 +141,6 @@
 				</div>
 					</div>
 					<div class="col-xs-6 col-md-4">
-						<h1>Fields for {{ checkbook.checkbookPaymentSunsetDate }}</h1>
 							<div class="form-group" [ngClass]="{ 'has-error': checkbookPaymentSunsetDate.touched && checkbookPaymentSunsetDate.invalid }">
 					<label for="checkbookPaymentSunsetDate">Payment End Date</label>
 					<div class="input-group">
@@ -158,7 +160,6 @@
 					</div>
 				</div>
 
-				<h1>Fields for {{ checkbook.checkbookReferenceNum }}</h1>
 				<div class="form-group" [ngClass]="{ 'has-error': checkbookReferenceNum.touched && checkbookReferenceNum.invalid }">
 					<label for="checkbookReferenceNum">Checkbook Reference Number</label>
 					<div class="input-group">
@@ -183,7 +184,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-3 col-md-10 col-md-offset-2">
-<button class="btn btn-warning" type="reset"><i class="fa fa-ban"></i>&nbsp;Reset</button><button class="btn btn-info" type="submit" [disabled]="criteriaForm.invalid"><i class="fa fa-pencil"></i>&nbsp;Graph Me</button>
+<button class="btn btn-warning" type="reset"><i class="fa fa-ban"></i>&nbsp;Reset</button><button class="btn btn-info" type="submit" 	(ngSubmit)="postCriteria().push"><i class="fa fa-pencil"></i>&nbsp;Graph Me</button>
 		</div>
 	</div>
 </div>
