@@ -9,7 +9,6 @@ import {NotFoundComponent} from "./components/notfound-component";
 import {LineComponent} from "./components/line-component";
 import {BarComponent} from "./components/bar-component";
 import {CriteriaComponent} from "./components/criteria-component";
-// import {PieComponent} from "./components/pie-component";
 
 
 export const allAppComponents = [HomeComponent, AboutComponent, ShareComponent, MainNavComponent, NotFoundComponent, LineComponent, BarComponent, CheckbookComponent, CriteriaComponent];
@@ -22,7 +21,6 @@ export const routes: Routes = [
 	{path: "line", component: LineComponent},
 	{path: "bar", component: BarComponent},
 	{path: "checkbook/:checkbookId", component: CheckbookComponent},
-	// {path: "pie", component: PieComponent},
 	{path: "", component: HomeComponent},
 	{path: "**", component: NotFoundComponent}
 ];

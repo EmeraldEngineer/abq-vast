@@ -19,7 +19,6 @@ export class CriteriaComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		this.getAllFields();
 	}
 
 	getAllFields(): void {
@@ -33,6 +32,7 @@ export class CriteriaComponent implements OnInit {
 	}
 
 	postCriteria() : void {
+		this.getAllFields();
 		this.criteria.filter(criterion => criterion.criteriaId === null).map(criterion => this.postCriterion(criterion));
 	}
 
