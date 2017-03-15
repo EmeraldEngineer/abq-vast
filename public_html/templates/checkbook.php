@@ -13,6 +13,7 @@
 					<em>Payment Date::</em> {{ checkbook.checkbookPaymentDate }}<br/>
 					<em>Reference Number:</em> {{ checkbook.checkbookReferenceNum }} <br/>
 					<em>Vendor:</em> {{ checkbook.checkbookVendor }} <br/>
+                    pick a number between 1 and 1,000,000 and enter it in url.<br/>
 				</p>
 			</div>
 		</div>
