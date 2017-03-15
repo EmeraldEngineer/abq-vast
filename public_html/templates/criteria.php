@@ -133,7 +133,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="checkbookReferenceNum">Checkbook Reference Number</label>
+					<label for="checkbookReferenceNum">Reference Number</label>
 					<div class="input-group">
 						<div class="input-group-addon">
 							<i class="fa fa-file-text-o" aria-hidden="true"></i>
