@@ -11,6 +11,8 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
  **/
 class DataDownloader {
 
+	private $dataset = null;
+
     /**
      * Vendor checkbook: http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml
      */
@@ -23,7 +25,7 @@ class DataDownloader {
      * @throws \RuntimeException if file doesn't exist
      **/
 
-    public static function getMetaData(string $url, string $eTag) {
+    public function getMetaData(string $url, string $eTag) {
         if($eTag !== "checkbook") {
             throw(new \RuntimeException("not a valid etag, 400"));
         }
@@ -61,20 +63,24 @@ class DataDownloader {
         }
 
     }
-    public static function getCheckbookXML($url) {
+    public function getCheckbookXML($url) {
         $context = stream_context_create(["http" => ["method" => "GET"]]);
         try {
             if(($xmlCheckbook = file_get_contents($url, null, $context)) === false) {
                 throw(new \RuntimeException("cannot connect to city server"));
             }
-            $dataset = simplexml_load_string($xmlCheckbook);
+            $this->dataset = simplexml_load_string($xmlCheckbook);
         } catch(\Exception $exception) {
             throw(new \PDOException($exception->getMessage(), 0, $exception));
         }
-        return($dataset);
     }
 
-    public static function insertCheckbooksToMySql(\PDO $pdo, \SimpleXMLElement $dataset) {
+    public function insertCheckbooksToMySql(\PDO $pdo) {
+		// clear the table
+		$query = "TRUNCATE checkbook";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
 		// create query template
         $query = "INSERT INTO checkbook(checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor) VALUES(:checkbookInvoiceAmount, :checkbookInvoiceDate, :checkbookInvoiceNum, :checkbookPaymentDate, :checkbookReferenceNum, :checkbookVendor)";
         $statement = $pdo->prepare($query);
@@ -82,7 +88,7 @@ class DataDownloader {
         // update the null checkbookId with what mySQL just gave us
         $this->checkbookId = intval($pdo->lastInsertId());
 
-        foreach($dataset->data->row as $row) {
+        foreach($this->dataset->data->row as $row) {
             $checkbookVendor = (string)$row->value[0];
             $checkbookReferenceNum = (string)$row->value[1];
             $checkbookInvoiceNum = (string)$row->value[2];
@@ -97,17 +103,16 @@ class DataDownloader {
 	        $statement->execute($parameters);
         }
     }
-    public static function compareAndDownload() {
+    public function compareAndDownload() {
 
         $checkbookUrl = "http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml";
 
         $dataset = null;
         try {
-            DataDownloader::getMetaData($checkbookUrl, "checkbook");
-            $dataset = DataDownloader::getCheckbookXML($checkbookUrl);
-            $pdo =  connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
-            DataDownloader::insertCheckbooksToMySql($pdo, $dataset);
-            $checkbookETag = DataDownloader::getMetaData($checkbookUrl, "checkbook");
+            $checkbookETag = $this->getMetaData($checkbookUrl, "checkbook");
+            $this->getCheckbookXML($checkbookUrl);
+            $pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqvast.ini");
+            $this->insertCheckbooksToMySql($pdo);
             $config = readConfig("/etc/apache2/capstone-mysql/abqvast.ini");
             $eTag = json_decode($config["etag"]);
             $eTag->checkbook = $checkbookETag;
@@ -120,7 +125,8 @@ class DataDownloader {
 }
 //DataDownloader::getMetaData("http://data.cabq.gov/government/vendorcheckbook/VendorCheckBookCABQ-en-us.xml","checkbook");
 try {
-    DataDownloader::compareAndDownload();
+	$dataDownloader = new DataDownloader();
+    $dataDownloader->compareAndDownload();
 } catch (\Exception $exception) {
     echo "Emerald Engineer Error (EEE): " . $exception->getMessage() . PHP_EOL;
 }
