@@ -75,6 +75,13 @@ class DataDownloader {
     }
 
     public static function insertCheckbooksToMySql(\PDO $pdo, \SimpleXMLElement $dataset) {
+		// create query template
+        $query = "INSERT INTO checkbook(checkbookInvoiceAmount, checkbookInvoiceDate, checkbookInvoiceNum, checkbookPaymentDate, checkbookReferenceNum, checkbookVendor) VALUES(:checkbookInvoiceAmount, :checkbookInvoiceDate, :checkbookInvoiceNum, :checkbookPaymentDate, :checkbookReferenceNum, :checkbookVendor)";
+        $statement = $pdo->prepare($query);
+
+        // update the null checkbookId with what mySQL just gave us
+        $this->checkbookId = intval($pdo->lastInsertId());
+
         foreach($dataset->data->row as $row) {
             $checkbookVendor = (string)$row->value[0];
             $checkbookReferenceNum = (string)$row->value[1];
@@ -85,13 +92,9 @@ class DataDownloader {
 
 
             $checkbookInvoiceDate = new \DateTime($checkbookInvoiceDate, new \DateTimeZone("UTC"));
-
             $checkbookPaymentDate = new \DateTime($checkbookPaymentDate, new \DateTimeZone("UTC"));
-
-            $xmlCheckbook = new Checkbook(null, $checkbookInvoiceAmount, $checkbookInvoiceDate, $checkbookInvoiceNum, $checkbookPaymentDate, $checkbookReferenceNum, $checkbookVendor);
-            $xmlCheckbook->insert($pdo);
-
-
+			$parameters = ["checkbookInvoiceAmount" => $checkbookInvoiceAmount, "checkbookInvoiceDate" => $checkbookInvoiceDate->format("Y-m-d"), "checkbookInvoiceNum" => $checkbookInvoiceNum, "checkbookPaymentDate" => $checkbookPaymentDate->format("Y-m-d"), "checkbookReferenceNum" => $checkbookReferenceNum, "checkbookVendor" => $checkbookVendor];
+	        $statement->execute($parameters);
         }
     }
     public static function compareAndDownload() {
