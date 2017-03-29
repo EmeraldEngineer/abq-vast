@@ -65,7 +65,7 @@ class DataDownloader {
 	}
 	public function getCheckbookXML($url) {
 		try {
-			$xmlReader = new XMLReader();
+			$xmlReader = new \XMLReader();
 			$xmlReader->open($url);
 			return($xmlReader);
 		} catch(\Exception $exception) {
